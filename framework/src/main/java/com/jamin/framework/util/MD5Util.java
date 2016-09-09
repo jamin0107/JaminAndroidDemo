@@ -9,7 +9,11 @@ public class MD5Util {
 
     protected static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-
+    /**
+     * Generate MD5 String by str
+     * @param str
+     * @return
+     */
     public final static String getMd5ByString(String str) {
         try {
             return getMd5ByByte(str.getBytes("UTF-8"));
