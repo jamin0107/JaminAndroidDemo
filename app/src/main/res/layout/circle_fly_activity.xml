@@ -8,10 +8,20 @@
         android:id="@+id/circle_vertical_fly_layout"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="#000fff"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true"
+        android:background="#000fff">
 
     </com.jamin.android.demo.widget.CornerLayout>
+
+    <com.jamin.android.demo.widget.CornerLayout2
+        android:id="@+id/circle_vertical_fly_layout2"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/circle_vertical_fly_layout"
+        android:layout_centerHorizontal="true"
+        android:background="#000fff">
+
+    </com.jamin.android.demo.widget.CornerLayout2>
 
 
 </RelativeLayout>

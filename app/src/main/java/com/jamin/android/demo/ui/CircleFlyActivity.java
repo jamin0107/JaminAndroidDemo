@@ -9,6 +9,7 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.widget.BackgroundFlyingLayout;
 import com.jamin.android.demo.widget.BackgroundVerticalFlyingLayout;
 import com.jamin.android.demo.widget.CornerLayout;
+import com.jamin.android.demo.widget.CornerLayout2;
 
 /**
  * Created by jamin on 2016/11/29.
@@ -17,7 +18,8 @@ import com.jamin.android.demo.widget.CornerLayout;
 public class CircleFlyActivity extends AppCompatActivity {
 
     BackgroundFlyingLayout backgroundFlyLayout = null;
-    BackgroundVerticalFlyingLayout backgroundFlyLayout2 = null;
+    BackgroundVerticalFlyingLayout backgroundVerticalFlyLayout = null;
+    BackgroundVerticalFlyingLayout backgroundVerticalFlyLayout2 = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,8 +33,15 @@ public class CircleFlyActivity extends AppCompatActivity {
         CornerLayout relativeLayoutVertical = (CornerLayout) findViewById(R.id.circle_vertical_fly_layout);
         if (relativeLayoutVertical != null) {
             relativeLayoutVertical.bringToFront();
-            backgroundFlyLayout2 = new BackgroundVerticalFlyingLayout(this, R.mipmap.img_login_window);
-            relativeLayoutVertical.addView(backgroundFlyLayout2);
+            backgroundVerticalFlyLayout = new BackgroundVerticalFlyingLayout(this, R.mipmap.img_login_window);
+            relativeLayoutVertical.addView(backgroundVerticalFlyLayout);
+        }
+
+        CornerLayout2 relativeLayoutVertical2 = (CornerLayout2) findViewById(R.id.circle_vertical_fly_layout2);
+        if (relativeLayoutVertical2 != null) {
+            relativeLayoutVertical2.bringToFront();
+            backgroundVerticalFlyLayout2 = new BackgroundVerticalFlyingLayout(this, R.mipmap.img_login_window);
+            relativeLayoutVertical2.addView(backgroundVerticalFlyLayout2);
         }
     }
 
@@ -50,6 +59,8 @@ public class CircleFlyActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         backgroundFlyLayout.destory();
-        backgroundFlyLayout2.destory();
+        backgroundVerticalFlyLayout.destory();
+        backgroundVerticalFlyLayout2.destory();
+
     }
 }

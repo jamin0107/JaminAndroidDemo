@@ -19,14 +19,14 @@ import com.jamin.framework.util.ImageUtil;
  * Created by jamin on 2016/11/29.
  */
 
-public class CornerLayout extends RelativeLayout {
+public class CornerLayout2 extends RelativeLayout {
 
-    public CornerLayout(Context context, AttributeSet attrs) {
+    public CornerLayout2(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CornerLayout(Context context) {
+    public CornerLayout2(Context context) {
         super(context);
         init();
     }
@@ -60,31 +60,31 @@ public class CornerLayout extends RelativeLayout {
         roundRect.set(0, 0, w, h);
     }
 
-    //圆角rect区域
-//    @Override
-//    public void draw(Canvas canvas) {
-//        canvas.saveLayer(roundRect, zonePaint, Canvas.ALL_SAVE_FLAG);
-//        canvas.drawRoundRect(roundRect, rect_adius, rect_adius, zonePaint);
-//        canvas.saveLayer(roundRect, maskPaint, Canvas.ALL_SAVE_FLAG);
-//        super.draw(canvas);
-//        canvas.restore();
-//    }
-
-    //心形Bitmap做的Mask
+//    圆角rect区域
     @Override
     public void draw(Canvas canvas) {
         canvas.saveLayer(roundRect, zonePaint, Canvas.ALL_SAVE_FLAG);
-        Bitmap bitmap = ImageUtil.decodeResource(getResources(), R.mipmap.heart_mask);
-        Matrix mMatrix = new Matrix();
-        mMatrix.setScale(3.5f, 3.5f);
-        // 创建新的图片
-        Bitmap resizedBitmap = ImageUtil.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), mMatrix, true);
-        canvas.drawBitmap(resizedBitmap, 0, 0, zonePaint);
+        canvas.drawRoundRect(roundRect, rect_adius, rect_adius, zonePaint);
         canvas.saveLayer(roundRect, maskPaint, Canvas.ALL_SAVE_FLAG);
         super.draw(canvas);
         canvas.restore();
     }
+
+    //心形Bitmap做的Mask
+//    @Override
+//    public void draw(Canvas canvas) {
+//        canvas.saveLayer(roundRect, zonePaint, Canvas.ALL_SAVE_FLAG);
+//        Bitmap bitmap = ImageUtil.decodeResource(getResources(), R.mipmap.heart_mask);
+//        Matrix mMatrix = new Matrix();
+//        mMatrix.setScale(3.5f, 3.5f);
+//        // 创建新的图片
+//        Bitmap resizedBitmap = ImageUtil.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+//                bitmap.getHeight(), mMatrix, true);
+//        canvas.drawBitmap(resizedBitmap, 0, 0, zonePaint);
+//        canvas.saveLayer(roundRect, maskPaint, Canvas.ALL_SAVE_FLAG);
+//        super.draw(canvas);
+//        canvas.restore();
+//    }
 
 
 }
