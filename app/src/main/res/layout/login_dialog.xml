@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0000ff">
+
+
+    <Button
+        android:id="@+id/explore_show_login_way"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="show Other Login WAY" />
+
+    <LinearLayout
+        android:id="@+id/explore_login_other_way_layout"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/explore_show_login_way"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="17dp"
+        android:orientation="horizontal">
+
+        <!--IG-->
+        <ImageView
+            android:id="@+id/explore_login_btn_ig"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <!--G+-->
+        <ImageView
+            android:id="@+id/explore_login_btn_g"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:src="@mipmap/ic_launcher" />
+        <!--Email-->
+        <ImageView
+            android:id="@+id/login_email"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:src="@mipmap/ic_launcher" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/policy"
+        android:layout_below="@+id/explore_show_login_way"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="我同意以下协议" />
+
+</RelativeLayout>
