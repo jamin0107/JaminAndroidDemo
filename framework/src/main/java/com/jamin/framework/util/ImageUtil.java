@@ -11,8 +11,7 @@ import android.graphics.Matrix;
 
 public class ImageUtil {
 
-    public static Bitmap createBitmap(int width, int height,
-                                      Bitmap.Config config) {
+    public static Bitmap createBitmap(int width, int height, Bitmap.Config config) {
         Bitmap bitmap = null;
         try {
             bitmap = Bitmap.createBitmap(width, height, config);
@@ -23,8 +22,7 @@ public class ImageUtil {
         return bitmap;
     }
 
-    public static Bitmap createBitmap(Bitmap source, int x, int y, int width,
-                                      int height, Matrix m, boolean filter) {
+    public static Bitmap createBitmap(Bitmap source, int x, int y, int width, int height, Matrix m, boolean filter) {
         Bitmap bitmap = null;
         try {
             bitmap = Bitmap
@@ -48,4 +46,8 @@ public class ImageUtil {
     }
 
 
+    public static int dp2Px(android.content.res.Resources res, float dp) {
+        final float scale = res.getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
 }

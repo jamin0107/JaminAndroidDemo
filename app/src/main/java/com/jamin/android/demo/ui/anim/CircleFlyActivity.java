@@ -1,4 +1,4 @@
-package com.jamin.android.demo.ui;
+package com.jamin.android.demo.ui.anim;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
