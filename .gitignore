@@ -36,3 +36,4 @@ Thumbs.db
 .classpath
 .settings
 infer-out/
+将删除 .gitignore
