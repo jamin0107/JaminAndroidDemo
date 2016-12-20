@@ -1,4 +1,4 @@
-package com.jamin.android.demo.ui;
+package com.jamin.android.demo.ui.image;
 
 import android.content.Intent;
 import android.text.Html;
@@ -8,20 +8,18 @@ import android.widget.TextView;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
 import com.jamin.android.demo.adapter.BaseItem;
-import com.jamin.android.demo.ui.anim.LauncherAnimationActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.android.demo.ui.image.LauncherImageActivity;
 
 
 /**
  * Created by Administrator on 2016/5/19.
  */
-public class LauncherTextItem extends BaseItem {
+public class LauncherFilterTextItem extends BaseItem {
 
     String desc;
 
 
-    public LauncherTextItem(BaseActivity ctx, String desc) {
+    public LauncherFilterTextItem(BaseActivity ctx, String desc) {
         super(ctx);
         this.desc = desc;
     }
@@ -39,10 +37,8 @@ public class LauncherTextItem extends BaseItem {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (LaunchActivity.LAUNCHER_ANIMATION.equals(desc)) {
-                    getActivity().startActivity(new Intent(getActivity(), LauncherAnimationActivity.class));
-                }else if(LaunchActivity.LAUNCHER_IMAGE.equals(desc)) {
-                    getActivity().startActivity(new Intent(getActivity(), LauncherImageActivity.class));
+                if (LauncherImageActivity.LAUNCHER_FILTER.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), FilterActivity.class));
                 }
             }
         });

@@ -33,6 +33,10 @@
         <activity android:name=".ui.anim.LauncherAnimationActivity" />
 
         <activity android:name=".ui.anim.CircleFlyActivity" />
+
+        <activity android:name=".ui.image.LauncherImageActivity" />
+
+        <activity android:name=".ui.image.FilterActivity" />
     </application>
 
 </manifest>

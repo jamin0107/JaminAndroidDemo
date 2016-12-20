@@ -17,9 +17,18 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
+
     public BaseActivity getActivity() {
         return this;
     }
+
+
 
 
 }

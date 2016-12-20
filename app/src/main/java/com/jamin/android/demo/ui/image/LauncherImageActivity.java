@@ -1,4 +1,4 @@
-package com.jamin.android.demo.ui;
+package com.jamin.android.demo.ui.image;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,15 +17,14 @@ import java.util.List;
  * Created by jamin on 2016/12/14.
  */
 
-public class LaunchActivity extends BaseActivity {
+public class LauncherImageActivity extends BaseActivity {
 
 
     RecyclerView mRecycleView;
     CustomRecyclerViewAdapter mCustomRecyclerViewAdapter;
     List<BaseItem> list = new LinkedList<>();
-    public static final String LAUNCHER_ANIMATION = "Animation";
-    public static final String LAUNCHER_IMAGE = "Image";
-    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION , LAUNCHER_IMAGE};
+    public static final String LAUNCHER_FILTER = "Filter";
+    String[] LAUNCHER = new String[]{LAUNCHER_FILTER};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class LaunchActivity extends BaseActivity {
 
     private void initData() {
         for (String str : LAUNCHER) {
-            list.add(new LauncherTextItem(getActivity(), str));
+            list.add(new LauncherFilterTextItem(getActivity(), str));
         }
     }
 
@@ -47,6 +46,5 @@ public class LaunchActivity extends BaseActivity {
         mCustomRecyclerViewAdapter = new CustomRecyclerViewAdapter(list);
         mRecycleView.setAdapter(mCustomRecyclerViewAdapter);
     }
-
 
 }
