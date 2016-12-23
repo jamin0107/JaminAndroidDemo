@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jamin on 2016/12/21.
@@ -22,6 +24,8 @@ abstract class RetrofitUtils {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
                     .baseUrl(HttpServiceApi.API_BASE + "/")
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .client(getOkHttpClient())
                     .build();
         }

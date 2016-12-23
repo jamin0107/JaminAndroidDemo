@@ -1,5 +1,7 @@
 package com.jamin.http.api;
 
+import com.jamin.http.model.HistoryOnToday;
+
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -16,7 +18,7 @@ public interface HttpServiceApi {
 
     String AppKey = "02868bcf47295999fb7475285872d408";
 
-    interface HistoryApi extends HttpServiceApi {
+    interface HistoryApi {
         /**
          * @param date
          * @param key
@@ -24,7 +26,7 @@ public interface HttpServiceApi {
          */
         @FormUrlEncoded
         @POST(TODAY_ON_HISTORY)
-        Observable<String> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
+        Observable<HistoryOnToday> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
 
 
         /**

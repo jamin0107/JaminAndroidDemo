@@ -11,6 +11,7 @@ import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.ui.anim.LauncherAnimationActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.android.demo.ui.image.LauncherImageActivity;
+import com.jamin.android.demo.ui.rxjava.ActivityHistoryOnToday;
 
 
 /**
@@ -41,8 +42,10 @@ public class LauncherTextItem extends BaseItem {
             public void onClick(View view) {
                 if (LaunchActivity.LAUNCHER_ANIMATION.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LauncherAnimationActivity.class));
-                }else if(LaunchActivity.LAUNCHER_IMAGE.equals(desc)) {
+                } else if (LaunchActivity.LAUNCHER_IMAGE.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LauncherImageActivity.class));
+                } else if (LaunchActivity.LAUNCHER_HISTORY_ON_TODAY.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), ActivityHistoryOnToday.class));
                 }
             }
         });

@@ -1,8 +1,8 @@
 package com.jamin.http;
 
 import com.jamin.http.api.HttpServiceApi;
+import com.jamin.http.model.HistoryOnToday;
 
-import retrofit2.http.HTTP;
 import rx.Observable;
 
 
@@ -25,9 +25,9 @@ public class HttpService extends RetrofitUtils {
         return httpService;
     }
 
-    public Observable<String> getTodayOnHistory(String date) {
+    public Observable<HistoryOnToday> getTodayOnHistory(String date) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
-        Observable<String> observable = historyApi.getTodayOnHistory(date, HttpServiceApi.AppKey);
+        Observable<HistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpServiceApi.AppKey);
         return observable;
     }
 
