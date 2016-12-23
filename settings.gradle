@@ -1,1 +1,1 @@
-include ':app', ':framework', ':gpuimagelibrary'
+include ':app', ':framework', ':gpuimagelibrary', ':cloudlib1'
