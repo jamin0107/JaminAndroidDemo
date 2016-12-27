@@ -1,5 +1,6 @@
 package com.jamin.framework.util;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,9 +46,11 @@ public class ImageUtil {
         return bitmap;
     }
 
-
-    public static int dp2Px(android.content.res.Resources res, float dp) {
-        final float scale = res.getDisplayMetrics().density;
+    public static int dp2px(Context context, float dp) {
+        if (context == null) {
+            return 0;
+        }
+        final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
 }

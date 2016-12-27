@@ -42,6 +42,8 @@ public class LauncherAnimationTextItem extends BaseItem {
                     getActivity().startActivity(new Intent(getActivity(), CircleFlyActivity.class));
                 } else if (LauncherAnimationActivity.LAUNCHER_FLY_BACK.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), VerticalFlyBackActivity.class));
+                }else if (LauncherAnimationActivity.LAUNCHER_LIKE_HEART.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), LikeActivity.class));
                 }
             }
         });

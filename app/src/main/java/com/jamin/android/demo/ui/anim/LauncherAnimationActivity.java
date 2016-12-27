@@ -25,7 +25,8 @@ public class LauncherAnimationActivity extends BaseActivity {
     List<BaseItem> list = new LinkedList<>();
     public static final String LAUNCHER_CIRCLE_FLYING = "Circle Flying";
     public static final String LAUNCHER_FLY_BACK = "vertical_fly_back_activity";
-    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING, LAUNCHER_FLY_BACK};
+    public static final String LAUNCHER_LIKE_HEART = "Like Heart";
+    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING, LAUNCHER_FLY_BACK, LAUNCHER_LIKE_HEART};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- Icon font -->
+    <declare-styleable name="IconFontTextView">
+        <attr name="if_bgSize" format="dimension" />
+        <attr name="if_bgColor" format="color" />
+        <attr name="if_bgShape">
+            <enum name="oval" value="0" />
+            <enum name="rectangle" value="1" />
+            <enum name="other" value="2" />
+        </attr>
+        <attr name="if_strokeColor" format="color" />
+        <attr name="if_strokeWidth" format="float" />
+        <attr name="if_flip_horizontal" format="boolean" />
+        <attr name="if_central_transparent" format="boolean" />
+        <attr name="if_central_bgcolor" format="color" />
+    </declare-styleable>
+</resources>
