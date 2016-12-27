@@ -1,7 +1,6 @@
 package com.jamin.android.demo.ui.rxjava;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +46,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
                     @Override
                     public void call(HistoryOnToday historyOnToday) {
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() +", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("s = " + historyOnToday);
+                        LogUtil.d("History OnToday Success do first event on bg");
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,7 +54,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
                     @Override
                     public void call(HistoryOnToday historyOnToday) {
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() +", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("s = " + historyOnToday);
+                        LogUtil.d("notify UI on MainThread");
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -68,7 +67,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
                     @Override
                     public void call() {
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() +", Thread name = " + Thread.currentThread().getName());
-
+                        LogUtil.d("event complete");
                     }
                 });
 

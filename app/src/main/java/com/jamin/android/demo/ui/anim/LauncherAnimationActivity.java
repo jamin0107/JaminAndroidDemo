@@ -24,7 +24,8 @@ public class LauncherAnimationActivity extends BaseActivity {
     CustomRecyclerViewAdapter mCustomRecyclerViewAdapter;
     List<BaseItem> list = new LinkedList<>();
     public static final String LAUNCHER_CIRCLE_FLYING = "Circle Flying";
-    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING};
+    public static final String LAUNCHER_FLY_BACK = "vertical_fly_back_activity";
+    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING, LAUNCHER_FLY_BACK};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

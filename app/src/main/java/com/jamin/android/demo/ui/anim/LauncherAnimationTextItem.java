@@ -40,6 +40,8 @@ public class LauncherAnimationTextItem extends BaseItem {
             public void onClick(View view) {
                 if (LauncherAnimationActivity.LAUNCHER_CIRCLE_FLYING.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), CircleFlyActivity.class));
+                } else if (LauncherAnimationActivity.LAUNCHER_FLY_BACK.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), VerticalFlyBackActivity.class));
                 }
             }
         });

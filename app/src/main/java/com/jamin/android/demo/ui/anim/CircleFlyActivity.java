@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.RelativeLayout;
 
 import com.jamin.android.demo.R;
+import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.android.demo.widget.BackgroundFlyingLayout;
 import com.jamin.android.demo.widget.BackgroundVerticalFlyingLayout;
 import com.jamin.android.demo.widget.CornerLayout;
@@ -15,7 +16,7 @@ import com.jamin.android.demo.widget.CornerLayout2;
  * Created by jamin on 2016/11/29.
  */
 
-public class CircleFlyActivity extends AppCompatActivity {
+public class CircleFlyActivity extends BaseActivity {
 
     BackgroundFlyingLayout backgroundFlyLayout = null;
     BackgroundVerticalFlyingLayout backgroundVerticalFlyLayout = null;
