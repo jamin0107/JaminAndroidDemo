@@ -23,7 +23,7 @@ import java.util.TimerTask;
 public class BackgroundVerticalFlyingLayout extends RelativeLayout {
 
     private static final String TAG = "BGVerticalFly";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     // 两张图Scroll的距离
     int offsetY = 0;
     int offsetY2 = 0;
