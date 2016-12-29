@@ -1,6 +1,5 @@
 package com.jamin.android.demo.widget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -9,7 +8,11 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.jamin.framework.util.ImageUtil;
 import com.jamin.framework.util.LogUtil;
+import com.jamin.framework.util.ScreenTool;
+
+import java.lang.ref.WeakReference;
 
 import static android.widget.ImageView.ScaleType.MATRIX;
 
@@ -26,7 +29,9 @@ public class ReboundImageView extends ImageView {
     int imageHeight = 0;
 
     int offsetY = 0;
-    private static final int FRAMES = 2;
+    private static final int FRAMES = 1;
+    ScreenTool.Screen screen;
+    private int DURATION = 10;
 
 
     public ReboundImageView(Context context) {
@@ -51,8 +56,19 @@ public class ReboundImageView extends ImageView {
     }
 
 
+    ReboundImageViewHandler mHandler;
+
     private void initView() {
         setScaleType(MATRIX);
+        screen = ScreenTool.getScreenPix(getContext());
+        mHandler = new ReboundImageViewHandler(this);
+    }
+
+
+    public void setSpeed(int dpPerSecond) {
+        int pxPerSecond = ImageUtil.dp2px(getContext(), dpPerSecond);
+        DURATION = 1000 / pxPerSecond;
+        LogUtil.d("Speed = " + DURATION);
     }
 
     public void setImageBitmap(Bitmap bitmap) {
@@ -67,62 +83,84 @@ public class ReboundImageView extends ImageView {
         return isAnimating;
     }
 
-    public void setAnimating(boolean animating) {
-        isAnimating = animating;
+    public void stop() {
+        isAnimating = false;
+    }
+
+    public void start() {
+        isAnimating = true;
     }
 
     public void startScroll() {
         if (mTimer != null)
             return;
-        setAnimating(true);
+        start();
         mTimer = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (isAnimating()) {
-                    handler.sendEmptyMessage(0x123);
+                    if (mHandler == null) {
+                        stop();
+                        return;
+                    }
+                    mHandler.sendEmptyMessage(0x123);
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(DURATION);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         });
         mTimer.start();
     }
 
-    @SuppressLint("HandlerLeak")
-    final Handler handler = new Handler() {
+    private static class ReboundImageViewHandler extends Handler {
 
 
+        private final WeakReference<ReboundImageView> m_reBoundImageView;
+
+        ReboundImageViewHandler(ReboundImageView reboundImageView) {
+            m_reBoundImageView = new WeakReference<>(reboundImageView);
+        }
+
+
+        @Override
         public void handleMessage(Message msg) {
-            if (viewHeight == 0 || viewWidth == 0) {
-                return;
-            }
-            if (msg.what == 0x123) {
-                if (!isReverse) {
-                    offsetY += FRAMES;
-                    if (offsetY + viewHeight < imageHeight) {
-                        LogUtil.d("first offsetY = " + offsetY);
-                        // 第一张图自己飞阶段
-                        scrollTo(0, offsetY);
-                    } else {
-                        isReverse = true;
-                        LogUtil.d("second offsetY = " + offsetY);
-                    }
-                } else {
-                    offsetY -= FRAMES;
-                    if (offsetY > 0) {
-                        scrollTo(0, offsetY);
-                    } else {
-                        isReverse = false;
-                    }
-                }
-
+            if (m_reBoundImageView.get() != null) {
+                m_reBoundImageView.get().handleStateMessage(msg);
             }
         }
-    };
 
+    }
+
+    private void handleStateMessage(Message msg) {
+        if (viewHeight == 0 || viewWidth == 0) {
+            return;
+        }
+        if (msg.what == 0x123) {
+            if (!isReverse) {
+                offsetY += FRAMES;
+                //正向
+                if (offsetY + viewHeight < imageHeight) {
+                    scrollTo(0, offsetY);
+                } else {
+                    isReverse = true;
+
+                }
+            } else {
+                //反向
+                offsetY -= FRAMES;
+                if (offsetY > 0) {
+                    scrollTo(0, offsetY);
+                } else {
+                    isReverse = false;
+                }
+            }
+
+        }
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -136,10 +174,9 @@ public class ReboundImageView extends ImageView {
             viewWidth = MeasureSpec.getSize(widthMeasureSpec);
             viewHeight = MeasureSpec.getSize(heightMeasureSpec);
             float widthScale = (float) viewWidth / (float) imageWidth;
-            LogUtil.d("imageHeight = " + imageHeight);
             imageWidth = (int) (imageWidth * widthScale);
             imageHeight = (int) (imageHeight * widthScale);
-            LogUtil.d("imageHeight = " + imageHeight);
+            //将图片的宽高变换成view等宽，进行等比扩大或者缩放
             Matrix matrix = new Matrix();
             matrix.setScale(widthScale, widthScale);
             setImageMatrix(matrix);

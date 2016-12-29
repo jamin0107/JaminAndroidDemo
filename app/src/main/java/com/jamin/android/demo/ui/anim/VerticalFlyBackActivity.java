@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jamin.android.demo.R;
@@ -20,16 +18,24 @@ import com.jamin.android.demo.widget.ReboundImageView;
 public class VerticalFlyBackActivity extends BaseActivity {
 
     BackgroundVerticalFlyingBackLayout backgroundVerticalFlyLayout2 = null;
-    ReboundImageView reboundImageView;
+    ReboundImageView reboundImageView, reboundImageView2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.circle_fly_back_activity);
         reboundImageView = (ReboundImageView) findViewById(R.id.fly_back_imageview);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.img_login_window);
+        reboundImageView2 = (ReboundImageView) findViewById(R.id.fly_back_imageview2);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pic1);
         reboundImageView.setImageBitmap(bitmap);
+        reboundImageView.setSpeed(26);
         reboundImageView.startScroll();
+
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.mipmap.pic2);
+        reboundImageView2.setImageBitmap(bitmap2);
+        reboundImageView2.setSpeed(26);
+        reboundImageView2.startScroll();
+
 //        postDelay(new Runnable() {
 //            @Override
 //            public void run() {
@@ -53,6 +59,7 @@ public class VerticalFlyBackActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         backgroundVerticalFlyLayout2.destory();
+        reboundImageView.stop();
 
     }
 }

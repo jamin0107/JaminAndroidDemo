@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class BackgroundVerticalFlyingBackLayout extends RelativeLayout {
 
     private static final String TAG = "BGVerticalFly";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     int offsetY = 0;
     // 背景图宽高
     int back_width = 0;
