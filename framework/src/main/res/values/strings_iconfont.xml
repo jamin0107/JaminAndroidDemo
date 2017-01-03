@@ -39,6 +39,12 @@
     <string name="iconfont_instant_share">\uE923</string>
     <string name="iconfont_frame_solid">\uE924</string>
     <string name="iconfont_gift_ad">\uE925</string>
+    <string name="iconfont_comment_stroke">\uE926</string>
+    <string name="iconfont_feature">\uE927</string>
+    <string name="iconfont_notification">\uE928</string>
+    <string name="iconfont_comment_soild">\uE929</string>
+    <string name="iconfont_list_s">\uE92A</string>
+    <string name="iconfont_retry_s">\uE92B</string>
     <string-array name="iconfont_lists">
         <item>iconfont_filmstrip</item>
         <item>iconfont_grid</item>
@@ -78,5 +84,11 @@
         <item>iconfont_instant_share</item>
         <item>iconfont_frame_solid</item>
         <item>iconfont_gift_ad</item>
+        <item>iconfont_comment_stroke</item>
+        <item>iconfont_feature</item>
+        <item>iconfont_notification</item>
+        <item>iconfont_comment_soild</item>
+        <item>iconfont_list_s</item>
+        <item>iconfont_retry_s</item>
     </string-array>
 </resources>
