@@ -46,6 +46,13 @@
         <activity android:name=".ui.image.FilterActivity" />
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
+
+        <service
+            android:name=".remote.JaminService"
+            android:exported="false"
+            android:process=":Remote" />
+
+
     </application>
 
 </manifest>
