@@ -7,26 +7,26 @@ import com.google.gson.annotations.SerializedName;
  * Created by jamin on 2016/12/23.
  */
 
-public class History {
+public class CloudBeanHistory {
 
 
     //日期
     @SerializedName("day")
     @Expose
-    private String day;
+    public String day;
 
     //事件日期
     @SerializedName("date")
     @Expose
-    private String date;
+    public String date;
 
     //事件id,即下一接口中所用的e_id
     @SerializedName("e_id")
     @Expose
-    private Integer e_id;
+    public Integer e_id;
 
     //事件标题
     @SerializedName("title")
     @Expose
-    private String title;
+    public String title;
 }

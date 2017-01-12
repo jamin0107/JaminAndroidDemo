@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+
+//definition in gradle.properties
+def minSDKV = minsdkV.toInteger()
+
+android {
+
+    compileSdkVersion sdkVersion.toInteger()
+    buildToolsVersion toolsVersion
+
+    defaultConfig {
+        minSdkVersion minSDKV
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+    }
+}
+
+greendao {
+    schemaVersion 1 //DB version
+    daoPackage 'com.jamin.greendao.dao' //自动生成dao的包名
+    targetGenDir 'src/main/java'        //自动生成dao的路径
+//    targetGenDirTest 'src/androidTest/java'
+//    generateTests 'com.jamin.greendao.test'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'org.greenrobot:greendao:3.2.0'//GreenDao
+    testCompile 'junit:junit:4.12'
+}

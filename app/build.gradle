@@ -48,4 +48,5 @@ dependencies {
     compile project(':framework')
     compile project(':gpuimagelibrary')
     compile project(':cloudlib1')
+    compile project(':dbmodule')
 }

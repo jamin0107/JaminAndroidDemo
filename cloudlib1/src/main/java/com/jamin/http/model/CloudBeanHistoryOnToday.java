@@ -10,22 +10,22 @@ import java.util.List;
  * Created by jamin on 2016/12/23.
  */
 
-public class HistoryOnToday {
+public class CloudBeanHistoryOnToday {
 
     //返回码
     @SerializedName("error_code")
     @Expose
-    private Integer errorCode;
+    public Integer errorCode;
 
 
     //提示信息
     @SerializedName("reason")
     @Expose
-    private String reason;
+    public String reason;
 
     @SerializedName("result")
     @Expose
-    List<History> list;
+    public List<CloudBeanHistory> list;
 
 
 }

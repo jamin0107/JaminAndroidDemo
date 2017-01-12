@@ -26,7 +26,7 @@ public class LaunchActivity extends BaseActivity {
     List<BaseItem> list = new LinkedList<>();
     public static final String LAUNCHER_ANIMATION = "Animation";
     public static final String LAUNCHER_IMAGE = "Image";
-    public static final String LAUNCHER_HISTORY_ON_TODAY = "History on Today";
+    public static final String LAUNCHER_HISTORY_ON_TODAY = "DbHistory on Today";
     String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY};
 
     @Override

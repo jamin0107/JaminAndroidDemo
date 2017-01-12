@@ -4,6 +4,7 @@ apply plugin: 'com.android.library'
 //definition in gradle.properties
 def minSDKV = minsdkV.toInteger()
 
+//生成iconfont的脚本
 task("updateIconfont", group: "iconfont") << {
     File f = project.rootProject.file('materials/selection.json')
     def slurper = new JsonSlurper()
@@ -95,7 +96,8 @@ dependencies {
     //find gradle jar name at http://www.mvnrepository.com/
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
-    compile 'com.facebook.stetho:stetho:1.1.0'
+    compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     //compile 'com.jakewharton:butterknife:5.1.2'
     //compile 'de.greenrobot:eventbus:2.4.0'
 

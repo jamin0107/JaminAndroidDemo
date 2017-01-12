@@ -1,6 +1,6 @@
 package com.jamin.http.api;
 
-import com.jamin.http.model.HistoryOnToday;
+import com.jamin.http.model.CloudBeanHistoryOnToday;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,7 +26,7 @@ public interface HttpServiceApi {
          */
         @FormUrlEncoded
         @POST(TODAY_ON_HISTORY)
-        Observable<HistoryOnToday> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
+        Observable<CloudBeanHistoryOnToday> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
 
 
         /**
