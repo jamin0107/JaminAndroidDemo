@@ -1,4 +1,4 @@
-package com.jamin.android.demo.ui.image;
+package com.jamin.android.demo.ui.image.filter;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

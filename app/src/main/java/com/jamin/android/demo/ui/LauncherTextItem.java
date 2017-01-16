@@ -40,11 +40,11 @@ public class LauncherTextItem extends BaseItem {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (LaunchActivity.LAUNCHER_ANIMATION.equals(desc)) {
+                if (MainActivity.LAUNCHER_ANIMATION.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LauncherAnimationActivity.class));
-                } else if (LaunchActivity.LAUNCHER_IMAGE.equals(desc)) {
+                } else if (MainActivity.LAUNCHER_IMAGE.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LauncherImageActivity.class));
-                } else if (LaunchActivity.LAUNCHER_HISTORY_ON_TODAY.equals(desc)) {
+                } else if (MainActivity.LAUNCHER_HISTORY_ON_TODAY.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), ActivityHistoryOnToday.class));
                 }
             }

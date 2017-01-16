@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 /**
  * Created by jamin on 2017/1/16.
+ * 比率0.00～1.00之间随机获取0xFFFFFFFF～0xFF000000之间的颜色
  */
 
 public class ColorUtil {

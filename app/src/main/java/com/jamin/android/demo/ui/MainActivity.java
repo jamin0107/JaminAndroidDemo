@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.remote.JaminService;
 import com.jamin.android.demo.ui.base.BaseActivity;
+import com.jamin.framework.util.HardWareEventListener;
+import com.jamin.framework.util.LogUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.List;
  * Created by jamin on 2016/12/14.
  */
 
-public class LaunchActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
 
     RecyclerView mRecycleView;
@@ -37,6 +40,37 @@ public class LaunchActivity extends BaseActivity {
         initData();
         initView();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        HardWareEventListener.getInstance(this).register(hardwareEventReceiver);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HardWareEventListener.getInstance(this).unregister(hardwareEventReceiver);
+    }
+
+    /**
+     * 点击硬件back，recent app的callback
+     */
+    HardWareEventListener.Receiver hardwareEventReceiver = new HardWareEventListener.Receiver() {
+        @Override
+        public void onReceived(String reason) {
+            if (HardWareEventListener.REASON_HOME_KEY.equals(reason)) {
+                //HOME KEY EVENT
+                //Toast.makeText(MainActivity.this, "HOME KEY EVENT", Toast.LENGTH_SHORT).show();
+                LogUtil.d("HOME KEY EVENT");
+            } else if (HardWareEventListener.REASON_RECENT_APPS.equals(reason)) {
+                //RECENT APP EVENT
+                //Toast.makeText(MainActivity.this, "RECENT APP EVENT", Toast.LENGTH_SHORT).show();
+                LogUtil.d("RECENT APP EVENT");
+            }
+        }
+    };
+
 
     private void initData() {
         for (String str : LAUNCHER) {

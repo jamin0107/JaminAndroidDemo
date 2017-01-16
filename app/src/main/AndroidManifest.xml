@@ -28,7 +28,7 @@
         <!--</activity>-->
 
         <activity
-            android:name=".ui.LaunchActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +49,7 @@
 
         <activity android:name=".ui.image.iconfont.IconFontGridActivity" />
 
-        <activity android:name=".ui.image.FilterActivity" />
+        <activity android:name=".ui.image.filter.FilterActivity" />
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
 
