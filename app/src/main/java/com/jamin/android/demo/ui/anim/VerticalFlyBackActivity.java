@@ -23,7 +23,7 @@ public class VerticalFlyBackActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.circle_fly_back_activity);
+        setContentView(R.layout.activity_circle_fly_back);
         reboundImageView = (ReboundImageView) findViewById(R.id.fly_back_imageview);
         reboundImageView2 = (ReboundImageView) findViewById(R.id.fly_back_imageview2);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pic1);

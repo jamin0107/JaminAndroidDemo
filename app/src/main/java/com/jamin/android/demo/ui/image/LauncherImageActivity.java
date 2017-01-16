@@ -24,7 +24,8 @@ public class LauncherImageActivity extends BaseActivity {
     CustomRecyclerViewAdapter mCustomRecyclerViewAdapter;
     List<BaseItem> list = new LinkedList<>();
     public static final String LAUNCHER_FILTER = "Filter";
-    String[] LAUNCHER = new String[]{LAUNCHER_FILTER};
+    public static final String LAUNCHER_ICON_FONT = "IconFont";
+    String[] LAUNCHER = new String[]{LAUNCHER_FILTER , LAUNCHER_ICON_FONT};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

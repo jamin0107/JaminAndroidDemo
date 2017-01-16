@@ -4,9 +4,9 @@ import com.jamin.greendao.model.DbHistory;
 import com.jamin.http.model.CloudBeanHistory;
 
 /**
+ * 与服务端交互的Model转化成本地用的model
  * Created by jamin on 2017/1/12.
  */
-
 public class ModelHelper {
 
 
