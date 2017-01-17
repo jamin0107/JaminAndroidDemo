@@ -1,9 +1,11 @@
 package com.jamin.http.api;
 
 import com.jamin.http.model.CloudBeanHistoryOnToday;
+import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -30,13 +32,13 @@ public interface HttpServiceApi {
 
 
         /**
-         * @param date
          * @param e_id
+         * @param key
          * @return
          */
         @FormUrlEncoded
         @POST(TODAY_ON_HISTORY_DETAIL)
-        Observable<String> getTodayOnHistoryDetail(@Field("date") String date, @Field("e_id") String e_id);
+        Observable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(@Field("e_id") int e_id, @Field("key") String key);
     }
 
 
