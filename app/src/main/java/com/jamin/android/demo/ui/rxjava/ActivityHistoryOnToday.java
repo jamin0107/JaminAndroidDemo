@@ -38,8 +38,6 @@ import rx.schedulers.Schedulers;
 public class ActivityHistoryOnToday extends BaseActivity {
 
 
-    @BindView(R.id.history_on_today)
-    Button mHistoryOnToday;
     @BindView(R.id.recycler_history_list)
     RecyclerView mRecyclerHistoryList;
     @BindView(R.id.layout_swipeRefresh)
@@ -54,20 +52,15 @@ public class ActivityHistoryOnToday extends BaseActivity {
         setContentView(R.layout.activity_history_on_today);
         ButterKnife.bind(this);
         activity=this;
-        Button button = (Button) findViewById(R.id.history_on_today);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                request();
-            }
-        });
+
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
             }
         });
-        
+        mLayoutSwipeRefresh.setRefreshing(true);
+        refresh();
         
 
     }
