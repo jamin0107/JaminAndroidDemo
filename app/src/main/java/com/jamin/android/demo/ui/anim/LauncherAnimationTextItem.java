@@ -14,16 +14,12 @@ import com.jamin.android.demo.ui.base.BaseActivity;
 /**
  * Created by Administrator on 2016/5/19.
  */
-public class LauncherAnimationTextItem extends BaseItem {
-
-    String desc;
+public class LauncherAnimationTextItem extends BaseItem<String> {
 
 
-    public LauncherAnimationTextItem(BaseActivity ctx, String desc) {
-        super(ctx);
-        this.desc = desc;
+    public LauncherAnimationTextItem(BaseActivity activity, String s) {
+        super(activity, s);
     }
-
 
     @Override
     public int getLayoutId() {
@@ -32,6 +28,7 @@ public class LauncherAnimationTextItem extends BaseItem {
 
     @Override
     public void onBindView(BaseHolder holder, int position) {
+        final String desc = getItemData();
         TextView textView = holder.getView(R.id.list_item_launch_tv);
         textView.setText(Html.fromHtml(desc));
         textView.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +38,7 @@ public class LauncherAnimationTextItem extends BaseItem {
                     getActivity().startActivity(new Intent(getActivity(), CircleFlyActivity.class));
                 } else if (LauncherAnimationActivity.LAUNCHER_FLY_BACK.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), VerticalFlyBackActivity.class));
-                }else if (LauncherAnimationActivity.LAUNCHER_LIKE_HEART.equals(desc)) {
+                } else if (LauncherAnimationActivity.LAUNCHER_LIKE_HEART.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LikeActivity.class));
                 }
             }

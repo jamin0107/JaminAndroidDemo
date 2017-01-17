@@ -12,14 +12,11 @@ import com.jamin.framework.widget.IconFontTextView;
  * Created by jamin on 2017/1/13.
  */
 
-public class ListItemIconFont extends BaseItem {
-
-    IconFont iconFont;
+public class ListItemIconFont extends BaseItem<IconFont> {
 
 
     public ListItemIconFont(BaseActivity activity, IconFont iconFont) {
-        super(activity);
-        this.iconFont = iconFont;
+        super(activity, iconFont);
     }
 
     @Override
@@ -30,6 +27,7 @@ public class ListItemIconFont extends BaseItem {
     @Override
     public void onBindView(BaseHolder holder, int position) {
         IconFontTextView iconFontTextView = holder.getView(R.id.list_item_iconfont_ico);
+        IconFont iconFont = getItemData();
         TextView textView = holder.getView(R.id.list_item_iconfont_text);
         if (iconFont == null) {
             return;

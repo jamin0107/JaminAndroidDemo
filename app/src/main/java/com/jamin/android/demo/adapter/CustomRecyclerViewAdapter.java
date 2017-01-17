@@ -21,6 +21,10 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<BaseHolder> 
     }
 
 
+    /**
+     * TODO:有点小问题 万一传入的是mList的引用，clear就清空掉了。
+     * @param list
+     */
     public void setData(List<BaseItem> list) {
         if (mList != null) {
             mList.clear();
@@ -28,6 +32,14 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<BaseHolder> 
         mList.addAll(list);
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+    }
+
 
 
     @Override
@@ -68,8 +80,13 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<BaseHolder> 
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
-
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
 
 
 }

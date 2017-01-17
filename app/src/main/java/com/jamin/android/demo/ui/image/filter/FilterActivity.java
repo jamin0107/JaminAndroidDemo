@@ -21,20 +21,11 @@ import jp.co.cyberagent.android.gpuimage.GPUImageGrayscaleFilter;
 public class FilterActivity extends BaseActivity {
 
     ImageView imageView;
-    Button grayScaleBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-        imageView = (ImageView) findViewById(R.id.activity_filter_iamgeview);
-        grayScaleBtn = (Button) findViewById(R.id.activity_filter_btn_gray_scale);
-        grayScaleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doFilter();
-            }
-        });
     }
 
 

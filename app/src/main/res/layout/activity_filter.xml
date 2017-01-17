@@ -1,39 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/activity_filter_btn_gray_scale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gray Scale" />
-
-        <!--<Button-->
-        <!--android:id="@+id/activity_filter_btn_gray_scale"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Gray Scale"/>-->
-
-        <!--<Button-->
-        <!--android:id="@+id/activity_filter_btn_gray_scale"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Gray Scale"/>-->
-
-
-    </LinearLayout>
 
 
     <ImageView
         android:id="@+id/activity_filter_iamgeview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/filter_panel"
+        android:layout_marginBottom="20dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/img_login_window" />
-</LinearLayout>
+
+
+
+    <fragment
+        android:id="@+id/filter_panel"
+        android:name="com.jamin.android.demo.ui.image.filter.FilterPanelFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

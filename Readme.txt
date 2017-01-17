@@ -42,8 +42,9 @@ gradle.properties 定义gradle里的一些常用变量
 
 
 #################<TODO>#########################
+
 1.recycleview的下拉刷新，上拉更多，滑动事件监听
-2.前台，后台切换的监听
+2.前台，后台切换的监听(RECENTAPP , HOME 监听)DONE
 3.可扩展的alertDialog
 4.可复用的loading
-5.
+5.可复用的滤镜选择panel(Fragment)

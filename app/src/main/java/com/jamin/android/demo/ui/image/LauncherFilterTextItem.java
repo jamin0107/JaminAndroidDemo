@@ -16,16 +16,12 @@ import com.jamin.android.demo.ui.image.iconfont.IconFontGridActivity;
 /**
  * Created by Administrator on 2016/5/19.
  */
-public class LauncherFilterTextItem extends BaseItem {
-
-    String desc;
+public class LauncherFilterTextItem extends BaseItem<String> {
 
 
-    public LauncherFilterTextItem(BaseActivity ctx, String desc) {
-        super(ctx);
-        this.desc = desc;
+    public LauncherFilterTextItem(BaseActivity activity, String s) {
+        super(activity, s);
     }
-
 
     @Override
     public int getLayoutId() {
@@ -35,6 +31,7 @@ public class LauncherFilterTextItem extends BaseItem {
     @Override
     public void onBindView(BaseHolder holder, int position) {
         TextView textView = holder.getView(R.id.list_item_launch_tv);
+        final String desc = getItemData();
         textView.setText(Html.fromHtml(desc));
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

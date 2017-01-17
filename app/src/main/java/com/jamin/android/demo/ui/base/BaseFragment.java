@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
  * Created by jamin on 2016/12/14.
  */
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     /**
      * 是否当前处于暂停状态
