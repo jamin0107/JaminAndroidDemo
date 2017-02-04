@@ -21,7 +21,7 @@ android {
 
     productFlavors {
         developer {
-            minSdkVersion 21
+            minSdkVersion 14
         }
         production {
             minSdkVersion minSDKV
@@ -44,9 +44,13 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile project(':framework')
     compile project(':gpuimagelibrary')
     compile project(':cloudlib1')
     compile project(':dbmodule')
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    testCompile 'junit:junit:4.12'
 }

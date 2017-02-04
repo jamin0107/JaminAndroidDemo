@@ -2,6 +2,7 @@ package com.jamin.http;
 
 import com.jamin.http.api.HttpServiceApi;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
+import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
 import rx.Observable;
 
@@ -28,6 +29,12 @@ public class HttpService extends RetrofitUtils {
     public Observable<CloudBeanHistoryOnToday> getTodayOnHistory(String date) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
         Observable<CloudBeanHistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpServiceApi.AppKey);
+        return observable;
+    }
+
+    public Observable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(int id) {
+        HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
+        Observable<CloudBeanHistoryDetail> observable = historyApi.getTodayOnHistoryDetail(id, HttpServiceApi.AppKey);
         return observable;
     }
 
