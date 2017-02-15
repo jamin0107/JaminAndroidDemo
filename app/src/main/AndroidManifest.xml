@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.jamin.android.demo"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jamin.android.demo">
 
     <!-- 网络权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 在SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 往SDCard写入数据权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".JaminApplication"
@@ -33,9 +33,9 @@
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -55,15 +55,28 @@
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
 
+        <activity android:name="com.jamin.framework.deeplink.FrameworkDeepLinkActivity" />
+        <activity
+            android:name=".deeplink.DeepLinkActivity"
+            android:theme="@android:style/Theme.NoDisplay">
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="jamin" />
+
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".remote.JaminService"
             android:exported="false"
-            android:process=":Remote"/>
+            android:process=":Remote" />
 
-        <activity android:name=".ui.rxjava.ActivityHistoryDetail">
-        </activity>
+        <activity android:name=".ui.rxjava.ActivityHistoryDetail"></activity>
     </application>
 
 </manifest>

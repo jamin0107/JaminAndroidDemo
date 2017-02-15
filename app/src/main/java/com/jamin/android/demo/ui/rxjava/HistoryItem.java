@@ -1,17 +1,13 @@
 package com.jamin.android.demo.ui.rxjava;
 
 import android.content.Intent;
-import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
 import com.jamin.android.demo.adapter.BaseItem;
-import com.jamin.android.demo.ui.LaunchActivity;
-import com.jamin.android.demo.ui.anim.LauncherAnimationActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.android.demo.ui.image.LauncherImageActivity;
 import com.jamin.http.model.CloudBeanHistory;
 
 /**

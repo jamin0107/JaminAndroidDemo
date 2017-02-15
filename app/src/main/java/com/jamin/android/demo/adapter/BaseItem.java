@@ -13,6 +13,11 @@ public abstract class BaseItem<Data> {
     private BaseActivity activity;
 
 
+    public BaseItem(BaseActivity activity) {
+        this.activity = activity;
+    }
+
+
     public BaseItem(BaseActivity activity, Data data) {
         this.activity = activity;
         this.mData = data;

@@ -1,16 +1,23 @@
 package com.jamin.android.demo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.deeplinkdispatch.DeepLink;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.remote.JaminService;
 import com.jamin.android.demo.ui.base.BaseActivity;
+import com.jamin.framework.deeplink.JaminDeepLink;
 import com.jamin.framework.util.HardWareEventListener;
 import com.jamin.framework.util.LogUtil;
 
@@ -21,6 +28,7 @@ import java.util.List;
  * Created by jamin on 2016/12/14.
  */
 
+@JaminDeepLink("/MainPage/{id}")
 public class MainActivity extends BaseActivity {
 
 
@@ -39,6 +47,16 @@ public class MainActivity extends BaseActivity {
         JaminService.startService(this);
         initData();
         initView();
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
+            Bundle parameters = intent.getExtras();
+            if (parameters != null) {
+                String queryParameter = parameters.getString("hello");
+                String idString = parameters.getString("id");
+                Toast.makeText(this, "hello + " + queryParameter + ", id = " + idString, Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     @Override
