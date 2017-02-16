@@ -9,6 +9,9 @@ import com.jamin.framework.deeplink.FrameworkDeepLinkModuleLoader;
 
 /**
  * Created by jamin on 2017/2/15.
+ * adb shell
+ * am start -W -a android.intent.action.VIEW -d "jamin://com.jamin/deeplink/framework" com.jamin.android.demo
+ * 如果设定的是http这种scheme，多app都可以截获的情况下，指定包名，可以保证唯一
  */
 
 @DeepLinkHandler({AppDeepLinkModule.class , FrameworkDeepLinkModule.class})

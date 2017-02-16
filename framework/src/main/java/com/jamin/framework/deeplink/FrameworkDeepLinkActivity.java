@@ -9,9 +9,10 @@ import com.airbnb.deeplinkdispatch.DeepLink;
 
 /**
  * Created by jamin on 2017/2/15.
+ * 仅仅是用来实验跨module的deeplink
  */
 
-@JaminDeepLink("/framework")
+@JaminDeepLink(JaminDeepLinkConstant.FRAMEWORK)
 public class FrameworkDeepLinkActivity extends Activity {
 
     @Override
