@@ -102,11 +102,12 @@ public class MainActivity extends BaseActivity {
         mRecycleView.setAdapter(mCustomRecyclerViewAdapter);
         TextView textView = (TextView) findViewById(R.id.text_show);
         try {
-            String abc = "Jamin DO IT!";
-            AESUtil aesUtil = new AESUtil();
-            String encryptStr = aesUtil.encrypt(abc);
-            String decryptStr = aesUtil.decrypt(encryptStr);
-            textView.setText(encryptStr + " " + decryptStr);
+//            AESUtil aesUtil = new AESUtil();
+//            String encryptStr = aesUtil.encrypt("pid");
+//            LogUtil.d("encryptStr = " + encryptStr);
+            String decryptStr = AESUtil.decrypt("s4wi9WIk97Anx0+1ipvAXw==");
+            LogUtil.d("decryptStr = " + decryptStr);
+            LogUtil.d("encrypt = " + AESUtil.encrypt("18752375"));
         } catch (Exception e) {
             e.printStackTrace();
         }
