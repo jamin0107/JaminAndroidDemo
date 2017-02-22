@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.deeplinkdispatch.DeepLink;
@@ -15,6 +16,7 @@ import com.jamin.android.demo.remote.JaminService;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.deeplink.JaminDeepLink;
 import com.jamin.framework.deeplink.JaminDeepLinkConstant;
+import com.jamin.framework.util.AESUtil;
 import com.jamin.framework.util.HardWareEventListener;
 import com.jamin.framework.util.LogUtil;
 
@@ -98,6 +100,17 @@ public class MainActivity extends BaseActivity {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mCustomRecyclerViewAdapter = new CustomRecyclerViewAdapter(list);
         mRecycleView.setAdapter(mCustomRecyclerViewAdapter);
+        TextView textView = (TextView) findViewById(R.id.text_show);
+        try {
+            String abc = "Jamin DO IT!";
+            AESUtil aesUtil = new AESUtil();
+            String encryptStr = aesUtil.encrypt(abc);
+            String decryptStr = aesUtil.decrypt(encryptStr);
+            textView.setText(encryptStr + " " + decryptStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
