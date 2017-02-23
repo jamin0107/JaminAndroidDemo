@@ -66,9 +66,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="jamin" />
+                <data
+                    android:host="com.jamin.demo"
+                    android:pathPrefix="/mainpage"
+                    android:scheme="jamin" />
 
-                <data android:scheme="http" />
+                <data
+                    android:host="com.jamin.demo"
+                    android:pathPrefix="/framework"
+                    android:scheme="jamin" />
+
 
             </intent-filter>
         </activity>

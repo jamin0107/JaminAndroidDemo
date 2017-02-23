@@ -12,7 +12,7 @@ import com.airbnb.deeplinkdispatch.DeepLink;
  * 仅仅是用来实验跨module的deeplink
  */
 
-@JaminDeepLink(JaminDeepLinkConstant.FRAMEWORK)
+@JaminDeepLink(JaminDeepLinkDispatcher.PATH_FRAMEWORK)
 public class FrameworkDeepLinkActivity extends Activity {
 
     @Override
