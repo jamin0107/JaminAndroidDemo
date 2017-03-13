@@ -55,6 +55,8 @@
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
 
+        <activity android:name=".ui.gl.GLStudyActivity" />
+
         <activity android:name="com.jamin.framework.deeplink.FrameworkDeepLinkActivity" />
         <activity
             android:name=".deeplink.DeepLinkActivity"

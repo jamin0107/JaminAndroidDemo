@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
 import com.jamin.android.demo.adapter.BaseItem;
+import com.jamin.android.demo.ui.gl.GLStudyActivity;
 import com.jamin.android.demo.ui.anim.LauncherAnimationActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.android.demo.ui.image.LauncherImageActivity;
@@ -43,6 +44,8 @@ public class LauncherTextItem extends BaseItem<String> {
                     getActivity().startActivity(new Intent(getActivity(), LauncherImageActivity.class));
                 } else if (MainActivity.LAUNCHER_HISTORY_ON_TODAY.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), ActivityHistoryOnToday.class));
+                }else if (MainActivity.LAUNCHER_GL_VIEW.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), GLStudyActivity.class));
                 }
             }
         });

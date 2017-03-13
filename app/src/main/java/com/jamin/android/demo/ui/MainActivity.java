@@ -36,7 +36,8 @@ public class MainActivity extends BaseActivity {
     public static final String LAUNCHER_ANIMATION = "Animation";
     public static final String LAUNCHER_IMAGE = "Image";
     public static final String LAUNCHER_HISTORY_ON_TODAY = "DbHistory on Today";
-    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY};
+    public static final String LAUNCHER_GL_VIEW = "GLView";
+    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY, LAUNCHER_GL_VIEW};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
