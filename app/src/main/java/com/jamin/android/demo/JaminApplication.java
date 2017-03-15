@@ -16,7 +16,7 @@ public class JaminApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LogUtil.init(true, "Jamin");
+        LogUtil.init(true, "JaminDebug");
         JaminApplicationHelper.init(this);
         ProcessManager.init(this);
         LogUtil.d("isUIProcess = " + ProcessManager.isUIProcess());

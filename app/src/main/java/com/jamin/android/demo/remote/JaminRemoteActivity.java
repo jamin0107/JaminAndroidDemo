@@ -28,9 +28,13 @@ public class JaminRemoteActivity extends BaseActivity {
         setContentView(R.layout.activity_remote_main);
         ButterKnife.bind(this);
         int pid = android.os.Process.myPid();
-        RemoteObj remoteObj = getIntent().getExtras().getParcelable(EXTRA_KEY_REMOTE_OBJ);
-        if (remoteObj != null) {
-            textView.setText("pid = " + pid + "----" + remoteObj.toString());
+        if (getIntent().getExtras() != null) {
+            RemoteObj remoteObj = getIntent().getExtras().getParcelable(EXTRA_KEY_REMOTE_OBJ);
+            if (remoteObj != null) {
+                textView.setText("pid = " + pid + "----" + remoteObj.toString());
+            }
+        } else {
+            textView.setText("pid = " + pid);
         }
 
     }

@@ -11,14 +11,24 @@
         android:text="bind" />
 
     <Button
+        android:id="@+id/btn_remote_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="start remote activity" />
+
+    <Button
         android:id="@+id/service_connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="connect" />
 
     <Button
         android:id="@+id/service_unbind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="unbind" />
+
+
 </LinearLayout>

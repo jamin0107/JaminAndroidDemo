@@ -3,7 +3,7 @@ package com.jamin.android.demo.remote;
 
 // Declare any non-default types here with import statements
 import com.jamin.android.demo.remote.RemoteObj;
-
+import com.jamin.android.demo.remote.IRemoteCallBack;
 
 
 interface IJaminServiceAIDL {
@@ -14,7 +14,6 @@ interface IJaminServiceAIDL {
     void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
             double aDouble, String aString);
 
-
-    void testMethod(in RemoteObj remoteobj);
+    RemoteObj testMethod(in RemoteObj remoteobj ,in IRemoteCallBack callback);
 
 }

@@ -13,7 +13,7 @@ public class LogUtil {
 
     private static boolean DEBUG = true;
 
-    public static String customTagPrefix = "Jamin";
+    public static String customTagPrefix = "JaminDebug";
 
 
     private static LogHandler logHandler;

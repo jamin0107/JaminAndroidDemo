@@ -4,10 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.widget.Toast;
 
+import com.jamin.android.demo.JaminApplication;
 import com.jamin.android.demo.JaminApplicationHelper;
 import com.jamin.framework.util.LogUtil;
 
@@ -18,6 +20,7 @@ import com.jamin.framework.util.LogUtil;
 public class JaminServiceConnect {
 
     private IJaminServiceAIDL mIJaminServiceAIDL;
+    private IRemoteCallBack mRemoteCallback;
     private boolean isBind;
 
     private static class LazyHolder {
@@ -26,6 +29,10 @@ public class JaminServiceConnect {
 
     public static JaminServiceConnect getInstance() {
         return LazyHolder.INSTANCE;
+    }
+
+    private JaminServiceConnect() {
+        mRemoteCallback = new JaminRemoteCallBack();
     }
 
     public void onBind() {
@@ -58,8 +65,10 @@ public class JaminServiceConnect {
         if (mIJaminServiceAIDL != null) {
             try {
                 int pid = android.os.Process.myPid();
-                LogUtil.d("onConnectTestMethod from pid = " + pid);
-                mIJaminServiceAIDL.testMethod(remoteObj);
+                LogUtil.d("onConnectTestMethod from pid = " + pid + ", mRemoteCallback = " + mRemoteCallback);
+                RemoteObj remoteObjReturn = mIJaminServiceAIDL.testMethod(remoteObj, mRemoteCallback);
+                LogUtil.d("RemoteObj remoteObjReturn = " + remoteObjReturn);
+//                Toast.makeText(JaminApplicationHelper.getAppContext(), "RemoteObj remoteObjReturn = " + remoteObjReturn, Toast.LENGTH_SHORT).show();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -85,5 +94,26 @@ public class JaminServiceConnect {
         }
     };
 
+
+    private class JaminRemoteCallBack extends IRemoteCallBack.Stub {
+
+        @Override
+        public void onSuccess(final RemoteObj remoteObj) throws RemoteException {
+            LogUtil.d("onSuccess remoteObj = " + remoteObj);
+            new Handler(JaminApplicationHelper.getAppContext().getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(JaminApplicationHelper.getAppContext(), "remoteObj = " + remoteObj, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+        @Override
+        public void onFailed(int responseCode, RemoteObj remoteobj) throws RemoteException {
+
+        }
+
+    }
 
 }
