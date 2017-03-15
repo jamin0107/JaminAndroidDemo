@@ -10,6 +10,8 @@ import com.jamin.framework.util.HardWareEventListener;
 
 import java.lang.ref.WeakReference;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by jamin on 2016/12/14.
  */

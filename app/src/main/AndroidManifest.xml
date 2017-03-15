@@ -9,6 +9,10 @@
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!--use OpenGL ES 2.0-->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
     <application
         android:name=".JaminApplication"
         android:allowBackup="true"
@@ -57,7 +61,13 @@
 
         <activity android:name=".ui.gl.GLStudyActivity" />
 
+        <activity android:name=".remote.TestRemoteServiceActivity" />
+
+        <activity android:name=".remote.JaminRemoteActivity"
+            android:process=":Remote"/>
+
         <activity android:name="com.jamin.framework.deeplink.FrameworkDeepLinkActivity" />
+
         <activity
             android:name=".deeplink.DeepLinkActivity"
             android:theme="@android:style/Theme.NoDisplay">

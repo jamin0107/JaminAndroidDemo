@@ -12,15 +12,17 @@ import com.jamin.framework.util.LogUtil;
 
 public class JaminApplication extends Application {
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         LogUtil.init(true, "Jamin");
+        JaminApplicationHelper.init(this);
         ProcessManager.init(this);
         LogUtil.d("isUIProcess = " + ProcessManager.isUIProcess());
         //注册数据库
         DBFactory.getInstance().register(this);
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             //Stetho Init chrome://inspect/
 //        Stetho.newInitializerBuilder(this)
 //                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

@@ -16,7 +16,6 @@ public class JaminService extends Service {
 
 
 
-
     public static void startService(Context context) {
         Intent intent = new Intent(context, JaminService.class);
         try {
@@ -28,8 +27,20 @@ public class JaminService extends Service {
 
     }
 
+    IJaminServiceAIDL.Stub mBinder = null;
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mBinder = new JaminServiceImpl(this);
+        LogUtil.d("onCreate");
+    }
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtil.d("onStartCommand() called with: intent = [" + intent + "]");
         return START_STICKY;
     }
 
@@ -37,19 +48,13 @@ public class JaminService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         LogUtil.d("onBind() called with: intent = [" + intent + "]");
-        return null;
+        return mBinder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         LogUtil.d("onUnbind() called with: intent = [" + intent + "]");
         return super.onUnbind(intent);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        LogUtil.d("onCreate");
     }
 
 
