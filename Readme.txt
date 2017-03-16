@@ -39,12 +39,14 @@ iconFont，可以通过脚本自动生成
 
 gradle.properties 定义gradle里的一些常用变量
 
-
+#################AIDL测试#####################
+TestRemoteServiceActivity为远程service的测试页面
+支持AIDL和Messenger两种模式与远程service通信，原理类似
+广播，socket的方式，不在这里验证。
 
 #################<TODO>#########################
 
 1.recycleview的下拉刷新，上拉更多，滑动事件监听
-2.前台，后台切换的监听(RECENTAPP , HOME 监听)DONE
 3.可扩展的alertDialog
 4.可复用的loading
 5.可复用的滤镜选择panel(Fragment)

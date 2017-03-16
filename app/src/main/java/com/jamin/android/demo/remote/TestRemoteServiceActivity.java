@@ -29,14 +29,15 @@ public class TestRemoteServiceActivity extends BaseActivity {
     @BindView(R.id.btn_remote_activity)
     Button mStartActivityBtn;
 
-    JaminServiceConnect mServiceConnection;
+    IJaminConnect mServiceConnection;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_remote_service);
         ButterKnife.bind(this);
-        mServiceConnection = JaminServiceConnect.getInstance();
+//        mServiceConnection = JaminServiceConnect.getInstance();
+        mServiceConnection = JaminServiceConnectMessenger.getInstance();
     }
 
 

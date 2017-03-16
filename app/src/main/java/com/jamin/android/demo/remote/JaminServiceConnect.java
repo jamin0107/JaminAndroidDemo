@@ -17,7 +17,7 @@ import com.jamin.framework.util.LogUtil;
  * Created by jamin on 2017/3/15.
  */
 
-public class JaminServiceConnect {
+public class JaminServiceConnect implements IJaminConnect {
 
     private IJaminServiceAIDL mIJaminServiceAIDL;
     private IRemoteCallBack mRemoteCallback;
@@ -77,7 +77,6 @@ public class JaminServiceConnect {
 
 
     ServiceConnection mServiceConnection = new ServiceConnection() {
-
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
