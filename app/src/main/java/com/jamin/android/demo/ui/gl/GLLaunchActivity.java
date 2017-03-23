@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jamin.android.demo.R;
+import com.jamin.android.demo.ui.gl.googledemo.OpenGLES20Activity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

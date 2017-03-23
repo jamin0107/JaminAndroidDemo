@@ -67,7 +67,7 @@
 
         <activity android:name=".ui.gl.GLStudy2Activity" />
 
-        <activity android:name=".ui.gl.OpenGLES20Activity" />
+        <activity android:name=".ui.gl.googledemo.OpenGLES20Activity" />
 
         <activity android:name=".remote.TestRemoteServiceActivity" />
 
