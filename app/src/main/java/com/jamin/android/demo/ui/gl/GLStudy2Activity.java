@@ -22,7 +22,7 @@ import javax.microedition.khronos.opengles.GL10;
  * 学习
  */
 
-public class GLStudyActivity extends BaseActivity {
+public class GLStudy2Activity extends BaseActivity {
 
 
     @Override
@@ -48,7 +48,7 @@ public class GLStudyActivity extends BaseActivity {
                 + "}";//着色
         private static final float[] VERTEX = {   // in counterclockwise order:
                 0, 1, 0.0f, // top
-                -1f, -1, 0.0f, // bottom left
+                -0.5f, -1, 0.0f, // bottom left
                 1f, -1, 0.0f,  // bottom right
         };
 
