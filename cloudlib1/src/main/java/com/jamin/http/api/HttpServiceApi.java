@@ -5,20 +5,15 @@ import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
 public interface HttpServiceApi {
 
 
-    String API_BASE = "http://v.juhe.cn/";
-
     String TODAY_ON_HISTORY = "todayOnhistory/queryEvent.php";
 
     String TODAY_ON_HISTORY_DETAIL = "todayOnhistory/queryDetail.php";
-
-    String AppKey = "02868bcf47295999fb7475285872d408";
 
     interface HistoryApi {
         /**

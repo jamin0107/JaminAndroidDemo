@@ -28,13 +28,13 @@ public class HttpService extends RetrofitUtils {
 
     public Observable<CloudBeanHistoryOnToday> getTodayOnHistory(String date) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
-        Observable<CloudBeanHistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpServiceApi.AppKey);
+        Observable<CloudBeanHistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpConfig.AppKey);
         return observable;
     }
 
     public Observable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(int id) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
-        Observable<CloudBeanHistoryDetail> observable = historyApi.getTodayOnHistoryDetail(id, HttpServiceApi.AppKey);
+        Observable<CloudBeanHistoryDetail> observable = historyApi.getTodayOnHistoryDetail(id, HttpConfig.AppKey);
         return observable;
     }
 

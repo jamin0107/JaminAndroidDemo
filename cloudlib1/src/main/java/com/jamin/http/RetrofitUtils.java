@@ -1,6 +1,6 @@
 package com.jamin.http;
 
-import com.jamin.http.api.HttpServiceApi;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +23,7 @@ abstract class RetrofitUtils {
     Retrofit getRetrofit() {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(HttpServiceApi.API_BASE + "/")
+                    .baseUrl(HttpConfig.API_BASE + "/")
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getOkHttpClient())
@@ -38,10 +38,10 @@ abstract class RetrofitUtils {
             mOkHttpClient = new OkHttpClient.Builder()
                     //.cookieJar(n)
                     //.addInterceptor(new MyIntercepter())
-                    //.addNetworkInterceptor(new CookiesInterceptor(MyApplication.getInstance().getApplicationContext()))
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
+                    .addNetworkInterceptor(new StethoInterceptor())
+                    .connectTimeout(HttpConfig.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(HttpConfig.WRITE_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(HttpConfig.READ_TIMEOUT, TimeUnit.SECONDS)
                     //.cache(cache);
                     .build();
         }
