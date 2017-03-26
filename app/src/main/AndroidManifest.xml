@@ -59,7 +59,6 @@
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
 
-
         <activity android:name=".ui.gl.GLLaunchActivity" />
 
 
@@ -71,8 +70,11 @@
 
         <activity android:name=".remote.TestRemoteServiceActivity" />
 
-        <activity android:name=".remote.JaminRemoteActivity"
-            android:process=":Remote"/>
+        <activity android:name=".ui.anim.parallaxscroll.ParallaxScrollActivity" />
+
+        <activity
+            android:name=".remote.JaminRemoteActivity"
+            android:process=":Remote" />
 
         <activity android:name="com.jamin.framework.deeplink.FrameworkDeepLinkActivity" />
 
