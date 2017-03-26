@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -18,15 +19,17 @@ import com.jamin.framework.util.ScreenTool;
 
 public class ParallaxScrollListView extends ListView implements OnScrollListener {
 
+    //视差效果参数，暂时不用
     public final static double NO_ZOOM = 1;
     public final static double ZOOM_X2 = 2;
 
+    private int MAX_ALPHA_HEIGHT = 300;//当300px时，达到不透明
 
     private RelativeLayout mImageLayout;
-    private int mDrawableMaxHeight = -1;
+    private int mDrawableMaxHeight = -1;//第一个item被允许拉到的极限值
     private int mImageLayoutHeight = -1;
     private int mLayoutHeight = -1;
-    private int mDefaultImageViewHeight = 0;
+    private int mDefaultImageViewHeight = 0;//第一个item的默认初始值
 
     private interface OnOverScrollByListener {
 
@@ -97,6 +100,7 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
         // so we can layout it to make it shorter
         LogUtil.d("onScrollChanged firstView.getTop() = " + firstView.getTop() + " ,  getPaddingTop() = " + getPaddingTop() +
                 " , mImageLayout.getHeight() = " + mImageLayout.getHeight() + " , mImageLayoutHeight = " + mImageLayoutHeight);
+        setMaskAlpha(mImageLayout.getHeight());
         if (firstView.getTop() < getPaddingTop() && mImageLayout.getHeight() > mImageLayoutHeight) {
             mImageLayout.getLayoutParams().height = Math.max(mImageLayout.getHeight() - (getPaddingTop() - firstView.getTop()), mImageLayoutHeight);
             // to set the firstView.mTop to 0,
@@ -136,6 +140,28 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
         }
     }
 
+    public void setMaskAlpha(int imageLayoutHeight) {
+        if (mImageLayout == null) {
+            return;
+        }
+        LogUtil.d("setMaskAlpha imageLayoutHeight = " + imageLayoutHeight + ",  mDefaultImageViewHeight = " + mDefaultImageViewHeight);
+        ImageView imageView = (ImageView) mImageLayout.findViewById(R.id.list_item_cover_mask);
+        if (imageLayoutHeight - mDefaultImageViewHeight <= 0) {
+            imageView.setAlpha(0f);
+            LogUtil.d("setMaskAlpha alpha = " + 0);
+        } else if (imageLayoutHeight - mDefaultImageViewHeight >= MAX_ALPHA_HEIGHT) {
+            //下滑距離大於300px，設置不透明
+            imageView.setAlpha(1f);
+            LogUtil.d("setMaskAlpha alpha = " + 1);
+        } else if (imageLayoutHeight - mDefaultImageViewHeight <= MAX_ALPHA_HEIGHT) {
+            float alpha = ((float) (imageLayoutHeight - mDefaultImageViewHeight)) / MAX_ALPHA_HEIGHT;
+            LogUtil.d("setMaskAlpha alpha = " + alpha);
+            imageView.setAlpha(alpha);
+        }
+
+    }
+
+
     private OnOverScrollByListener scrollByListener = new OnOverScrollByListener() {
         @Override
         public boolean overScrollBy(int deltaX, int deltaY, int scrollX,
@@ -146,6 +172,7 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
 
                 if (deltaY < 0) {
                     int deltaYDamp = deltaY;
+                    //设置第一个item跟随手势放大的速率
                     //let first item offset become 1/2
                     //int deltaYDamp = deltaY / 2;
                     if (mImageLayout.getHeight() - deltaYDamp >= mImageLayoutHeight) {
@@ -172,6 +199,7 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
             if (mImageLayout == null) {
                 return;
             }
+            //松手之后，确定是回弹，还是继续下滑
             if (ev.getAction() == MotionEvent.ACTION_UP) {
                 LogUtil.d("ACTION_UP = ");
                 if (mImageLayoutHeight - 1 < mImageLayout.getHeight()) {
@@ -192,6 +220,9 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
         }
     };
 
+    /**
+     * 回弹动画
+     */
     public class ResetAnimation extends Animation {
         int targetHeight;
         int originalHeight;

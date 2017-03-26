@@ -15,7 +15,6 @@
             android:id="@+id/list_item_cover"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="15dp"
             android:scaleType="matrix"
             android:src="@mipmap/img_login_window" />
 
@@ -24,14 +23,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="27dip"
             android:layout_marginLeft="10dip"
-            android:layout_centerHorizontal="true"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Jamin"
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/list_item_cover_mask"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:alpha="0"
+            android:background="#ffff00"
+            android:scaleType="matrix" />
+
+
     </RelativeLayout>
 
     <View
