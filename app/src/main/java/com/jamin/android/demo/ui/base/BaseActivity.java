@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
-import com.jamin.framework.util.HardWareEventListener;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.ButterKnife;
 
 /**
  * Created by jamin on 2016/12/14.
@@ -28,6 +28,15 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHandler = new BaseHandler(this);
+    }
+
+
+    public void hideTitleBar() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ActionBar actionBar = getSupportActionBar(); //得到ActionBar
+        if (actionBar != null) {
+            actionBar.hide(); //隐藏ActionBar
+        }
     }
 
 

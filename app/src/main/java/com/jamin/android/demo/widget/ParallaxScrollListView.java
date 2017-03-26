@@ -30,6 +30,7 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
     private int mImageLayoutHeight = -1;
     private int mLayoutHeight = -1;
     private int mDefaultImageViewHeight = 0;//第一个item的默认初始值
+    private ExpandCallback expandedListener;
 
     private interface OnOverScrollByListener {
 
@@ -40,6 +41,10 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
 
     private interface OnTouchEventListener {
         void onTouchEvent(MotionEvent ev);
+    }
+
+    public void setExpandedListener(ExpandCallback callback) {
+        this.expandedListener = callback;
     }
 
     public ParallaxScrollListView(Context context, AttributeSet attrs,
@@ -208,9 +213,29 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
 
                     ResetAnimation animation;
                     if (mImageLayout.getHeight() < ScreenTool.getScreenPix(getContext()).heightPixels / 3) {
+                        //回弹
                         animation = new ResetAnimation(mImageLayout, mImageLayoutHeight);
                     } else {
+                        //继续下滑
                         animation = new ResetAnimation(mImageLayout, ScreenTool.getScreenPix(getContext()).heightPixels);
+                        animation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                if (expandedListener != null) {
+                                    expandedListener.expanded();
+                                }
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
                     }
 
                     animation.setDuration(300);
@@ -248,4 +273,11 @@ public class ParallaxScrollListView extends ListView implements OnScrollListener
         }
     }
 
+
+    public interface ExpandCallback {
+        /**
+         * 首頁展開動畫結束
+         */
+        void expanded();
+    }
 }

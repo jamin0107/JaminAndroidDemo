@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.RelativeLayout;
 
 import com.jamin.android.demo.R;
@@ -41,6 +42,7 @@ public class ParallaxScrollActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideTitleBar();
         setContentView(R.layout.activity_parallax_scroll);
         ButterKnife.bind(this);
         initData();
@@ -59,6 +61,14 @@ public class ParallaxScrollActivity extends BaseActivity {
         mCustomListViewAdapter = new CustomListViewAdapter(list);
         mRecycleView.addHeaderView(mHeaderView);
         mRecycleView.setAdapter(mCustomListViewAdapter);
+        mRecycleView.setExpandedListener(new ParallaxScrollListView.ExpandCallback() {
+            @Override
+            public void expanded() {
+                mRecycleView.setVisibility(View.GONE);
+                findViewById(R.id.activity_parallax_btn_below_parallax).setVisibility(View.GONE);
+                findViewById(R.id.activity_parallax_expand_bg).setVisibility(View.VISIBLE);
+            }
+        });
         RelativeLayout rl = (RelativeLayout) mHeaderView.findViewById(R.id.list_item_cover_layout);
         mRecycleView.setParallaxImageView(rl);
     }
