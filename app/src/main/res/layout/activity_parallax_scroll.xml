@@ -10,15 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F3F3F3"
-        android:divider="@null" />
+        android:overScrollMode="always"
+        android:divider="@null"
+        android:scrollbars="none" />
 
 
     <RelativeLayout
         android:id="@+id/activity_parallax_bg"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#ff0000"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="60dp"
