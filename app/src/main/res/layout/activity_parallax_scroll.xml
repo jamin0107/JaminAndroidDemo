@@ -4,25 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/activity_parallax_expand_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffff00" />
 
-    <Button
-        android:id="@+id/activity_parallax_btn_below_parallax"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="bottom bar" />
-
-    <com.jamin.android.demo.widget.ParallaxScrollListView
+    <com.jamin.android.demo.widget.PullToActionListView
         android:id="@+id/activity_parallax_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/activity_parallax_btn_below_parallax"
-        android:background="#ffffff" />
+        android:background="#F3F3F3"
+        android:divider="@null" />
 
 
+    <RelativeLayout
+        android:id="@+id/activity_parallax_bg"
+        android:layout_width="match_parent"
+        android:background="#ff0000"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_gallery_camera" />
+
+    </RelativeLayout>
 </RelativeLayout>

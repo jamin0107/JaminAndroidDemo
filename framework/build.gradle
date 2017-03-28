@@ -118,4 +118,5 @@ dependencies {
 
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
+    compile 'com.airbnb.android:lottie:1.5.3'
 }
