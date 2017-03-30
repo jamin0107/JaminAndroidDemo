@@ -47,6 +47,10 @@
 
         <activity android:name=".ui.anim.CircleFlyActivity" />
 
+        <activity
+            android:name=".ui.anim.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden|stateAlwaysHidden" />
+
         <activity android:name=".ui.anim.VerticalFlyBackActivity" />
 
         <activity android:name=".ui.anim.LikeActivity" />

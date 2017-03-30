@@ -43,6 +43,8 @@ public class LauncherAnimationTextItem extends BaseItem<String> {
                     getActivity().startActivity(new Intent(getActivity(), LikeActivity.class));
                 } else if (LauncherAnimationActivity.LAUNCHER_PARALLAX_SCROLL.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), ParallaxScrollActivity.class));
+                } else if (LauncherAnimationActivity.LAUNCHER_RESIZE_LAYOUT.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
         });

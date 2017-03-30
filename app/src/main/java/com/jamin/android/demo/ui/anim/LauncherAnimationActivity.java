@@ -26,8 +26,10 @@ public class LauncherAnimationActivity extends BaseActivity {
     public static final String LAUNCHER_CIRCLE_FLYING = "Circle Flying";
     public static final String LAUNCHER_FLY_BACK = "vertical_fly_back_activity";
     public static final String LAUNCHER_LIKE_HEART = "Like Heart";
+    public static final String LAUNCHER_RESIZE_LAYOUT = "Login Layout";
     public static final String LAUNCHER_PARALLAX_SCROLL = "ParallaxScroll";
-    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING, LAUNCHER_FLY_BACK, LAUNCHER_LIKE_HEART, LAUNCHER_PARALLAX_SCROLL};
+    String[] LAUNCHER = new String[]{LAUNCHER_CIRCLE_FLYING, LAUNCHER_FLY_BACK, LAUNCHER_LIKE_HEART,
+            LAUNCHER_RESIZE_LAYOUT, LAUNCHER_PARALLAX_SCROLL};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
