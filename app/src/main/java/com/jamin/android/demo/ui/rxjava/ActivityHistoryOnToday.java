@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
@@ -25,8 +23,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import rx.exceptions.Exceptions;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -51,7 +51,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_on_today);
         ButterKnife.bind(this);
-        activity=this;
+        activity = this;
 
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -61,21 +61,27 @@ public class ActivityHistoryOnToday extends BaseActivity {
         });
         mLayoutSwipeRefresh.setRefreshing(true);
         refresh();
-        
+
 
     }
+
     private void refresh() {
         request();
     }
+
     private void request() {
-        HttpService.getInstance().getTodayOnHistory("1/17")
-                .subscribeOn(Schedulers.io())
+        Observable<CloudBeanHistoryOnToday> observer = HttpService.getInstance().getTodayOnHistory("1/17");
+        observer.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Action1<CloudBeanHistoryOnToday>() {
                     @Override
                     public void call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
                         if (cloudBeanHistoryOnToday.list == null) {
-                            return;
+                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
+                        }
+                        if (cloudBeanHistoryOnToday.errorCode != 0) {
+                            LogUtil.d("reason = " + cloudBeanHistoryOnToday.reason);
+                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
                         }
                         //存入数据库
                         List<DbHistory> list = new ArrayList<>();
@@ -86,55 +92,61 @@ public class ActivityHistoryOnToday extends BaseActivity {
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
                         LogUtil.d("DbHistory OnToday Success do first event on bg");
                     }
+
                 })
                 .map(new Func1<CloudBeanHistoryOnToday, List<BaseItem>>() {
                     @Override
                     public List<BaseItem> call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-                         List<CloudBeanHistory> list=cloudBeanHistoryOnToday.list;
-                        List<BaseItem> items=new ArrayList<BaseItem>();
+
+                        List<CloudBeanHistory> list = cloudBeanHistoryOnToday.list;
+                        List<BaseItem> items = new ArrayList<BaseItem>();
                         for (CloudBeanHistory cloudBeanHistory : list) {
-                            items.add(new HistoryItem(activity,cloudBeanHistory));
+                            items.add(new HistoryItem(activity, cloudBeanHistory));
                         }
                         return items;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<BaseItem>>() {
+                .subscribe(new Observer<List<BaseItem>>() {
                     @Override
-                    public void call(List<BaseItem> baseItems) {
-                        refreshRecyclerView(baseItems);
-                        mLayoutSwipeRefresh.setRefreshing(false);
+                    public void onCompleted() {
+                        if (mLayoutSwipeRefresh != null) {
+                            mLayoutSwipeRefresh.setRefreshing(false);
+                        }
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("notify UI on MainThread");
+                        LogUtil.d("notify UI onCompleted on MainThread");
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        throwable.printStackTrace();
 
-                    }
-                }, new Action0() {
                     @Override
-                    public void call() {
+                    public void onError(Throwable e) {
+                        if (mLayoutSwipeRefresh != null) {
+                            mLayoutSwipeRefresh.setRefreshing(false);
+                        }
                         LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("event complete");
+                        LogUtil.d("notify UI onError on MainThread");
+                        LogUtil.d("Throwable.msg = " + e.getMessage());
                     }
-                })
-               ;
+
+                    @Override
+                    public void onNext(List<BaseItem> baseItems) {
+                        refreshRecyclerView(baseItems);
+                    }
+                });
 
     }
 
     private void refreshRecyclerView(List<BaseItem> baseItems) {
 
-        if (mAdapter==null){
-            mAdapter=new CustomRecyclerViewAdapter(baseItems);
+        if (baseItems == null || mRecyclerHistoryList == null) {
+            return;
+        }
+        if (mAdapter == null) {
+            mAdapter = new CustomRecyclerViewAdapter(baseItems);
             mRecyclerHistoryList.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerHistoryList.setAdapter(mAdapter);
-        }else {
+        } else {
             mAdapter.setData(baseItems);
         }
-
 
     }
 }
