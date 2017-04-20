@@ -9,7 +9,7 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.android.demo.ui.image.filter.FilterActivity;
+import com.jamin.android.demo.ui.image.filter.activity.ActivityMain;
 import com.jamin.android.demo.ui.image.iconfont.IconFontGridActivity;
 
 
@@ -37,7 +37,7 @@ public class LauncherFilterTextItem extends BaseItem<String> {
             @Override
             public void onClick(View view) {
                 if (LauncherImageActivity.LAUNCHER_FILTER.equals(desc)) {
-                    getActivity().startActivity(new Intent(getActivity(), FilterActivity.class));
+                    getActivity().startActivity(new Intent(getActivity(), ActivityMain.class));
                 } else if (LauncherImageActivity.LAUNCHER_ICON_FONT.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), IconFontGridActivity.class));
                 }

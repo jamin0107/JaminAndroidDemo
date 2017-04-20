@@ -8,7 +8,7 @@ android {
     buildToolsVersion toolsVersion
 
     defaultConfig {
-
+        minSdkVersion minsdkV.toInteger()
         consumerProguardFiles 'proguard-rules.txt'
 
         ndk {

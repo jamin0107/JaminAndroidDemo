@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
@@ -43,6 +44,11 @@ public class ActivityHistoryOnToday extends BaseActivity {
     @BindView(R.id.layout_swipeRefresh)
     SwipeRefreshLayout mLayoutSwipeRefresh;
 
+    @BindView(R.id.repeat_number)
+    TextView mRepeatNumber;
+    String[] repeatText = new String[]{"Jamin", "Hello", "World", "!"};
+
+
     private CustomRecyclerViewAdapter mAdapter;
     private BaseActivity activity;
 
@@ -61,9 +67,30 @@ public class ActivityHistoryOnToday extends BaseActivity {
         });
         mLayoutSwipeRefresh.setRefreshing(true);
         refresh();
-
+        startCirclePlay();
 
     }
+
+    public void startCirclePlay() {
+//        Observable.from(repeatText)
+//                .subscribeOn(Schedulers.io())
+//                .repeat()
+//                .timer
+//                .subscribe(new Action1<TimeInterval<String>>() {
+//                    @Override
+//                    public void call(TimeInterval<String> stringTimeInterval) {
+//                        LogUtil.d("--------" + stringTimeInterval.getValue());
+//                    }
+//                });
+//                .repeat(new Func1<Observable<? extends Void> , Observable<?>>(){
+//
+//                    @Override
+//                    public Observable<?> call(Observable<? extends Void> observable) {
+//                        return null;
+//                    }
+//                })
+    }
+
 
     private void refresh() {
         request();

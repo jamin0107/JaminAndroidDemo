@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!--use OpenGL ES 2.0-->
     <uses-feature
@@ -59,7 +60,9 @@
 
         <activity android:name=".ui.image.iconfont.IconFontGridActivity" />
 
-        <activity android:name=".ui.image.filter.FilterActivity" />
+        <activity android:name=".ui.image.filter.activity.ActivityMain" />
+        <activity android:name=".ui.image.filter.activity.ActivityGallery" />
+        <activity android:name=".ui.image.filter.activity.ActivityCamera" />
 
         <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
 
