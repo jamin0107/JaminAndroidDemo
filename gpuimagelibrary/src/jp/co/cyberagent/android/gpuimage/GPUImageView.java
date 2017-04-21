@@ -114,6 +114,10 @@ public class GPUImageView extends FrameLayout {
         mGPUImage.deleteImage();
     }
 
+    public void deleteImage() {
+        mGPUImage.deleteImage();
+    }
+
     /**
      * Set the scale type of GPUImage.
      *

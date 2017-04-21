@@ -2,11 +2,11 @@ package com.jamin.android.demo.ui.image.filter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilterGroup;
+
 
 /**
  * Created by jamin on 2017/4/20.
@@ -14,42 +14,44 @@ import jp.co.cyberagent.android.gpuimage.GPUImageFilterGroup;
 
 public class FilterGroup {
 
-    HashMap<String, GPUImageFilter> filterMap = new HashMap<String, GPUImageFilter>();
+    static List<GPUImageFilter> filterList = new ArrayList<>();
 
-    HashMap<String, Float> mAdjustMap = new HashMap<>();
+    static HashMap<String, Float> mAdjustMap = new HashMap<>();
 
 
-    public void addFilter(GPUImageFilter gpuImageFilter) {
-        if (!filterMap.containsKey(gpuImageFilter.getClass().getSimpleName())) {
-            filterMap.put(gpuImageFilter.getClass().getSimpleName(), gpuImageFilter);
+    public static GPUImageFilter addFilter(GPUImageFilter gpuImageFilter) {
+        for (GPUImageFilter filter : filterList) {
+            if (filter.getClass().getSimpleName().equals(gpuImageFilter.getClass().getSimpleName())) {
+                return filter;
+            }
         }
+        filterList.add(gpuImageFilter);
+        return gpuImageFilter;
+    }
+
+    public static void addRange(String filterKey, float value) {
+        mAdjustMap.put(filterKey, value);
     }
 
 
-    public GPUImageFilter getFilterGroup() {
-        Iterator iterator = filterMap.keySet().iterator();
-        List<GPUImageFilter> list = new ArrayList<>();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            list.add(filterMap.get(key));
-        }
-        GPUImageFilterGroup filterGroup = new GPUImageFilterGroup(list);
+    public static GPUImageFilter getFilterGroup() {
+        GPUImageFilterGroup filterGroup = new GPUImageFilterGroup(filterList);
         return filterGroup;
     }
 
 
-    public StringBuilder getFilterName() {
+    public static StringBuilder getFilterName() {
         StringBuilder stringBuilder = new StringBuilder("");
-        Iterator iterator = filterMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            stringBuilder.append(key + "-\n");
+        for (GPUImageFilter filter : filterList) {
+            String key = filter.getClass().getSimpleName();
+            stringBuilder.append(key + "-" + mAdjustMap.get(key) + "-\n");
         }
+
         return stringBuilder;
     }
 
-    public void clear() {
-        filterMap.clear();
+    public static void clear() {
+        filterList.clear();
         mAdjustMap.clear();
     }
 }

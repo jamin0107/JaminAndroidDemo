@@ -35,7 +35,6 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.image.filter.FilterGroup;
 import com.jamin.android.demo.ui.image.filter.GPUImageFilterTools;
 
-import java.util.HashMap;
 
 public class ActivityGallery extends Activity implements OnSeekBarChangeListener,
         OnClickListener, OnPictureSavedListener {
@@ -46,6 +45,9 @@ public class ActivityGallery extends Activity implements OnSeekBarChangeListener
     private GPUImageView mGPUImageView;
     private FilterGroup mFilterGroup;
     private TextView mUseFilter;
+    private Uri uri;
+
+
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -121,17 +123,19 @@ public class ActivityGallery extends Activity implements OnSeekBarChangeListener
     private void switchFilterTo(final GPUImageFilter filter) {
         if (mFilter == null
                 || (filter != null && !mFilter.getClass().equals(filter.getClass()))) {
-            mFilter = filter;
-            mFilterGroup.addFilter(mFilter);
-            mGPUImageView.setFilter(mFilterGroup.getFilterGroup());
+            //切换滤镜，把滤镜加入list，并且全局滤镜设置当前滤镜，来做参数调整。如果GROUP中已有当前滤镜，则返回当前滤镜的引用。
+            mFilter = FilterGroup.addFilter(filter);
+            mGPUImageView.deleteImage();
+            mGPUImageView.setImage(uri);
+            mGPUImageView.setFilter(FilterGroup.getFilterGroup());
 
             mUseFilter.bringToFront();
-            mUseFilter.setText(mFilterGroup.getFilterName());
             mFilterAdjuster = new GPUImageFilterTools.FilterAdjuster(mFilter);
 
             findViewById(R.id.seekBar).setVisibility(
                     mFilterAdjuster.canAdjust() ? View.VISIBLE : View.GONE);
         }
+        mUseFilter.setText(FilterGroup.getFilterName());
     }
 
     @Override
@@ -151,6 +155,7 @@ public class ActivityGallery extends Activity implements OnSeekBarChangeListener
     }
 
     private void handleImage(final Uri selectedImage) {
+        uri = selectedImage;
         mGPUImageView.setImage(selectedImage);
     }
 }

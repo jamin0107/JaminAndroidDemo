@@ -11,6 +11,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:text="Use Filter"
+        android:background="#0000ff"
         android:textColor="#ffffff"
         android:textSize="20dp" />
 
