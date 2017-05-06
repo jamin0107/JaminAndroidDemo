@@ -1,5 +1,7 @@
 package com.jamin.android.demo.ui.rxjava;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +15,7 @@ import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.db.DBFactory;
 import com.jamin.android.demo.db.ModelHelper;
 import com.jamin.android.demo.ui.base.BaseActivity;
+import com.jamin.framework.util.FaceLandMark;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.greendao.model.DbHistory;
 import com.jamin.http.HttpService;
@@ -24,7 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Notification;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -69,45 +71,37 @@ public class ActivityHistoryOnToday extends BaseActivity {
         });
 //        mLayoutSwipeRefresh.setRefreshing(true);
 //        refresh();
-        startCirclePlay();
+//        startCirclePlay();
+        faceDetect();
 
     }
 
+    public void faceDetect() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nasa);
+        RxJavaHelper.faceDetectObserve(bitmap).subscribe(new Subscriber<FaceLandMark>() {
+            @Override
+            public void onCompleted() {
+                LogUtil.d("rx subscribe onCompleted");
+                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+            }
 
-    /**
-     * 周期性无旋循环，轮播
-     */
+            @Override
+            public void onError(Throwable e) {
+                LogUtil.d("rx subscribe onError e = " + e.getMessage());
+                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+            }
+
+            @Override
+            public void onNext(FaceLandMark faceLandMark) {
+                LogUtil.d("rx subscribe onNext faceLandMark = " + faceLandMark.pointX);
+                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+            }
+        });
+    }
+
+
     public void startCirclePlay() {
-        Observable.from(repeatText)
-                .observeOn(Schedulers.io())
-                .repeat()
-                .doOnEach(new Action1<Notification<? super String>>() {
-                    @Override
-                    public void call(Notification<? super String> notification) {
-                        LogUtil.d("sleep at doOnEach notification = " + notification.getValue());
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                })
-//                .subscribeOn(Schedulers.io())
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        LogUtil.d("xian");
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        LogUtil.d("hou");
-//                    }
-//                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(AndroidSchedulers.mainThread())
+        RxJavaHelper.circleRepeat(repeatText)
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
