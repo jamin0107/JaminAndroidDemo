@@ -21,6 +21,8 @@ DB以及DB对应model相关库，使用greendao，gradle执行task可以自动�
 
 gpuimagelibray:
 实现滤镜等效果的图片处理库
+滤镜叠加器，用于开发新滤镜
+
 
 framework:
 项目通用的一些基础工具库
@@ -49,4 +51,3 @@ TestRemoteServiceActivity为远程service的测试页面
 1.recycleview的下拉刷新，上拉更多，滑动事件监听
 3.可扩展的alertDialog
 4.可复用的loading
-5.可复用的滤镜选择panel(Fragment)

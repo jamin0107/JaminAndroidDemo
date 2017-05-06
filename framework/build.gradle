@@ -115,7 +115,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     // And ProGuard rules for RxJava!
     compile 'com.artemzin.rxjava:proguard-rules:1.2.2.0'
-
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
     compile 'com.airbnb.android:lottie:1.5.3'

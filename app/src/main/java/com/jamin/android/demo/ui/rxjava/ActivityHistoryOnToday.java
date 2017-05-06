@@ -24,8 +24,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Notification;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
@@ -65,30 +67,69 @@ public class ActivityHistoryOnToday extends BaseActivity {
                 refresh();
             }
         });
-        mLayoutSwipeRefresh.setRefreshing(true);
-        refresh();
+//        mLayoutSwipeRefresh.setRefreshing(true);
+//        refresh();
         startCirclePlay();
 
     }
 
+
+    /**
+     * 周期性无旋循环，轮播
+     */
     public void startCirclePlay() {
-//        Observable.from(repeatText)
+        Observable.from(repeatText)
+                .observeOn(Schedulers.io())
+                .repeat()
+                .doOnEach(new Action1<Notification<? super String>>() {
+                    @Override
+                    public void call(Notification<? super String> notification) {
+                        LogUtil.d("sleep at doOnEach notification = " + notification.getValue());
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
 //                .subscribeOn(Schedulers.io())
-//                .repeat()
-//                .timer
-//                .subscribe(new Action1<TimeInterval<String>>() {
+//                .doOnSubscribe(new Action0() {
 //                    @Override
-//                    public void call(TimeInterval<String> stringTimeInterval) {
-//                        LogUtil.d("--------" + stringTimeInterval.getValue());
-//                    }
-//                });
-//                .repeat(new Func1<Observable<? extends Void> , Observable<?>>(){
-//
-//                    @Override
-//                    public Observable<?> call(Observable<? extends Void> observable) {
-//                        return null;
+//                    public void call() {
+//                        LogUtil.d("xian");
 //                    }
 //                })
+//                .subscribeOn(Schedulers.io())
+//                .doOnSubscribe(new Action0() {
+//                    @Override
+//                    public void call() {
+//                        LogUtil.d("hou");
+//                    }
+//                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtil.d("subscribe onCompleted");
+                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtil.d("subscribe onError e = " + e.getMessage());
+                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        LogUtil.d("subscribe onNext s = " + s);
+                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+                        mRepeatNumber.setText(s);
+                    }
+                });
+
+
     }
 
 
