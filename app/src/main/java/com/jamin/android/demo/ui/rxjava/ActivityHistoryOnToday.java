@@ -71,8 +71,8 @@ public class ActivityHistoryOnToday extends BaseActivity {
         });
 //        mLayoutSwipeRefresh.setRefreshing(true);
 //        refresh();
-//        startCirclePlay();
-        faceDetect();
+        startCirclePlay();
+//        faceDetect();
 
     }
 

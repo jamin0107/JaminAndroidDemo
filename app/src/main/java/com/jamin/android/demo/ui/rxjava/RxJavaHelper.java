@@ -7,7 +7,6 @@ import com.jamin.framework.util.ImageUtil;
 import com.jamin.framework.util.LogUtil;
 
 
-import java.util.Random;
 
 import rx.Notification;
 import rx.Observable;
@@ -50,25 +49,19 @@ public class RxJavaHelper {
 
     /**
      * 耗时操作 A 转 B
-     *
+     * <p>
      * 再对B做操作，最多100次，失败回调，成功回调
      *
      * @return
      */
     static int i = 0;
+    static long startTime = 0;
+    static long endTIme = 0;
 
     public static Observable<FaceLandMark> faceDetectObserve(Bitmap bitmap) {
         i = 0;
-        int radomTimes = new Random(100).nextInt();
         return Observable.just(bitmap)
                 .observeOn(Schedulers.io())
-//                .flatMap(new Func1<String, Observable<Integer>>() {
-//                    @Override
-//                    public Observable<Integer> call(String s) {
-//                        LogUtil.d("1 flatMap String to int" + Thread.currentThread());
-//                        return Observable.just(Integer.valueOf(s));
-//                    }
-//                })
                 .flatMap(new Func1<Bitmap, Observable<byte[]>>() {
                     @Override
                     public Observable<byte[]> call(Bitmap bitmap) {
@@ -76,11 +69,25 @@ public class RxJavaHelper {
                         return Observable.just(ImageUtil.getNV12FromBitmap(bitmap.getHeight(), bitmap.getHeight(), bitmap));
                     }
                 })
-                .observeOn(Schedulers.newThread())
+                .doOnNext(new Action1<byte[]>() {
+                    @Override
+                    public void call(byte[] bytes) {
+                        startTime = System.currentTimeMillis();
+                        LogUtil.d("starttime = " + startTime);
+                    }
+                })
                 .flatMap(new Func1<byte[], Observable<FaceLandMark>>() {
                     @Override
                     public Observable<FaceLandMark> call(byte[] bitmapArray) {
                         return getByteArrayToLandMarkObservable(bitmapArray);
+                    }
+                })
+                .doOnNext(new Action1<FaceLandMark>() {
+                    @Override
+                    public void call(FaceLandMark faceLandMark) {
+                        endTIme = System.currentTimeMillis();
+                        LogUtil.d("costTime = " + (endTIme - startTime) + "ms");
+                        LogUtil.d("times = " + i + " times ");
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,6 +97,7 @@ public class RxJavaHelper {
 
     /**
      * 模拟人脸识别次数。可能失败，多次尝试。成功则返回，最多100次
+     *
      * @param bitmapArray
      * @return
      */
@@ -98,11 +106,14 @@ public class RxJavaHelper {
                 .map(new Func1<byte[], FaceLandMark>() {
                     @Override
                     public FaceLandMark call(byte[] bytes) {
-//                        Random random = new Random(100);
-//                        int randomNum = random.nextInt();
                         i++;
+                        try {
+                            Thread.sleep(40);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         LogUtil.d("getByteArrayToLandMarkObservable randomNum = " + i + " ,thread = " + Thread.currentThread().getId());
-                        if (i < 80) {
+                        if (i < 30) {
                             throw Exceptions.propagate(new Throwable("retry"));
                         }
                         return new FaceLandMark();
