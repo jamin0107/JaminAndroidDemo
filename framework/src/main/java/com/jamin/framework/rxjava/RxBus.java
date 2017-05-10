@@ -10,7 +10,7 @@ import rx.subjects.Subject;
 
 /**
  * Created by jamin on 2017/5/10.
- *
+ * <p>
  * PublishSubject只会给在订阅者订阅的时间点之后的数据发送给观察者。
  * <p>
  * BehaviorSubject在订阅者订阅时，会发送其最近发送的数据（如果此时还没有收到任何数据，它会发送一个默认值）。
@@ -25,13 +25,13 @@ public class RxBus {
 
     private static volatile RxBus defaultInstance;
 
-    private final Subject<Object, Object> bus;
+    private final Subject<Object, Object> mBus;
 
     private final Map<Class<?>, Object> mStickyEventMap;
 
     // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
     public RxBus() {
-        bus = new SerializedSubject<>(PublishSubject.create());
+        mBus = new SerializedSubject<>(PublishSubject.create());
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
@@ -50,9 +50,8 @@ public class RxBus {
 
     // 发送一个新的事件
     public void post(Object o) {
-        bus.onNext(o);
+        mBus.onNext(o);
     }
-
 
 
     public void postSticky(Object event) {
@@ -63,9 +62,36 @@ public class RxBus {
     }
 
 
+
     // 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
     public <T> Observable<T> toObservable(Class<T> eventType) {
-        return bus.ofType(eventType);
+        return mBus.ofType(eventType);
+    }
+
+
+
+    /**
+     * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
+     */
+    public <T> Observable<T> toObservableSticky(final Class<T> eventType) {
+        synchronized (mStickyEventMap) {
+            Observable<T> observable = mBus.ofType(eventType);
+            final Object event = mStickyEventMap.get(eventType);
+
+            if (event != null) {
+                return observable.mergeWith(Observable.just(eventType.cast(event)));
+            } else {
+                return observable;
+            }
+        }
+    }
+
+
+
+    public <T> T getStickyEvent(Class<T> eventType) {
+        synchronized (mStickyEventMap) {
+            return eventType.cast(mStickyEventMap.get(eventType));
+        }
     }
 
 

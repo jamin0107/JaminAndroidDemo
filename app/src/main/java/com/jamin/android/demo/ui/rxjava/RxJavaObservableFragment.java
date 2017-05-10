@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseFragment;
 import com.jamin.android.demo.ui.rxjava.event.NormalEvent;
+import com.jamin.android.demo.ui.rxjava.event.StickyEvent;
 import com.jamin.framework.rxjava.RxBus;
 
 import butterknife.BindView;
@@ -47,6 +48,14 @@ public class RxJavaObservableFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_rxjava_observable, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+
+    @OnClick(R.id.frag_observe_btn_postSticky)
+    public void postStickyEvent() {
+        RxBus.getDefault().postSticky(new StickyEvent(--mCountStickyNum));
+        String str = mStickyEventTV.getText().toString();
+        mStickyEventTV.setText(TextUtils.isEmpty(str) ? String.valueOf(mCountStickyNum) : str + ", " + mCountStickyNum);
     }
 
 

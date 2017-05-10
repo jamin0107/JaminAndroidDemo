@@ -8,7 +8,12 @@ import com.jamin.framework.rxjava.BaseEvent;
 
 public class StickyEvent extends BaseEvent {
 
+    public int number;
 
 
+    public StickyEvent(int number) {
+        super();
+        this.number = number;
+    }
 
 }

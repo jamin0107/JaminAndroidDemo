@@ -3,6 +3,7 @@ package com.jamin.android.demo.ui.rxjava;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseFragment;
 import com.jamin.android.demo.ui.rxjava.event.NormalEvent;
 import com.jamin.android.demo.ui.rxjava.event.RxSubscriptions;
+import com.jamin.android.demo.ui.rxjava.event.StickyEvent;
 import com.jamin.framework.rxjava.RxBus;
 import com.jamin.framework.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -82,11 +85,45 @@ public class RxJavaSubscriberFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.frag_subscriber_btn_register)
+    public void subscribeStickyEvent() {
+        if (mRxSubSticky != null && !mRxSubSticky.isUnsubscribed()) {
+            mRegisterBtn.setText("Register");
+            RxSubscriptions.remove(mRxSubSticky);
+        } else {
+            StickyEvent s = RxBus.getDefault().getStickyEvent(StickyEvent.class);
+            LogUtil.d("获取到StickyEvent--->" + s.number);
+            mRxSubSticky = RxBus.getDefault().toObservableSticky(StickyEvent.class)
+                    .subscribe(new Subscriber<StickyEvent>() {
+                        @Override
+                        public void onCompleted() {
+                            LogUtil.d("onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            LogUtil.d("onError");
+                        }
+
+                        @Override
+                        public void onNext(StickyEvent normalEvent) {
+                            LogUtil.d("onNext + normalEvent.number = " + normalEvent.number);
+                            String str = mStickyEventTV.getText().toString();
+                            Toast.makeText(context, "RxSubscriptions.hasSubscriptions() = " + RxSubscriptions.hasSubscriptions(), Toast.LENGTH_SHORT).show();
+                            mStickyEventTV.setText(TextUtils.isEmpty(str) ? String.valueOf(normalEvent.number) : str + ", " + normalEvent.number);
+                        }
+                    });
+            mRegisterBtn.setText("Cancel");
+            RxSubscriptions.add(mRxSubSticky);
+        }
+    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         RxSubscriptions.remove(mRxSubscriber);
+        RxSubscriptions.remove(mRxSubSticky);
         LogUtil.d("RxSubscriptions.hasSubscriptions() = " + RxSubscriptions.hasSubscriptions());
 
     }
