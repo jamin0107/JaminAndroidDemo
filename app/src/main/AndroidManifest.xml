@@ -79,6 +79,9 @@
 
         <activity android:name=".ui.anim.parallaxscroll.ParallaxScrollActivity" />
 
+        <activity android:name=".ui.rxjava.RxStudyActivity" />
+
+
         <activity
             android:name=".remote.JaminRemoteActivity"
             android:process=":Remote" />

@@ -1,13 +1,10 @@
 package com.jamin.android.demo.ui.rxjava;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
@@ -15,7 +12,6 @@ import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.db.DBFactory;
 import com.jamin.android.demo.db.ModelHelper;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.framework.util.FaceLandMark;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.greendao.model.DbHistory;
 import com.jamin.http.HttpService;
@@ -29,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
@@ -48,9 +43,6 @@ public class ActivityHistoryOnToday extends BaseActivity {
     @BindView(R.id.layout_swipeRefresh)
     SwipeRefreshLayout mLayoutSwipeRefresh;
 
-    @BindView(R.id.repeat_number)
-    TextView mRepeatNumber;
-    String[] repeatText = new String[]{"Jamin", "Hello", "World", "!"};
 
 
     private CustomRecyclerViewAdapter mAdapter;
@@ -71,58 +63,6 @@ public class ActivityHistoryOnToday extends BaseActivity {
         });
 //        mLayoutSwipeRefresh.setRefreshing(true);
 //        refresh();
-        startCirclePlay();
-//        faceDetect();
-
-    }
-
-    public void faceDetect() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nasa);
-        RxJavaHelper.faceDetectObserve(bitmap).subscribe(new Subscriber<FaceLandMark>() {
-            @Override
-            public void onCompleted() {
-                LogUtil.d("rx subscribe onCompleted");
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                LogUtil.d("rx subscribe onError e = " + e.getMessage());
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-
-            @Override
-            public void onNext(FaceLandMark faceLandMark) {
-                LogUtil.d("rx subscribe onNext faceLandMark = " + faceLandMark.pointX);
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-        });
-    }
-
-
-    public void startCirclePlay() {
-        RxJavaHelper.circleRepeat(repeatText)
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        LogUtil.d("subscribe onCompleted");
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.d("subscribe onError e = " + e.getMessage());
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        LogUtil.d("subscribe onNext s = " + s);
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                        mRepeatNumber.setText(s);
-                    }
-                });
-
 
     }
 

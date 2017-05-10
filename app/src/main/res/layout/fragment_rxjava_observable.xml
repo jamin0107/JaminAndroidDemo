@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="被观察者Fragment"
+        android:textColor="#ff0000"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已发送事件："
+        android:textColor="#222222"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/frag_observe_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#222222"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/frag_observe_btn_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="SEND EVENT ONCE" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已发送事件："
+        android:textColor="#222222"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/frag_observe_sticky_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#222222"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/frag_observe_btn_postSticky"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="SEND STICKY EVENT" />
+</LinearLayout>

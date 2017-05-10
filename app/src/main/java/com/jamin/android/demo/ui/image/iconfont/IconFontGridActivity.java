@@ -1,8 +1,6 @@
 package com.jamin.android.demo.ui.image.iconfont;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
