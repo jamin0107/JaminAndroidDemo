@@ -1,1 +1,2 @@
 @mipmap/ic_launcher
+@drawable/side_nav_bar

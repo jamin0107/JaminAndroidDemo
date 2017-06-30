@@ -31,13 +31,13 @@ framework:
 app:
 项目相关的主app库
 
-
+##################Tool#######################
+iconFont，可以通过脚本自动生成
+res_move_tool.py drawable搬家. 把需要搬家的资源放到move_list.py中,后续会自动讲资源从src module到dst module
 
 #################使用说明#####################
 
 stetho 可以通过chrome://inspect/ 监控
-
-iconFont，可以通过脚本自动生成
 
 gradle.properties 定义gradle里的一些常用变量
 
