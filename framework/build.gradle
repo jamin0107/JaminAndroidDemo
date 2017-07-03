@@ -79,6 +79,11 @@ android {
 
     defaultConfig {
         minSdkVersion minSDKV
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
 }
@@ -106,6 +111,8 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.4'
 
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
     //rxjava definition
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -119,4 +126,9 @@ dependencies {
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
     compile 'com.airbnb.android:lottie:1.5.3'
+
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
+
+
 }

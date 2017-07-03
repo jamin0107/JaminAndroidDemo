@@ -125,7 +125,7 @@ public class ActivityGallery extends Activity implements OnSeekBarChangeListener
                 || (filter != null && !mFilter.getClass().equals(filter.getClass()))) {
             //切换滤镜，把滤镜加入list，并且全局滤镜设置当前滤镜，来做参数调整。如果GROUP中已有当前滤镜，则返回当前滤镜的引用。
             mFilter = FilterGroup.addFilter(filter);
-            mGPUImageView.deleteImage();
+//            mGPUImageView.deleteImage();
             mGPUImageView.setImage(uri);
             mGPUImageView.setFilter(FilterGroup.getFilterGroup());
 

@@ -2,6 +2,7 @@ package com.jamin.android.demo;
 
 import android.app.Application;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.jamin.android.demo.db.DBFactory;
 import com.jamin.framework.util.LogUtil;
@@ -30,8 +31,18 @@ public class JaminApplication extends Application {
 //                .build();
             //// TODO: 2017/1/12 要区分正式环境和测试环境对Stetho进行编译
             Stetho.initializeWithDefaults(this);
+            ARouter.openLog();
+            ARouter.openDebug();
         }
+        ARouter.init(this);
+
     }
+
+
+
+
+
+
 
 
 }

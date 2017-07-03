@@ -37,6 +37,12 @@ android {
         targetSdkVersion 23
         versionCode VERSION_CODE
         versionName VERSION_NAME
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -57,7 +63,6 @@ dependencies {
     //尽量放到framework的module，保证所有lib都挂载
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':framework')
-    compile project(':gpuimagelibrary')
     compile project(':cloudlib1')
     compile project(':dbmodule')
     testCompile 'junit:junit:4.12'
@@ -66,7 +71,7 @@ dependencies {
     //For DeepLink
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
-
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
 }
