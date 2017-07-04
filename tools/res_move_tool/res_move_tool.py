@@ -27,9 +27,10 @@ move_file_list = "move_list.txt"
 
 # find_dir = []
 find_drawable_dir = ["drawable/", "drawable-hdpi/", "drawable-xhdpi/", "drawable-xxhdpi/",
-                     "drawable-xxxhdpi/", "drawable-ldpi/", "drawable-mdpi/"]
+                     "drawable-xxxhdpi/", "drawable-ldpi/", "drawable-mdpi/", "drawable-v21/"]
 
-find_mipmap_dir = ["mipmap/", "mipmap-hdpi/", "mipmap-xhdpi/", "mipmap-xxhdpi/", "mipmap-ldpi/",
+find_mipmap_dir = ["mipmap/", "mipmap-hdpi/", "mipmap-xhdpi/", "mipmap-xxhdpi/", "mipmap-xxxhdpi/",
+                   "mipmap-ldpi/",
                    "mipmap-mdpi/"]
 
 suffixs = [".9.png", ".png", ".jpg", ".xml"]
@@ -86,4 +87,30 @@ def move_image(drawable_dir, res_name):
             print "****MV****" + src_file + "--->" + dst_file
 
 
-move_res()
+def move_all():
+    find_drawable_dir.extend(find_mipmap_dir)
+    for dir in find_drawable_dir:
+        src_dir = src_dir_base + dir
+        dst_dir = dst_dir_base + dir
+        if not os.path.exists(src_dir):
+            continue
+        if not os.path.exists(dst_dir):
+            os.makedirs(dst_dir)
+        file_list = os.listdir(src_dir)
+        for filename in file_list:
+            file_abs_path = src_dir + filename
+            if GIT_MODE:
+                subprocess.call(['git', "mv", file_abs_path, dst_dir + filename])
+            else:
+                shutil.move(file_abs_path, dst_dir + filename)
+            print file_abs_path + "--->" + dst_dir
+
+
+def move():
+    if sys.argv[1] == "moveall":
+        move_all()
+    else:
+        move_res()
+
+
+move()
