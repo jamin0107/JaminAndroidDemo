@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="300dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_gallery_camera" />
+            android:src="@drawable/icon_gallery_camera" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -38,8 +38,9 @@ public class MainActivity extends BaseActivity {
     public static final String LAUNCHER_HISTORY_ON_TODAY = "DbHistory on Today";
     public static final String LAUNCHER_GL_VIEW = "GLView";
     public static final String LAUNCHER_SERVICE = "Remote Service";
+    public static final String LAUNCHER_JAMIN_TEST = "Jamin Test Tiny Res";
 
-    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY, LAUNCHER_GL_VIEW, LAUNCHER_SERVICE};
+    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY, LAUNCHER_GL_VIEW, LAUNCHER_SERVICE , LAUNCHER_JAMIN_TEST};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

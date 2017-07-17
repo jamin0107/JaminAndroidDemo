@@ -81,6 +81,7 @@
 
         <activity android:name=".ui.rxjava.RxStudyActivity" />
 
+        <activity android:name=".ui.JaminTestActivity" />
 
         <activity
             android:name=".remote.JaminRemoteActivity"

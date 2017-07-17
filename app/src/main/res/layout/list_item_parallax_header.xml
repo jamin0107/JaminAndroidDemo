@@ -82,12 +82,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/icon_gallery_camera" />
+        android:src="@drawable/icon_gallery_camera" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
-        android:src="@mipmap/home_banner_curve" />
+        android:src="@drawable/home_banner_curve" />
 </RelativeLayout>

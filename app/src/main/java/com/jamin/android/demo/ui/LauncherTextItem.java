@@ -62,6 +62,8 @@ public class LauncherTextItem extends BaseItem<String> {
                     getActivity().startActivity(new Intent(getActivity(), GLLaunchActivity.class));
                 } else if (MainActivity.LAUNCHER_SERVICE.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), TestRemoteServiceActivity.class));
+                } else if (MainActivity.LAUNCHER_JAMIN_TEST.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), JaminTestActivity.class));
                 }
             }
         });
