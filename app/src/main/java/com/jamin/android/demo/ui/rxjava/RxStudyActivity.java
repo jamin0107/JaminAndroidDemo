@@ -35,7 +35,6 @@ public class RxStudyActivity extends BaseActivity {
         setContentView(R.layout.activity_rxjava);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
-
             RxJavaSubscriberFragment subscriberFragment = RxJavaSubscriberFragment.newInstance();
             RxJavaObservableFragment observableFragment = RxJavaObservableFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
@@ -51,51 +50,51 @@ public class RxStudyActivity extends BaseActivity {
 
 
     public void faceDetect() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nasa);
-        RxJavaHelper.faceDetectObserve(bitmap).subscribe(new Subscriber<FaceLandMark>() {
-            @Override
-            public void onCompleted() {
-                LogUtil.d("rx subscribe onCompleted");
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                LogUtil.d("rx subscribe onError e = " + e.getMessage());
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-
-            @Override
-            public void onNext(FaceLandMark faceLandMark) {
-                LogUtil.d("rx subscribe onNext faceLandMark = " + faceLandMark.pointX);
-                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
-            }
-        });
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nasa);
+//        RxJavaHelper.faceDetectObserve(bitmap).subscribe(new Subscriber<FaceLandMark>() {
+//            @Override
+//            public void onCompleted() {
+//                LogUtil.d("rx subscribe onCompleted");
+//                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                LogUtil.d("rx subscribe onError e = " + e.getMessage());
+//                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+//            }
+//
+//            @Override
+//            public void onNext(FaceLandMark faceLandMark) {
+//                LogUtil.d("rx subscribe onNext faceLandMark = " + faceLandMark.pointX);
+//                LogUtil.d("rx thread id = " + Thread.currentThread().getId());
+//            }
+//        });
     }
 
 
     public void startCirclePlay() {
-        RxJavaHelper.circleRepeat(repeatText)
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        LogUtil.d("subscribe onCompleted");
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.d("subscribe onError e = " + e.getMessage());
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        LogUtil.d("subscribe onNext s = " + s);
-                        LogUtil.d("thread id = " + Thread.currentThread().getId());
-                        mRepeatNumber.setText(s);
-                    }
-                });
+//        RxJavaHelper.circleRepeat(repeatText)
+//                .subscribe(new Subscriber<String>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        LogUtil.d("subscribe onCompleted");
+//                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        LogUtil.d("subscribe onError e = " + e.getMessage());
+//                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+//                    }
+//
+//                    @Override
+//                    public void onNext(String s) {
+//                        LogUtil.d("subscribe onNext s = " + s);
+//                        LogUtil.d("thread id = " + Thread.currentThread().getId());
+//                        mRepeatNumber.setText(s);
+//                    }
+//                });
 
 
     }

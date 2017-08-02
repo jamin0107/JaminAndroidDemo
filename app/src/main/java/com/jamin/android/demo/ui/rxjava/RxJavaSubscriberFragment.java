@@ -3,7 +3,6 @@ package com.jamin.android.demo.ui.rxjava;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.jamin.android.demo.ui.base.BaseFragment;
 import com.jamin.android.demo.ui.rxjava.event.NormalEvent;
 import com.jamin.android.demo.ui.rxjava.event.RxSubscriptions;
 import com.jamin.android.demo.ui.rxjava.event.StickyEvent;
-import com.jamin.framework.rxjava.RxBus;
+import com.jamin.framework.rxjava.Rx2Bus;
 import com.jamin.framework.util.LogUtil;
 
 import butterknife.BindView;
@@ -59,8 +58,8 @@ public class RxJavaSubscriberFragment extends BaseFragment {
 
 
     private void subscribeEvent() {
-        mRxSubscriber = RxBus.getDefault()
-                .toObservable(NormalEvent.class)
+        mRxSubscriber = Rx2Bus.getDefault()
+                .toObservableThrottleFirst(NormalEvent.class)
                 .subscribe(new Subscriber<NormalEvent>() {
                     @Override
                     public void onCompleted() {
@@ -76,8 +75,9 @@ public class RxJavaSubscriberFragment extends BaseFragment {
                     public void onNext(NormalEvent normalEvent) {
                         LogUtil.d("onNext + normalEvent.number = " + normalEvent.number);
                         String str = mNormalEventTV.getText().toString();
-                        Toast.makeText(context, "RxSubscriptions.hasSubscriptions() = " + RxSubscriptions.hasSubscriptions(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "RxSubscriptions.hasSubscriptions() = " + RxSubscriptions.hasSubscriptions(), Toast.LENGTH_SHORT).show();
                         mNormalEventTV.setText(TextUtils.isEmpty(str) ? String.valueOf(normalEvent.number) : str + ", " + normalEvent.number);
+                        LogUtil.d( "Jamin111 subscribeEvent = " + normalEvent.number);
                     }
                 });
 
@@ -91,9 +91,9 @@ public class RxJavaSubscriberFragment extends BaseFragment {
             mRegisterBtn.setText("Register");
             RxSubscriptions.remove(mRxSubSticky);
         } else {
-            StickyEvent s = RxBus.getDefault().getStickyEvent(StickyEvent.class);
+            StickyEvent s = Rx2Bus.getDefault().getStickyEvent(StickyEvent.class);
             LogUtil.d("获取到StickyEvent--->" + s.number);
-            mRxSubSticky = RxBus.getDefault().toObservableSticky(StickyEvent.class)
+            mRxSubSticky = Rx2Bus.getDefault().toObservableSticky(StickyEvent.class)
                     .subscribe(new Subscriber<StickyEvent>() {
                         @Override
                         public void onCompleted() {

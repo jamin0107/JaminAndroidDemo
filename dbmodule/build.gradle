@@ -28,7 +28,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
     }
 }
 
@@ -45,6 +45,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'org.greenrobot:greendao:3.2.0'//GreenDao
+    compile 'org.greenrobot:greendao:3.2.2'//GreenDao
     testCompile 'junit:junit:4.12'
 }

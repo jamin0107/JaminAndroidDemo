@@ -22,10 +22,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class ActivityHistoryDetail extends BaseActivity {
     @BindView(R.id.recycler_history_detail)
@@ -45,46 +45,46 @@ public class ActivityHistoryDetail extends BaseActivity {
 
     private void requestDetail(int id) {
 
-        HttpService.getInstance().getTodayOnHistoryDetail(id)
-                .subscribeOn(Schedulers.io())
-                .doOnNext(new Action1<CloudBeanHistoryDetail>() {
-                    @Override
-                    public void call(CloudBeanHistoryDetail cloudBeanHistoryDetail) {
-
-                    }
-                })
-                .map(new Func1<CloudBeanHistoryDetail, List<BaseItem>>() {
-                    @Override
-                    public List<BaseItem> call(CloudBeanHistoryDetail cloudBeanHistoryDetail) {
-
-                        List<BaseItem> items = new ArrayList<>();
-
-                        List<DetailBean> details = cloudBeanHistoryDetail.getResult();
-                        for (DetailBean detail : details) {
-                            items.add(new DetailTitleItem(activity, detail.getTitle()));
-                            items.add(new DetailContentItem(activity, detail.getContent()));
-                            List<DetailPicUrlBean> pictures = detail.getPicUrlBeans();
-                            for (DetailPicUrlBean picture : pictures) {
-                                items.add(new DetailPictureItem(activity, picture));
-                            }
-
-                        }
-                        return items;
-                    }
-
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<BaseItem>>() {
-                    @Override
-                    public void call(List<BaseItem> baseItems) {
-                        refreshRecyclerView(baseItems);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                });
+//        HttpService.getInstance().getTodayOnHistoryDetail(id)
+//                .subscribeOn(Schedulers.io())
+//                .doOnNext(new Action1<CloudBeanHistoryDetail>() {
+//                    @Override
+//                    public void call(CloudBeanHistoryDetail cloudBeanHistoryDetail) {
+//
+//                    }
+//                })
+//                .map(new Func1<CloudBeanHistoryDetail, List<BaseItem>>() {
+//                    @Override
+//                    public List<BaseItem> call(CloudBeanHistoryDetail cloudBeanHistoryDetail) {
+//
+//                        List<BaseItem> items = new ArrayList<>();
+//
+//                        List<DetailBean> details = cloudBeanHistoryDetail.getResult();
+//                        for (DetailBean detail : details) {
+//                            items.add(new DetailTitleItem(activity, detail.getTitle()));
+//                            items.add(new DetailContentItem(activity, detail.getContent()));
+//                            List<DetailPicUrlBean> pictures = detail.getPicUrlBeans();
+//                            for (DetailPicUrlBean picture : pictures) {
+//                                items.add(new DetailPictureItem(activity, picture));
+//                            }
+//
+//                        }
+//                        return items;
+//                    }
+//
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<List<BaseItem>>() {
+//                    @Override
+//                    public void call(List<BaseItem> baseItems) {
+//                        refreshRecyclerView(baseItems);
+//                    }
+//                }, new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//                        throwable.printStackTrace();
+//                    }
+//                });
     }
 
     private void refreshRecyclerView(List<BaseItem> baseItems) {

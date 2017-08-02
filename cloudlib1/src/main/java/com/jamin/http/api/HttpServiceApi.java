@@ -3,6 +3,7 @@ package com.jamin.http.api;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
+import io.reactivex.Flowable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -23,7 +24,7 @@ public interface HttpServiceApi {
          */
         @FormUrlEncoded
         @POST(TODAY_ON_HISTORY)
-        Observable<CloudBeanHistoryOnToday> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
+        Flowable<CloudBeanHistoryOnToday> getTodayOnHistory(@Field("date") String date, @Field("key") String key);
 
 
         /**
@@ -33,7 +34,7 @@ public interface HttpServiceApi {
          */
         @FormUrlEncoded
         @POST(TODAY_ON_HISTORY_DETAIL)
-        Observable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(@Field("e_id") int e_id, @Field("key") String key);
+        Flowable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(@Field("e_id") int e_id, @Field("key") String key);
     }
 
 

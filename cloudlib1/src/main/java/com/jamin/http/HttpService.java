@@ -4,6 +4,7 @@ import com.jamin.http.api.HttpServiceApi;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
+import io.reactivex.Flowable;
 import rx.Observable;
 
 
@@ -26,15 +27,15 @@ public class HttpService extends RetrofitUtils {
         return httpService;
     }
 
-    public Observable<CloudBeanHistoryOnToday> getTodayOnHistory(String date) {
+    public Flowable<CloudBeanHistoryOnToday> getTodayOnHistory(String date) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
-        Observable<CloudBeanHistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpConfig.AppKey);
+        Flowable<CloudBeanHistoryOnToday> observable = historyApi.getTodayOnHistory(date, HttpConfig.AppKey);
         return observable;
     }
 
-    public Observable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(int id) {
+    public Flowable<CloudBeanHistoryDetail> getTodayOnHistoryDetail(int id) {
         HttpServiceApi.HistoryApi historyApi = getRetrofit().create(HttpServiceApi.HistoryApi.class);
-        Observable<CloudBeanHistoryDetail> observable = historyApi.getTodayOnHistoryDetail(id, HttpConfig.AppKey);
+        Flowable<CloudBeanHistoryDetail> observable = historyApi.getTodayOnHistoryDetail(id, HttpConfig.AppKey);
         return observable;
     }
 

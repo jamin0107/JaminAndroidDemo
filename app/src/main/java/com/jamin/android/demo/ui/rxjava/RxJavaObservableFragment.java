@@ -13,7 +13,9 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseFragment;
 import com.jamin.android.demo.ui.rxjava.event.NormalEvent;
 import com.jamin.android.demo.ui.rxjava.event.StickyEvent;
+import com.jamin.framework.rxjava.Rx2Bus;
 import com.jamin.framework.rxjava.RxBus;
+import com.jamin.framework.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +55,7 @@ public class RxJavaObservableFragment extends BaseFragment {
 
     @OnClick(R.id.frag_observe_btn_postSticky)
     public void postStickyEvent() {
-        RxBus.getDefault().postSticky(new StickyEvent(--mCountStickyNum));
+        Rx2Bus.getDefault().postSticky(new StickyEvent(--mCountStickyNum));
         String str = mStickyEventTV.getText().toString();
         mStickyEventTV.setText(TextUtils.isEmpty(str) ? String.valueOf(mCountStickyNum) : str + ", " + mCountStickyNum);
     }
@@ -61,10 +63,13 @@ public class RxJavaObservableFragment extends BaseFragment {
 
     @OnClick(R.id.frag_observe_btn_post)
     public void postEvent() {
-        RxBus.getDefault().post(new NormalEvent(++mCountNum));
+        for (int i = 0; i < 10000; i++) {
+            Rx2Bus.getDefault().post(new NormalEvent(++mCountNum));
+//            String str = mNormalEventTV.getText().toString();
+            mNormalEventTV.setText("-" + mCountNum);
+            LogUtil.d("Jamin111 postEvent = " + mNormalEventTV.getText().toString());
+        }
 
-        String str = mNormalEventTV.getText().toString();
-        mNormalEventTV.setText(TextUtils.isEmpty(str) ? String.valueOf(mCountNum) : str + ", " + mCountNum);
     }
 
 

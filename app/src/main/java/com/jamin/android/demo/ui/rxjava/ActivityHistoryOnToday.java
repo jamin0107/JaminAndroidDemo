@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -72,68 +71,68 @@ public class ActivityHistoryOnToday extends BaseActivity {
     }
 
     private void request() {
-        Observable<CloudBeanHistoryOnToday> observer = HttpService.getInstance().getTodayOnHistory("1/17");
-        observer.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnNext(new Action1<CloudBeanHistoryOnToday>() {
-                    @Override
-                    public void call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-                        if (cloudBeanHistoryOnToday.list == null) {
-                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
-                        }
-                        if (cloudBeanHistoryOnToday.errorCode != 0) {
-                            LogUtil.d("reason = " + cloudBeanHistoryOnToday.reason);
-                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
-                        }
-                        //存入数据库
-                        List<DbHistory> list = new ArrayList<>();
-                        for (CloudBeanHistory history : cloudBeanHistoryOnToday.list) {
-                            list.add(ModelHelper.cloudHistoryToDBHistory(history));
-                        }
-                        DBFactory.getInstance().getHistoryDao().insertInTx(list);
-                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("DbHistory OnToday Success do first event on bg");
-                    }
-
-                })
-                .map(new Func1<CloudBeanHistoryOnToday, List<BaseItem>>() {
-                    @Override
-                    public List<BaseItem> call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-
-                        List<CloudBeanHistory> list = cloudBeanHistoryOnToday.list;
-                        List<BaseItem> items = new ArrayList<BaseItem>();
-                        for (CloudBeanHistory cloudBeanHistory : list) {
-                            items.add(new HistoryItem(activity, cloudBeanHistory));
-                        }
-                        return items;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BaseItem>>() {
-                    @Override
-                    public void onCompleted() {
-                        if (mLayoutSwipeRefresh != null) {
-                            mLayoutSwipeRefresh.setRefreshing(false);
-                        }
-                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("notify UI onCompleted on MainThread");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (mLayoutSwipeRefresh != null) {
-                            mLayoutSwipeRefresh.setRefreshing(false);
-                        }
-                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-                        LogUtil.d("notify UI onError on MainThread");
-                        LogUtil.d("Throwable.msg = " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(List<BaseItem> baseItems) {
-                        refreshRecyclerView(baseItems);
-                    }
-                });
+//        Observable<CloudBeanHistoryOnToday> observer = HttpService.getInstance().getTodayOnHistory("1/17");
+//        observer.subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.io())
+//                .doOnNext(new Action1<CloudBeanHistoryOnToday>() {
+//                    @Override
+//                    public void call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
+//                        if (cloudBeanHistoryOnToday.list == null) {
+//                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
+//                        }
+//                        if (cloudBeanHistoryOnToday.errorCode != 0) {
+//                            LogUtil.d("reason = " + cloudBeanHistoryOnToday.reason);
+//                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
+//                        }
+//                        //存入数据库
+//                        List<DbHistory> list = new ArrayList<>();
+//                        for (CloudBeanHistory history : cloudBeanHistoryOnToday.list) {
+//                            list.add(ModelHelper.cloudHistoryToDBHistory(history));
+//                        }
+//                        DBFactory.getInstance().getHistoryDao().insertInTx(list);
+//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
+//                        LogUtil.d("DbHistory OnToday Success do first event on bg");
+//                    }
+//
+//                })
+//                .map(new Func1<CloudBeanHistoryOnToday, List<BaseItem>>() {
+//                    @Override
+//                    public List<BaseItem> call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
+//
+//                        List<CloudBeanHistory> list = cloudBeanHistoryOnToday.list;
+//                        List<BaseItem> items = new ArrayList<BaseItem>();
+//                        for (CloudBeanHistory cloudBeanHistory : list) {
+//                            items.add(new HistoryItem(activity, cloudBeanHistory));
+//                        }
+//                        return items;
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<List<BaseItem>>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        if (mLayoutSwipeRefresh != null) {
+//                            mLayoutSwipeRefresh.setRefreshing(false);
+//                        }
+//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
+//                        LogUtil.d("notify UI onCompleted on MainThread");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        if (mLayoutSwipeRefresh != null) {
+//                            mLayoutSwipeRefresh.setRefreshing(false);
+//                        }
+//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
+//                        LogUtil.d("notify UI onError on MainThread");
+//                        LogUtil.d("Throwable.msg = " + e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<BaseItem> baseItems) {
+//                        refreshRecyclerView(baseItems);
+//                    }
+//                });
 
     }
 
