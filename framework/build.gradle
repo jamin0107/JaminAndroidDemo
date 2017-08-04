@@ -1,15 +1,13 @@
 import groovy.json.JsonSlurper
 
 apply plugin: 'com.android.library'
-//definition in gradle.properties
-def minSDKV = minsdkV.toInteger()
 
 //生成iconfont的脚本
 task("updateIconfont", group: "iconfont") << {
     File f = project.rootProject.file('materials/selection.json')
     def slurper = new JsonSlurper()
     def jsonText = f.getText()
-    def json = slurper.parseText( jsonText )
+    def json = slurper.parseText(jsonText)
 
     json.icons.sort { a, b ->
         a.properties.code <=> b.properties.code
@@ -23,7 +21,7 @@ task("updateIconfont", group: "iconfont") << {
         name = name.replace('-', '_')
         def code = Integer.toHexString(it.properties.code as int)
         code = code.toUpperCase()
-        xml += '    <string name="iconfont_' + name + '">\\u' + code +'</string>\n'
+        xml += '    <string name="iconfont_' + name + '">\\u' + code + '</string>\n'
     }
 
     xml += '    <string-array name="iconfont_lists">\n'
@@ -45,7 +43,7 @@ task("updateIconfont", group: "iconfont") << {
     def ttfSrcMD5 = generateMD5(ttfSrc)
     def ttfDestMD5 = generateMD5(ttfDest)
     println "Compare TTF file. Indentical=" + ttfDestMD5.equals(ttfSrcMD5)
-    if(!ttfDestMD5.equals(ttfSrcMD5)) {
+    if (!ttfDestMD5.equals(ttfSrcMD5)) {
         println 'Update TTF'
         ttfDest.bytes = ttfSrc.bytes
     }
@@ -67,10 +65,12 @@ def generateMD5(final file) {
 
 android {
 
-    compileSdkVersion sdkVersion.toInteger()
-    buildToolsVersion toolsVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
-    buildTypes {
+
+
+        buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -78,10 +78,14 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion minSDKV
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
     }
@@ -89,46 +93,36 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
-    //definition in gradle.properties
-    compile supportV4
-    compile supportV7
-    compile design
-    compile recyclerviewV7
-
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
+    compile "com.android.support:support-v4:$rootProject.supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibVersion"
+    compile "com.android.support:design:$rootProject.supportLibVersion"
     //find gradle jar name at http://www.mvnrepository.com/
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
-
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //compile 'de.greenrobot:eventbus:2.4.0'
-
     compile 'com.google.code.gson:gson:2.8.1'
-
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-
     //rxjava definition
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitConverterGsonVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
     // And ProGuard rules for RxJava!
-//    compile 'com.artemzin.rxjava:proguard-rules:1.2.2.0'
+    //    compile 'com.artemzin.rxjava:proguard-rules:1.2.2.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
     compile 'com.airbnb.android:lottie:1.5.3'
-
     compile 'com.alibaba:arouter-api:1.2.1.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
-
-
 }

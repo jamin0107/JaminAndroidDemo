@@ -1,0 +1,28 @@
+ext {
+
+
+    android = [
+            versionCode      : 6,
+            versionName      : "1.1.2",
+            applicationId    : "com.jamin.android.demo",
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.2",
+            minSdkVersion    : 15,
+            targetSdkVersion : 19
+    ]
+
+
+    //第三方
+    rxjavaVersion = '2.1.2'
+    rxAndroidVersion = '2.0.1'
+    retrofitVersion = '2.3.0'
+    retrofitConverterGsonVersion = '2.2.0'
+    okhttp3Version = '3.8.0'
+    frescoVersion = '1.2.0'
+
+    //Google Android
+    supportLibVersion = '25.3.1'
+    gmsVersion = '11.0.2'
+
+
+}

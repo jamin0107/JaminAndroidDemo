@@ -5,7 +5,6 @@ import com.jamin.http.model.CloudBeanHistoryOnToday;
 import com.jamin.http.model.detail.CloudBeanHistoryDetail;
 
 import io.reactivex.Flowable;
-import rx.Observable;
 
 
 /**

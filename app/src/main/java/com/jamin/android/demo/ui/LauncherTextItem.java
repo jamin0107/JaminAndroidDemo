@@ -12,11 +12,8 @@ import com.jamin.android.demo.adapter.BaseHolder;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.remote.TestRemoteServiceActivity;
 import com.jamin.android.demo.ui.gl.GLLaunchActivity;
-import com.jamin.android.demo.ui.gl.GLStudyActivity;
-import com.jamin.android.demo.ui.anim.LauncherAnimationActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.android.demo.ui.image.LauncherImageActivity;
-import com.jamin.android.demo.ui.rxjava.ActivityHistoryOnToday;
 import com.jamin.android.demo.ui.rxjava.RxStudyActivity;
 
 
@@ -62,8 +59,8 @@ public class LauncherTextItem extends BaseItem<String> {
                     getActivity().startActivity(new Intent(getActivity(), GLLaunchActivity.class));
                 } else if (MainActivity.LAUNCHER_SERVICE.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), TestRemoteServiceActivity.class));
-                } else if (MainActivity.LAUNCHER_JAMIN_TEST.equals(desc)) {
-                    getActivity().startActivity(new Intent(getActivity(), JaminTestActivity.class));
+                } else if (MainActivity.LAUNCHER_RESCUE_TEST.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), JaminRescueActivity.class));
                 }
             }
         });

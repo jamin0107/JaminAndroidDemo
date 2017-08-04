@@ -4,9 +4,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
 
 /**
  * Created by jamin on 2017/5/10.
@@ -25,7 +26,7 @@ public class Rx2Bus {
 
     private static volatile Rx2Bus defaultInstance;
 
-    private final Subject<Object, Object> mBus;
+    private final Subject<Object> mBus;
 
     private final Map<Class<?>, Object> mStickyEventMap;
 

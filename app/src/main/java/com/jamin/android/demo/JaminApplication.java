@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.jamin.android.demo.db.DBFactory;
 import com.jamin.framework.util.LogUtil;
+import com.jamin.rescue.Rescue;
 
 /**
  * Created by jamin on 2016/11/25.
@@ -33,8 +34,15 @@ public class JaminApplication extends Application {
             Stetho.initializeWithDefaults(this);
             ARouter.openLog();
             ARouter.openDebug();
+            Rescue.setDebug(true);
         }
         ARouter.init(this);
+        //
+        Rescue.init(this);
+        Rescue.setEnable(true);
+
+
+
 
     }
 

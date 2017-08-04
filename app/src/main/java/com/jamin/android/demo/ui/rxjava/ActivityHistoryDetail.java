@@ -9,23 +9,11 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.android.demo.ui.rxjava.detail.DetailContentItem;
-import com.jamin.android.demo.ui.rxjava.detail.DetailPictureItem;
-import com.jamin.android.demo.ui.rxjava.detail.DetailTitleItem;
-import com.jamin.http.HttpService;
-import com.jamin.http.model.detail.CloudBeanHistoryDetail;
-import com.jamin.http.model.detail.DetailBean;
-import com.jamin.http.model.detail.DetailPicUrlBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class ActivityHistoryDetail extends BaseActivity {
     @BindView(R.id.recycler_history_detail)

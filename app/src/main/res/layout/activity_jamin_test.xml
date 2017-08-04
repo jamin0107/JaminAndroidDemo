@@ -4,22 +4,4 @@
     android:background="#550055"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bg_room_change" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:src="@drawable/feed_img_mask" />
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/oliveapp_camera_list_pressed_holo_light" />
-
 </RelativeLayout>

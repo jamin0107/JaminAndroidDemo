@@ -1,19 +1,14 @@
 package com.jamin.android.demo.ui.rxjava;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.framework.util.FaceLandMark;
-import com.jamin.framework.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 
 /**
  * Created by jamin on 2017/5/10.

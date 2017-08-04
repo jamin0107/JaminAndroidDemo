@@ -8,12 +8,6 @@ import com.jamin.framework.util.LogUtil;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import rx.Notification;
-import rx.Observable;
-import rx.exceptions.Exceptions;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jamin on 2017/5/6.

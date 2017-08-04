@@ -1,23 +1,23 @@
 apply plugin: 'com.android.application'
-
-def VERSION_NAME = getVersionName()
-def VERSION_CODE = getVersionCode()
-def minSDKV = minsdkV.toInteger()
-
-def getVersionName() {
-    println "========= VersionName : " + appVersionName + " ========="
-    return appVersionName
-}
-
-def getVersionCode() {
-    println "========= VersionCode : " + appVersionCode.toInteger() + " ========="
-    return appVersionCode.toInteger()
-}
+apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.jakewharton.hugo'
+//def VERSION_NAME = getVersionName()
+//def VERSION_CODE = getVersionCode()
+//
+//def getVersionName() {
+//    println "========= VersionName : " + appVersionName + " ========="
+//    return appVersionName
+//}
+//
+//def getVersionCode() {
+//    println "========= VersionCode : " + appVersionCode.toInteger() + " ========="
+//    return appVersionCode.toInteger()
+//}
 
 android {
 
-    compileSdkVersion sdkVersion.toInteger()
-    buildToolsVersion toolsVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
 
     flavorDimensions "mode"
@@ -25,18 +25,18 @@ android {
     
     productFlavors {
         developer {
-            minSdkVersion 14
+            minSdkVersion 21
         }
         production {
-            minSdkVersion minSDKV
+            minSdkVersion rootProject.ext.android.minSdkVersion
         }
     }
 
     defaultConfig {
-        applicationId "com.jamin.android.demo"
-        targetSdkVersion 23
-        versionCode VERSION_CODE
-        versionName VERSION_NAME
+        applicationId rootProject.ext.android.applicationId
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -72,12 +72,12 @@ dependencies {
     compile project(':cloudlib1')
     compile project(':dbmodule')
     testCompile 'junit:junit:4.12'
-
-
     //For DeepLink
     annotationProcessor 'com.airbnb:deeplinkdispatch-processor:3.0.0-rc3'
     compile 'com.airbnb:deeplinkdispatch:3.0.0-rc3'
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
+    compile project(':rescue')
+    compile project(':simpledb')
 }
