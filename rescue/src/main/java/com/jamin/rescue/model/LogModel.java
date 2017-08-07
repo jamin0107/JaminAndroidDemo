@@ -15,29 +15,26 @@ import java.lang.annotation.RetentionPolicy;
  * Created by wangjieming on 2017/8/2.
  */
 
-public class LogModel extends RowIdBaseModel{
+public class LogModel extends RowIdBaseModel {
 
 
     public static final String LEVEL_ERROR = "ERROR";
     public static final String LEVEL_WARING = "WARING";
     public static final String LEVEL_DEBUG = "DEBUG";
+    public static final String COLUMN_NAME_CREATE_TIME = "time";
 
     @DatabaseField(columnName = "tag")
     public String tag;          //错误类型
-    @DatabaseField(columnName = "time")
+    @DatabaseField(columnName = COLUMN_NAME_CREATE_TIME)
     public long create_time;    //时间
     @DatabaseField(columnName = "message")
     public String message;      //信息
     @DatabaseField(columnName = "pageName")
     public String pageName;     //页面名称
-
-    @LogLevel
     @DatabaseField(columnName = "logLevel")
     public String logLevel;     //日志等级
-
     @DatabaseField(columnName = "sdcardSize")
     public String sdcardSize;   //SDCardSize
-
     @DatabaseField(columnName = "net_type")
     public String netType;   //SDCardSize
 
@@ -72,8 +69,14 @@ public class LogModel extends RowIdBaseModel{
     }
 
 
+    public LogModel withMessage(@NonNull String format, Object... args) {
+        this.message = String.format(format, args);
+        return this;
+    }
+
+
     public void setNewWorkType(int type) {
-        switch (type){
+        switch (type) {
             case NetWorkUtil.NET_OFF:
                 netType = "NET_OFF";
                 break;

@@ -13,6 +13,8 @@ import com.jamin.simpedb.DBOperateSelectListener;
 public class LogModelDao {
 
 
+
+
     public void insert(LogModel logModel) {
         DBManager dbManager = RescueDBFactory.getInstance().getDBManager();
         if (null == dbManager) {
@@ -22,11 +24,14 @@ public class LogModelDao {
     }
 
 
-    public void deleteAll(DBOperateDeleteListener dbOperateDeleteListener) {
+    public void deleteByTime(long uploadedTime, DBOperateDeleteListener dbOperateDeleteListener) {
         DBManager dbManager = RescueDBFactory.getInstance().getDBManager();
         if (null == dbManager || dbOperateDeleteListener == null) {
             return;
         }
+        String selection = LogModel.COLUMN_NAME_CREATE_TIME + "<=?";
+        String[] selectionArgs = new String[]{"" + uploadedTime};
+        dbManager.delete(LogModel.class,selection , selectionArgs , dbOperateDeleteListener);
     }
 
 
@@ -40,6 +45,19 @@ public class LogModelDao {
     }
 
 
-
+    /**
+     * select all log before logTime
+     * @param logTime
+     * @param dbOperateSelectListener
+     */
+    public void getLogModelListByTime(long logTime, DBOperateSelectListener dbOperateSelectListener) {
+        DBManager dbManager = RescueDBFactory.getInstance().getDBManager();
+        if (null == dbManager || dbOperateSelectListener == null) {
+            return;
+        }
+        String selection =  LogModel.COLUMN_NAME_CREATE_TIME  + "<=?";
+        String[] selectionArgs = new String[]{"" + logTime};
+        dbManager.select(LogModel.class, null, selection, selectionArgs, null, null, null, null, dbOperateSelectListener);
+    }
 
 }

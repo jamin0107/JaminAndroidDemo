@@ -25,6 +25,7 @@ public class Rescue {
         _Rescue.getInstance()._init(application);
     }
 
+
     public static void setDeviceId(String deviceId) {
         _Rescue.getInstance().setDeviceId(deviceId);
     }
@@ -35,6 +36,10 @@ public class Rescue {
     }
 
 
+    /**
+     * config by cloud whether running Rescue or not.
+     * @param enable
+     */
     public static void setEnable(boolean enable) {
         //TODO:考虑存储到 sp中,不要每次都调用
         _Rescue.getInstance().setEnable(enable);
@@ -45,15 +50,28 @@ public class Rescue {
         DEBUG = debug;
     }
 
+    /**
+     * log event and save to db
+     * @param logModel
+     */
     public static void log(LogModel logModel) {
         _Rescue.getInstance().log(logModel);
     }
 
 
-    public static void upload(UploadListener uploadListener) {
-        _Rescue.getInstance().upload(uploadListener);
+    /**
+     * upload all log from now
+     * @param uploadListener
+     */
+    public static void uploadAll(UploadListener uploadListener) {
+        _Rescue.getInstance().uploadAll(uploadListener);
     }
 
+
+    /**
+     * when app upload the log file . tell Rescue uploaded ,
+     * Rescue will delete the log file and remove the uploaded log from db.
+     */
     public static void uploaded() {
         _Rescue.getInstance().uploaded();
     }

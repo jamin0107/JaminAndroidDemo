@@ -7,7 +7,7 @@ package com.jamin.rescue.upload;
 public interface UploadListener {
 
 
-    void upload(String filePath, String tag);
+    void upload(String filePath, String tag , long uploadedFlag);
 
 
 }

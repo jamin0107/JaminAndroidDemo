@@ -69,6 +69,7 @@ public class Rx2Bus {
         return mBus.ofType(eventType);
     }
 
+
     public  <T> Observable<T> toObservableThrottleFirst(Class<T> eventType) {
         return mBus.ofType(eventType).throttleFirst(50, TimeUnit.MILLISECONDS);
     }

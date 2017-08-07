@@ -84,7 +84,7 @@ public class _Rescue {
         LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
         if (logModelDao != null) {
             if (Rescue.DEBUG) {
-                Log.d("_Rescue.log", "LogModel = " + new Gson().toJson(logModel));
+                Log.d("_Rescue.log", "insert LogModel = " + new Gson().toJson(logModel));
             }
             RescueDBFactory.getInstance().logModelDao.insert(logModel);
         }
@@ -92,8 +92,8 @@ public class _Rescue {
     }
 
 
-    public void upload(UploadListener uploadListener) {
-        uploadManager.upload(uploadListener);
+    public void uploadAll(UploadListener uploadListener) {
+        uploadManager.uploadAll(uploadListener);
     }
 
 
@@ -102,7 +102,4 @@ public class _Rescue {
         uploadManager.uploaded();
     }
 
-    public int getNetWorkType(){
-        return NetWorkUtil.getNetworkType(application);
-    }
 }
