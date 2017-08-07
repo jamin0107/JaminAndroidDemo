@@ -135,7 +135,7 @@ public class UploadManager {
                             public void run() {
                                 //主线程通知UI.
                                 if (uploadListener != null) {
-                                    uploadListener.upload(null, null, uploadFlag);
+                                    uploadListener.upload(null, null);
                                 }
                             }
                         });
@@ -146,7 +146,7 @@ public class UploadManager {
                     public void run() {
                         //主线程通知UI.
                         if (uploadListener != null) {
-                            uploadListener.upload(logDataFile.getPath(), tag, uploadFlag);
+                            uploadListener.upload(logDataFile.getPath(), tag);
                         }
                     }
                 });

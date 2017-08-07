@@ -43,8 +43,8 @@ public class JaminRescueActivity extends BaseActivity {
             public void onClick(View v) {
                 Rescue.uploadAll(new UploadListener() {
                     @Override
-                    public void upload(String filePath, String tag, long uploadedFlag) {
-                        LogUtil.d("uploadFilePath = " + filePath + ", tag = " + tag + ", uploadFlag = " + uploadedFlag);
+                    public void upload(String filePath, String tag) {
+                        LogUtil.d("uploadFilePath = " + filePath + ", tag = " + tag );
                     }
 
                 });
