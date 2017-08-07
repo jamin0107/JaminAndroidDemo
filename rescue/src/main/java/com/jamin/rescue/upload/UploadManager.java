@@ -42,12 +42,11 @@ public class UploadManager {
     private String tempDir;
     private Handler handler = new Handler(Looper.getMainLooper());
     private AtomicBoolean uploading = new AtomicBoolean(false);
-    private long uploadFloag;
+    private long uploadFlag;
 
     public UploadManager(Application context) {
         application = context;
     }
-
 
 
     /**
@@ -59,22 +58,22 @@ public class UploadManager {
     @UiThread
     public void uploadAll(final UploadListener uploadListener) {
         if (uploading.get()) {
-            if(Rescue.DEBUG){
-                Log.d("Rescue" , "uploading , please call uploaded() to finish lash upload");
+            if (Rescue.DEBUG) {
+                Log.d("Rescue", "uploading , please call uploaded() to finish lash upload");
             }
             return;
         } else {
             uploading.set(true);
         }
 
-        uploadFloag = System.currentTimeMillis();
+        uploadFlag = System.currentTimeMillis();
         LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
-        if(logModelDao == null){
+        if (logModelDao == null) {
 
         }
-        logModelDao.getLogModelListByTime(uploadFloag, new DBOperateSelectListener() {
+        logModelDao.getLogModelListByTime(uploadFlag, new DBOperateSelectListener() {
             @Override
-            public <T extends BaseModel> void onSelectCallBack(List<T> list ) {
+            public <T extends BaseModel> void onSelectCallBack(List<T> list) {
                 prepareTagAndWriteFile((List<LogModel>) list, uploadListener);
             }
         });
@@ -91,17 +90,16 @@ public class UploadManager {
     @UiThread
     public void uploaded() {
         uploading.set(false);
-        deleteUploadedData(uploadFloag);
+        deleteUploadedData(uploadFlag);
     }
 
 
     /**
-
-
-    /**
+     * /**
      * 1.prepare tag
      * 2.write upload db data to file
      * 3.
+     *
      * @param list
      * @param uploadListener
      */
@@ -137,7 +135,7 @@ public class UploadManager {
                             public void run() {
                                 //主线程通知UI.
                                 if (uploadListener != null) {
-                                    uploadListener.upload(null, null , uploadFloag);
+                                    uploadListener.upload(null, null, uploadFlag);
                                 }
                             }
                         });
@@ -148,7 +146,7 @@ public class UploadManager {
                     public void run() {
                         //主线程通知UI.
                         if (uploadListener != null) {
-                            uploadListener.upload(logDataFile.getPath(), tag , uploadFloag);
+                            uploadListener.upload(logDataFile.getPath(), tag, uploadFlag);
                         }
                     }
                 });
@@ -220,6 +218,7 @@ public class UploadManager {
      * <p>
      * 1.delete log folder
      * 2.delete uploaded data from db
+     *
      * @param uploadedFlag
      */
     @UiThread
@@ -238,12 +237,11 @@ public class UploadManager {
                 @Override
                 public <T extends BaseModel> void onDeleteCallback(Class<T> claz, int rows) {
                     if (Rescue.DEBUG) {
-                        Log.d("Rescue.UploadManager", "delete.size  = " + rows);
+                        Log.d("Rescue.UploadManager", "deleteUploadedData.size  = " + rows);
                     }
                 }
             });
         }
-
     }
 
 

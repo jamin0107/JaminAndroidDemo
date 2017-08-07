@@ -12,14 +12,10 @@ import android.content.SharedPreferences;
 public class RescueSP {
 
 
-    static SharedPreferences sharedPreferences;
-    static long b = 0;
+    private static SharedPreferences sharedPreferences;
 
-    public static void a(Context context, long j) {
-        sharedPreferences = context.getApplicationContext().getSharedPreferences("crash_sp", Activity.MODE_PRIVATE);
-        if (b == 0) {
-            b = j;
-        }
+    public static void init(Context context) {
+        sharedPreferences = context.getApplicationContext().getSharedPreferences("rescue_sp", Activity.MODE_PRIVATE);
     }
 
     public static long getLastUpdateTime() {
@@ -27,8 +23,25 @@ public class RescueSP {
     }
 
 
+    public static void setDataKeepDays(int days) {
+        sharedPreferences.edit().putInt("rescue_data_keep_days", days).apply();
+    }
+
+    public static int getDataKeepDays() {
+        return sharedPreferences.getInt("rescue_data_keep_days", 7);
+    }
+
+
     public static void setLastUpdateTime(long lastUpdateTime) {
         sharedPreferences.edit().putLong("LastUpdateDbTime", lastUpdateTime).apply();
     }
 
+    public static void setEnable(boolean enable) {
+        sharedPreferences.edit().putBoolean("rescueEnable", enable).apply();
+    }
+
+
+    public static boolean isEnable() {
+        return sharedPreferences.getBoolean("rescueEnable", false);
+    }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
@@ -19,7 +21,8 @@ import com.jamin.rescue.upload.UploadListener;
 public class JaminRescueActivity extends BaseActivity {
 
 
-    Button uploadedBtn , uploadBtn , logBtn;
+    Button uploadedBtn, uploadBtn, logBtn;
+    CheckBox enableCB;
     long uploadFlag;
 
     @Override
@@ -41,7 +44,7 @@ public class JaminRescueActivity extends BaseActivity {
                 Rescue.uploadAll(new UploadListener() {
                     @Override
                     public void upload(String filePath, String tag, long uploadedFlag) {
-                        LogUtil.d("uploadfilepath = " + filePath + ", tag = " + tag  + ", uploadFlaog = " + uploadedFlag);
+                        LogUtil.d("uploadFilePath = " + filePath + ", tag = " + tag + ", uploadFlag = " + uploadedFlag);
                     }
 
                 });
@@ -56,11 +59,21 @@ public class JaminRescueActivity extends BaseActivity {
             }
         });
 
+        enableCB = (CheckBox) findViewById(R.id.btn_enable);
+        enableCB.setChecked(Rescue.isEnable());
+        enableCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                buttonView.setChecked(isChecked);
+                Rescue.setEnable(isChecked);
+            }
+        });
+
     }
 
     private void log() {
         LogModel logModel = new LogModel()
-                .withTag("upload22222")
+                .withTag("uploadaaacc")
                 .withLogLevel(LogModel.LEVEL_DEBUG)
                 .withPageName(JaminRescueActivity.class.getSimpleName())
                 .withMessage("onCreate");

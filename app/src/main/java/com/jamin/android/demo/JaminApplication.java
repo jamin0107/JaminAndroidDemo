@@ -39,9 +39,7 @@ public class JaminApplication extends Application {
         ARouter.init(this);
         //
         Rescue.init(this);
-        Rescue.setEnable(true);
-
-
+//        Rescue.setEnable(true);
 
 
     }

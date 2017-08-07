@@ -7,11 +7,14 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.jamin.rescue.dao.LogModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
+import com.jamin.rescue.db.RescueSP;
 import com.jamin.rescue.io.NetWorkUtil;
 import com.jamin.rescue.io.Utils;
 import com.jamin.rescue.model.LogModel;
 import com.jamin.rescue.upload.UploadListener;
 import com.jamin.rescue.upload.UploadManager;
+import com.jamin.simpedb.BaseModel;
+import com.jamin.simpedb.DBOperateDeleteListener;
 
 /**
  * sdk proxy
@@ -55,12 +58,21 @@ public class _Rescue {
     }
 
 
-    void _init(Application application) {
+    boolean _init(Application application) {
         setContext(application);
+        RescueSP.init(application);
+        RescueDBFactory.getInstance().initDB(application);
         versionCode = Utils.getVersionCode(application);
         versionName = Utils.getVersionName(application);
         uploadManager = new UploadManager(application);
-        RescueDBFactory.getInstance().initDB(application);
+        return true;
+    }
+
+    /**
+     * Logic init
+     */
+    void afterInit() {
+        deleteDataBeforeKeepDays();
     }
 
 
@@ -74,12 +86,31 @@ public class _Rescue {
     }
 
 
-    void setEnable(boolean enable) {
-        this.enable = enable;
+    /**
+     * set data keep days . default keep 7 days.
+     *
+     * @param days
+     */
+    void setDataKeepDays(int days) {
+        RescueSP.setDataKeepDays(days);
     }
 
+    void setEnable(boolean enable) {
+        this.enable = enable;
+        RescueSP.setEnable(enable);
+    }
+
+    boolean isEnable() {
+        return RescueSP.isEnable();
+    }
 
     void log(@NonNull LogModel logModel) {
+        if (!enable) {
+            if (Rescue.DEBUG) {
+                Log.d("_Rescue.log", "rescue  disable");
+            }
+            return;
+        }
         logModel.setNewWorkType(NetWorkUtil.getNetworkType(application));
         LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
         if (logModelDao != null) {
@@ -92,14 +123,47 @@ public class _Rescue {
     }
 
 
-    public void uploadAll(UploadListener uploadListener) {
+    void uploadAll(UploadListener uploadListener) {
+        if (!enable) {
+            if (Rescue.DEBUG) {
+                Log.d("_Rescue.uploadAll", "rescue  disable");
+            }
+            return;
+        }
         uploadManager.uploadAll(uploadListener);
     }
 
 
-
-    public void uploaded() {
+    void uploaded() {
+        if (!enable) {
+            if (Rescue.DEBUG) {
+                Log.d("_Rescue.uploaded", "rescue  disable");
+            }
+            return;
+        }
         uploadManager.uploaded();
+    }
+
+    /**
+     * delete data before keeps days
+     */
+    private void deleteDataBeforeKeepDays() {
+        //删除数据库中对应的数据
+        LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
+        final int days = RescueSP.getDataKeepDays();
+        long beforeKeepDays = System.currentTimeMillis() - days * 24 * 60 * 60 * 1000;
+        if (logModelDao != null) {
+            logModelDao.deleteByTime(beforeKeepDays, new DBOperateDeleteListener() {
+                @Override
+                public <T extends BaseModel> void onDeleteCallback(Class<T> claz, int rows) {
+                    if (Rescue.DEBUG) {
+                        Log.d("Rescue.UploadManager", "days = " + days + ", deleteDataBeforeKeepDays.size  = " + rows);
+                    }
+                }
+            });
+        }
+
+
     }
 
 }
