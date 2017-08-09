@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'org.greenrobot.greendao'
+
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -23,6 +26,15 @@ android {
     }
 }
 
+greendao {
+    schemaVersion rootProject.ext.android.versionCode //DB version
+    daoPackage 'com.jamin.rescue.greendao' //自动生成dao的包名
+    targetGenDir 'src/main/java'        //自动生成dao的路径
+//    targetGenDirTest 'src/androidTest/java'
+//    generateTests 'com.jamin.greendao.test'
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.0', {
@@ -31,5 +43,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.android.support:support-annotations:25.3.1'
+    compile 'org.greenrobot:greendao:3.2.2'//GreenDao
     implementation project(':simpledb')
 }

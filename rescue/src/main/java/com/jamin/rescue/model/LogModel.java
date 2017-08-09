@@ -14,7 +14,6 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by wangjieming on 2017/8/2.
  */
-
 public class LogModel extends RowIdBaseModel {
 
 

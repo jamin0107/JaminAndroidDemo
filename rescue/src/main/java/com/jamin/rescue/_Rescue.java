@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.jamin.rescue.dao.LogModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
+import com.jamin.rescue.db.RescueDBFactoryGreen;
 import com.jamin.rescue.db.RescueSP;
 import com.jamin.rescue.io.NetWorkUtil;
 import com.jamin.rescue.io.Utils;
@@ -62,6 +63,7 @@ public class _Rescue {
         setContext(application);
         RescueSP.init(application);
         RescueDBFactory.getInstance().initDB(application);
+        RescueDBFactoryGreen.getInstance().initDB(application);
         versionCode = Utils.getVersionCode(application);
         versionName = Utils.getVersionName(application);
         uploadManager = new UploadManager(application);
