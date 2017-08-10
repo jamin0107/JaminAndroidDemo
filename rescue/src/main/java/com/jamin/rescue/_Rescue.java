@@ -12,6 +12,7 @@ import com.jamin.rescue.db.RescueSP;
 import com.jamin.rescue.io.NetWorkUtil;
 import com.jamin.rescue.io.Utils;
 import com.jamin.rescue.model.LogModel;
+import com.jamin.rescue.model.LogModelGreen;
 import com.jamin.rescue.upload.UploadListener;
 import com.jamin.rescue.upload.UploadManager;
 import com.jamin.simpedb.BaseModel;
@@ -122,7 +123,24 @@ public class _Rescue {
             RescueDBFactory.getInstance().logModelDao.insert(logModel);
         }
 
+
+        LogModelGreen logModelGreen = new LogModelGreen();
+        logModelGreen.setNewWorkType(NetWorkUtil.getNetworkType(application));
+        logModelGreen.tag = logModel.tag;
+        logModelGreen.logLevel = logModel.logLevel;
+        logModelGreen.pageName = logModel.pageName;
+        logModelGreen.message = logModel.message;
+        log(logModelGreen);
+
     }
+
+
+
+    private void log(@NonNull LogModelGreen logModelGreen) {
+        RescueDBFactoryGreen.getInstance().logModelDao.insert(logModelGreen);
+//        RescueDBFactoryGreen.getInstance().logModelRxDao.insert(logModelGreen);
+    }
+
 
 
     void uploadAll(UploadListener uploadListener) {

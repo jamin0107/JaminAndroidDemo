@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.jamin.rescue.greendao.DaoMaster;
 import com.jamin.rescue.greendao.DaoSession;
 import com.jamin.rescue.greendao.LogModelGreenDao;
+import com.jamin.rescue.model.LogModelGreen;
 
 import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.rx.RxDao;
 
 /**
  * Created by wangjieming on 2017/8/3.
@@ -18,6 +20,7 @@ public class RescueDBFactoryGreen {
 
 
     public LogModelGreenDao logModelDao;
+    public RxDao<LogModelGreen, Long> logModelRxDao;
 
     private static RescueDBFactoryGreen INSTANCE;
     private static final String DB_NAME = "rescue_green.db";
@@ -48,6 +51,7 @@ public class RescueDBFactoryGreen {
 
     private void initDAOs(DaoSession daoSession) {
         logModelDao = daoSession.getLogModelGreenDao();
+        logModelRxDao = new RxDao<>(logModelDao);
     }
 
 

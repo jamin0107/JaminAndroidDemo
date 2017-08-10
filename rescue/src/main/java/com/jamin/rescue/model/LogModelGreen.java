@@ -25,8 +25,8 @@ public class LogModelGreen {
     public static final String LEVEL_DEBUG = "DEBUG";
     public static final String COLUMN_NAME_CREATE_TIME = "time";
 
-    @Id
-    public long id;
+    @Id(autoincrement = true)
+    public Long id;
     public String tag;          //错误类型
     public long create_time;    //时间
     public String message;      //信息
@@ -34,7 +34,6 @@ public class LogModelGreen {
     public String logLevel;     //日志等级
     public String sdcardSize;   //SDCardSize
     public String netType;   //SDCardSize
-    public String haha;   //SDCardSize
 
     public LogModelGreen() {
         this.create_time = System.currentTimeMillis();
@@ -42,10 +41,13 @@ public class LogModelGreen {
     }
 
 
-    @Generated(hash = 153954806)
-    public LogModelGreen(long id, String tag, long create_time, String message,
-            String pageName, String logLevel, String sdcardSize, String netType,
-            String haha) {
+
+
+
+
+    @Generated(hash = 354397725)
+    public LogModelGreen(Long id, String tag, long create_time, String message,
+            String pageName, String logLevel, String sdcardSize, String netType) {
         this.id = id;
         this.tag = tag;
         this.create_time = create_time;
@@ -54,8 +56,11 @@ public class LogModelGreen {
         this.logLevel = logLevel;
         this.sdcardSize = sdcardSize;
         this.netType = netType;
-        this.haha = haha;
     }
+
+
+
+
 
 
     public LogModelGreen withTag(@NonNull String tag) {
@@ -115,14 +120,26 @@ public class LogModelGreen {
     }
 
 
-    public long getId() {
+
+
+
+
+    public Long getId() {
         return this.id;
     }
 
 
-    public void setId(long id) {
+
+
+
+
+    public void setId(Long id) {
         this.id = id;
     }
+
+
+
+
 
 
     public String getTag() {
@@ -130,9 +147,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+
+
+
 
 
     public long getCreate_time() {
@@ -140,9 +165,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setCreate_time(long create_time) {
         this.create_time = create_time;
     }
+
+
+
+
 
 
     public String getMessage() {
@@ -150,9 +183,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+
+
 
 
     public String getPageName() {
@@ -160,9 +201,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setPageName(String pageName) {
         this.pageName = pageName;
     }
+
+
+
+
 
 
     public String getLogLevel() {
@@ -170,9 +219,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setLogLevel(String logLevel) {
         this.logLevel = logLevel;
     }
+
+
+
+
 
 
     public String getSdcardSize() {
@@ -180,9 +237,17 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setSdcardSize(String sdcardSize) {
         this.sdcardSize = sdcardSize;
     }
+
+
+
+
 
 
     public String getNetType() {
@@ -190,19 +255,15 @@ public class LogModelGreen {
     }
 
 
+
+
+
+
     public void setNetType(String netType) {
         this.netType = netType;
     }
 
 
-    public String getHaha() {
-        return this.haha;
-    }
-
-
-    public void setHaha(String haha) {
-        this.haha = haha;
-    }
 
 
     @StringDef({
