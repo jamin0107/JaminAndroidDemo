@@ -34,6 +34,7 @@ public class LogModelGreen {
     public String logLevel;     //日志等级
     public String sdcardSize;   //SDCardSize
     public String netType;   //SDCardSize
+    public String aaaaa;   //SDCardSize
 
     public LogModelGreen() {
         this.create_time = System.currentTimeMillis();
@@ -45,9 +46,10 @@ public class LogModelGreen {
 
 
 
-    @Generated(hash = 354397725)
+    @Generated(hash = 1882526264)
     public LogModelGreen(Long id, String tag, long create_time, String message,
-            String pageName, String logLevel, String sdcardSize, String netType) {
+            String pageName, String logLevel, String sdcardSize, String netType,
+            String aaaaa) {
         this.id = id;
         this.tag = tag;
         this.create_time = create_time;
@@ -56,6 +58,7 @@ public class LogModelGreen {
         this.logLevel = logLevel;
         this.sdcardSize = sdcardSize;
         this.netType = netType;
+        this.aaaaa = aaaaa;
     }
 
 
@@ -261,6 +264,24 @@ public class LogModelGreen {
 
     public void setNetType(String netType) {
         this.netType = netType;
+    }
+
+
+
+
+
+
+    public String getAaaaa() {
+        return this.aaaaa;
+    }
+
+
+
+
+
+
+    public void setAaaaa(String aaaaa) {
+        this.aaaaa = aaaaa;
     }
 
 

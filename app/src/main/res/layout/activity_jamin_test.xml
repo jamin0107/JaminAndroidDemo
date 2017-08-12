@@ -31,5 +31,9 @@
         android:layout_height="wrap_content"
         android:text="uploaded" />
 
+    <ImageView
+        android:id="@+id/rescue_img"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
 
 </LinearLayout>

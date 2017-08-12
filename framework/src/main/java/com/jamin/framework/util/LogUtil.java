@@ -17,11 +17,13 @@ public class LogUtil {
 
 
     private static LogHandler logHandler;
-    private static boolean logcatEnable = false;
 
 
     public static void init(boolean bLogcatEnable, String bCustomTagPrefix) {
-        logcatEnable = bLogcatEnable;
+        DEBUG = bLogcatEnable;
+        if (!DEBUG) {
+            return;
+        }
         customTagPrefix = bCustomTagPrefix;
         HandlerThread handlerThread = new HandlerThread("LogException");
         handlerThread.start();

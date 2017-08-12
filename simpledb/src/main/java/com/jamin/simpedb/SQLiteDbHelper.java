@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 //			DatabaseTools.onUpgrade(db, dbName, context, User.class);
 			if(models != null && models.size() > 0){
 				for(Class<?> claz : models){
-					Log.d("simpledb upgrade" , "table name = " + claz.getClass().getSimpleName());
 					DatabaseTools.onUpgrade(db, dbName, context, claz);
 				}
 			}

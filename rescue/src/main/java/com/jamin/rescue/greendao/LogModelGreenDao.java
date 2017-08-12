@@ -32,6 +32,7 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
         public final static Property LogLevel = new Property(5, String.class, "logLevel", false, "LOG_LEVEL");
         public final static Property SdcardSize = new Property(6, String.class, "sdcardSize", false, "SDCARD_SIZE");
         public final static Property NetType = new Property(7, String.class, "netType", false, "NET_TYPE");
+        public final static Property Aaaaa = new Property(8, String.class, "aaaaa", false, "AAAAA");
     }
 
 
@@ -54,7 +55,8 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
                 "\"PAGE_NAME\" TEXT," + // 4: pageName
                 "\"LOG_LEVEL\" TEXT," + // 5: logLevel
                 "\"SDCARD_SIZE\" TEXT," + // 6: sdcardSize
-                "\"NET_TYPE\" TEXT);"); // 7: netType
+                "\"NET_TYPE\" TEXT," + // 7: netType
+                "\"AAAAA\" TEXT);"); // 8: aaaaa
     }
 
     /** Drops the underlying database table. */
@@ -102,6 +104,11 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
         if (netType != null) {
             stmt.bindString(8, netType);
         }
+ 
+        String aaaaa = entity.getAaaaa();
+        if (aaaaa != null) {
+            stmt.bindString(9, aaaaa);
+        }
     }
 
     @Override
@@ -143,6 +150,11 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
         if (netType != null) {
             stmt.bindString(8, netType);
         }
+ 
+        String aaaaa = entity.getAaaaa();
+        if (aaaaa != null) {
+            stmt.bindString(9, aaaaa);
+        }
     }
 
     @Override
@@ -160,7 +172,8 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // pageName
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // logLevel
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // sdcardSize
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // netType
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // netType
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // aaaaa
         );
         return entity;
     }
@@ -175,6 +188,7 @@ public class LogModelGreenDao extends AbstractDao<LogModelGreen, Long> {
         entity.setLogLevel(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setSdcardSize(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setNetType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setAaaaa(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

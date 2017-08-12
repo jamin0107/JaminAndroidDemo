@@ -1,11 +1,14 @@
 package com.jamin.android.demo.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
@@ -22,13 +25,18 @@ public class JaminRescueActivity extends BaseActivity {
 
 
     Button uploadedBtn, uploadBtn, logBtn;
+    ImageView rescue_img;
+    Bitmap bitmap = null;
     CheckBox enableCB;
-    long uploadFlag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jamin_test);
+
+        rescue_img = (ImageView) findViewById(R.id.rescue_img);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nasa);
+        rescue_img.setImageBitmap(bitmap);
         uploadedBtn = (Button) findViewById(R.id.btn_uploaded);
         uploadedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +52,7 @@ public class JaminRescueActivity extends BaseActivity {
                 Rescue.uploadAll(new UploadListener() {
                     @Override
                     public void upload(String filePath, String tag) {
-                        LogUtil.d("uploadFilePath = " + filePath + ", tag = " + tag );
+                        LogUtil.d("uploadFilePath = " + filePath + ", tag = " + tag);
                     }
 
                 });
@@ -81,4 +89,13 @@ public class JaminRescueActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (rescue_img != null) {
+            rescue_img.setImageBitmap(null);
+            rescue_img = null;
+        }
+    }
 }
