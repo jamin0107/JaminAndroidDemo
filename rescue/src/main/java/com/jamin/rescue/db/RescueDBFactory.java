@@ -3,6 +3,8 @@ package com.jamin.rescue.db;
 import android.app.Application;
 
 import com.jamin.rescue.dao.LogModelDao;
+import com.jamin.rescue.dao.PerformanceModelDao;
+import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
 import com.jamin.simpedb.DBManager;
 
@@ -17,6 +19,7 @@ public class RescueDBFactory {
 
 
     public LogModelDao logModelDao;
+    public PerformanceModelDao performanceDao;
 
     private static RescueDBFactory INSTANCE;
     private DBManager dbManager = null;
@@ -36,11 +39,13 @@ public class RescueDBFactory {
     }
 
 
+
     public void initDB(Application application) {
         synchronized (this) {
             dbManager = DBManager.newInstance();
             List<Class<?>> models = new ArrayList<>();
             models.add(LogModel.class);
+            models.add(KeyPathPerformanceModel.class);
             dbManager.initDataBase(application.getBaseContext(), DB_NAME, models);
             initDAOs();
         }
@@ -54,6 +59,7 @@ public class RescueDBFactory {
 
     private void initDAOs() {
         logModelDao = new LogModelDao();
+        performanceDao = new PerformanceModelDao();
     }
 
 

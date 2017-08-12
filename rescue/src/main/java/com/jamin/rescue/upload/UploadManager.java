@@ -12,6 +12,7 @@ import com.jamin.rescue.Rescue;
 import com.jamin.rescue.dao.LogModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
 import com.jamin.rescue.io.FileUtil;
+import com.jamin.rescue.log.manager.PrepareDataListener;
 import com.jamin.rescue.model.LogModel;
 import com.jamin.simpedb.BaseModel;
 import com.jamin.simpedb.DBOperateDeleteListener;
@@ -29,17 +30,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by wangjieming on 2017/8/2.
  */
 
+
 public class UploadManager {
 
 
     private static final String LOG_DIR = "/log/";
-    private static final String ZIP_FILE_NAME = "log.zip";
+    //private static final String ZIP_FILE_NAME = "log.zip";
 
     private ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
     private Application application;
-    StringBuilder tag;
+    //StringBuilder tag;
     private String logDir;
-    private String tempDir;
+    //private String tempDir;
     private Handler handler = new Handler(Looper.getMainLooper());
     private AtomicBoolean uploading = new AtomicBoolean(false);
     private long uploadFlag;
@@ -53,13 +55,17 @@ public class UploadManager {
      * prepare the zipfile for upload
      * return the zipfile path and params through UploadListener
      *
-     * @param uploadListener
+     * @param prepareDataListener
      */
     @UiThread
-    public void uploadAll(final UploadListener uploadListener) {
+    public void prepareLogData(final PrepareDataListener prepareDataListener) {
+        if(prepareDataListener == null){
+            return;
+        }
         if (uploading.get()) {
+            prepareDataListener.uploading();
             if (Rescue.DEBUG) {
-                Log.d("Rescue", "uploading , please call uploaded() to finish lash upload");
+                Log.d("Rescue", "prepareLogData , please call uploaded() to finish upload action");
             }
             return;
         } else {
@@ -69,12 +75,15 @@ public class UploadManager {
         uploadFlag = System.currentTimeMillis();
         LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
         if (logModelDao == null) {
-
+            return;
+        }
+        if (Rescue.DEBUG) {
+            Log.d("Rescue.", "UploadManager prepareLogData uploadFlag = " + uploadFlag);
         }
         logModelDao.getLogModelListByTime(uploadFlag, new DBOperateSelectListener() {
             @Override
             public <T extends BaseModel> void onSelectCallBack(List<T> list) {
-                prepareTagAndWriteFile((List<LogModel>) list, uploadListener);
+                prepareTagAndWriteFile((List<LogModel>) list, prepareDataListener);
             }
         });
 
@@ -89,8 +98,11 @@ public class UploadManager {
      */
     @UiThread
     public void uploaded() {
-        uploading.set(false);
+        if (Rescue.DEBUG) {
+            Log.d("Rescue.UploadManager", "uploaded uploadFlag = " + uploadFlag);
+        }
         deleteUploadedData(uploadFlag);
+        uploading.set(false);
     }
 
 
@@ -101,17 +113,27 @@ public class UploadManager {
      * 3.
      *
      * @param list
-     * @param uploadListener
+     * @param prepareDataListener
      */
     @UiThread
-    private void prepareTagAndWriteFile(final List<LogModel> list, final UploadListener uploadListener) {
+    private void prepareTagAndWriteFile(final List<LogModel> list, final PrepareDataListener prepareDataListener) {
         //开线程准备上传资料
         singleThreadExecutor.execute(new Runnable() {
             @Override
             public void run() {
 
-                if (list == null || list.size() == 0)
+                if (list == null || list.size() == 0) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //主线程通知UI.
+                            if (prepareDataListener != null) {
+                                prepareDataListener.prepared(null, null);
+                            }
+                        }
+                    });
                     return;
+                }
                 //取出所有tag
                 if (Rescue.DEBUG) {
                     Log.d("Rescue.UploadManager", "list.size  = " + list.size());
@@ -119,34 +141,34 @@ public class UploadManager {
                 final String tag = getTagStr(list);
                 //将log数据写入cache/log/路径下的文件
                 String logDataStr = new Gson().toJson(list);
-                String logFileName = String.valueOf(System.currentTimeMillis());
+                String logFileName = String.valueOf(System.currentTimeMillis()) + ".txt";
                 //删除log dir.上传前都重新创建
                 deleteLogDir();
+                //重新创建log文件.
                 final File logDataFile = new File(getLogDirPath() + logFileName);
-                if (!logDataFile.exists()) {
-                    try {
-                        new File(getLogDirPath()).mkdirs();
-                        logDataFile.createNewFile();
-                        FileUtil.saveStringToFile(logDataStr, logDataFile, "UTF-8");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //主线程通知UI.
-                                if (uploadListener != null) {
-                                    uploadListener.upload(null, null);
-                                }
+                try {
+                    new File(getLogDirPath()).mkdirs();
+                    logDataFile.createNewFile();
+                    FileUtil.saveStringToFile(logDataStr, logDataFile, "UTF-8");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //主线程通知UI.
+                            if (prepareDataListener != null) {
+                                prepareDataListener.prepared(null, null);
                             }
-                        });
-                    }
+                        }
+                    });
+                    return;
                 }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         //主线程通知UI.
-                        if (uploadListener != null) {
-                            uploadListener.upload(logDataFile.getPath(), tag);
+                        if (prepareDataListener != null) {
+                            prepareDataListener.prepared(logDataFile.getPath(), tag);
                         }
                     }
                 });

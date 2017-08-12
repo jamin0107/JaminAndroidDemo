@@ -14,12 +14,16 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by wangjieming on 2017/8/2.
  */
+
 public class LogModel extends RowIdBaseModel {
 
 
     public static final String LEVEL_ERROR = "ERROR";
     public static final String LEVEL_WARING = "WARING";
     public static final String LEVEL_DEBUG = "DEBUG";
+    public static final String LEVEL_WTF = "WTF";
+
+
     public static final String COLUMN_NAME_CREATE_TIME = "time";
 
     @DatabaseField(columnName = "tag")
@@ -35,7 +39,9 @@ public class LogModel extends RowIdBaseModel {
     @DatabaseField(columnName = "sdcardSize")
     public String sdcardSize;   //SDCardSize
     @DatabaseField(columnName = "net_type")
-    public String netType;   //SDCardSize
+    public String netType;      //SDCardSize
+    @DatabaseField(columnName = "version")
+    public String version;      //Version
 
 
     public LogModel() {
@@ -104,7 +110,8 @@ public class LogModel extends RowIdBaseModel {
     @StringDef({
             LEVEL_ERROR,
             LEVEL_WARING,
-            LEVEL_DEBUG
+            LEVEL_DEBUG,
+            LEVEL_WTF
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface LogLevel {

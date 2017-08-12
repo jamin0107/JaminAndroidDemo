@@ -1,11 +1,11 @@
 package com.jamin.rescue;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
+import com.jamin.rescue.log.manager.PrepareDataListener;
+import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
-import com.jamin.rescue.upload.UploadListener;
-
-import hugo.weaving.DebugLog;
 
 /**
  * Created by wangjieming on 2017/8/2.
@@ -22,8 +22,9 @@ public class Rescue {
 
     /**
      * Init, it must be call before used router.
+     * Use DebugLog test Rescue init Cost
+     * Rescue: ⇠ init [9ms]
      */
-    @DebugLog
     public static void init(Application application) {
         hasInit = _Rescue.getInstance()._init(application);
         if (hasInit) {
@@ -74,21 +75,31 @@ public class Rescue {
 
 
     /**
-     * upload all log from now
+     * prepared all log from now
      *
-     * @param uploadListener
+     * @param prepareDataListener
      */
-    public static void uploadAll(UploadListener uploadListener) {
-        _Rescue.getInstance().uploadAll(uploadListener);
+    public static void prepareLogData(PrepareDataListener prepareDataListener) {
+        _Rescue.getInstance().prepareLogData(prepareDataListener);
     }
 
 
     /**
-     * when app upload the log file . tell Rescue uploaded ,
+     * when app prepared the log file . tell Rescue uploaded ,
      * Rescue will delete the log file and remove the uploaded log from db.
      */
     public static void uploaded() {
         _Rescue.getInstance().uploaded();
+    }
+
+
+    public static void performanceWriter(@NonNull KeyPathPerformanceModel keyPathPerformanceModel) {
+        _Rescue.getInstance().performanceWriter(keyPathPerformanceModel);
+    }
+
+
+    public static void preparePerformanceData(PrepareDataListener prepareDataListener){
+        _Rescue.getInstance().preparePerformanceData(prepareDataListener);
     }
 
 }

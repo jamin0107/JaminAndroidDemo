@@ -6,14 +6,15 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jamin.rescue.dao.LogModelDao;
+import com.jamin.rescue.dao.PerformanceModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
-import com.jamin.rescue.db.RescueDBFactoryGreen;
 import com.jamin.rescue.db.RescueSP;
 import com.jamin.rescue.io.NetWorkUtil;
 import com.jamin.rescue.io.Utils;
+import com.jamin.rescue.log.manager.PrepareDataListener;
+import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
-import com.jamin.rescue.model.LogModelGreen;
-import com.jamin.rescue.upload.UploadListener;
+import com.jamin.rescue.performance.manager.PerformanceManager;
 import com.jamin.rescue.upload.UploadManager;
 import com.jamin.simpedb.BaseModel;
 import com.jamin.simpedb.DBOperateDeleteListener;
@@ -36,6 +37,7 @@ public class _Rescue {
     private String versionName;             //版本名
     private Application application;        //
     private UploadManager uploadManager;    //上传模块
+    private PerformanceManager performanceManager;
 
 
     private _Rescue() {
@@ -64,10 +66,10 @@ public class _Rescue {
         setContext(application);
         RescueSP.init(application);
         RescueDBFactory.getInstance().initDB(application);
-        RescueDBFactoryGreen.getInstance().initDB(application);
         versionCode = Utils.getVersionCode(application);
         versionName = Utils.getVersionName(application);
         uploadManager = new UploadManager(application);
+        performanceManager = new PerformanceManager(application);
         return true;
     }
 
@@ -114,43 +116,46 @@ public class _Rescue {
             }
             return;
         }
+        logModel.version = versionName + "(" + versionCode + ")";
         logModel.setNewWorkType(NetWorkUtil.getNetworkType(application));
         LogModelDao logModelDao = RescueDBFactory.getInstance().logModelDao;
         if (logModelDao != null) {
             if (Rescue.DEBUG) {
                 Log.d("_Rescue.log", "insert LogModel = " + new Gson().toJson(logModel));
             }
-            RescueDBFactory.getInstance().logModelDao.insert(logModel);
+            logModelDao.insert(logModel);
         }
 
-
-        LogModelGreen logModelGreen = new LogModelGreen();
-        logModelGreen.setNewWorkType(NetWorkUtil.getNetworkType(application));
-        logModelGreen.tag = logModel.tag;
-        logModelGreen.logLevel = logModel.logLevel;
-        logModelGreen.pageName = logModel.pageName;
-        logModelGreen.message = logModel.message;
-        log(logModelGreen);
-
     }
 
 
-
-    private void log(@NonNull LogModelGreen logModelGreen) {
-        RescueDBFactoryGreen.getInstance().logModelDao.insert(logModelGreen);
-//        RescueDBFactoryGreen.getInstance().logModelRxDao.insert(logModelGreen);
-    }
-
-
-
-    void uploadAll(UploadListener uploadListener) {
+    void performanceWriter(@NonNull KeyPathPerformanceModel keyPathPerformanceModel) {
         if (!enable) {
             if (Rescue.DEBUG) {
-                Log.d("_Rescue.uploadAll", "rescue  disable");
+                Log.d("_Rescue.log", "rescue  disable");
             }
             return;
         }
-        uploadManager.uploadAll(uploadListener);
+        keyPathPerformanceModel.create_time = System.currentTimeMillis();
+        PerformanceModelDao performanceModelDao = RescueDBFactory.getInstance().performanceDao;
+        if (performanceModelDao != null) {
+            if (Rescue.DEBUG) {
+                Log.d("_Rescue.log", "insert PerformanceModel = " + new Gson().toJson(keyPathPerformanceModel));
+            }
+            performanceModelDao.insert(keyPathPerformanceModel);
+        }
+
+    }
+
+
+    void prepareLogData(PrepareDataListener prepareDataListener) {
+        if (!enable) {
+            if (Rescue.DEBUG) {
+                Log.d("_Rescue.prepareLogData", "rescue  disable");
+            }
+            return;
+        }
+        uploadManager.prepareLogData(prepareDataListener);
     }
 
 
@@ -186,4 +191,10 @@ public class _Rescue {
 
     }
 
+    public void preparePerformanceData(PrepareDataListener prepareDataListener) {
+        performanceManager.preparePerformanceData(prepareDataListener);
+
+
+
+    }
 }
