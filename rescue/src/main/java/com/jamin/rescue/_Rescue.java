@@ -33,7 +33,7 @@ public class _Rescue {
     private boolean enable = true;          //开关
     private String deviceId;                //设备ID
     private String uid;                     //用户ID
-    private int versionCode;                //版本号
+    private int versionCode ;               //版本号
     private String versionName;             //版本名
     private Application application;        //
     private UploadManager uploadManager;    //上传模块
@@ -148,6 +148,11 @@ public class _Rescue {
     }
 
 
+    public void preparePerformanceData(PrepareDataListener prepareDataListener) {
+        performanceManager.preparePerformanceData(prepareDataListener);
+    }
+
+
     void prepareLogData(PrepareDataListener prepareDataListener) {
         if (!enable) {
             if (Rescue.DEBUG) {
@@ -191,10 +196,4 @@ public class _Rescue {
 
     }
 
-    public void preparePerformanceData(PrepareDataListener prepareDataListener) {
-        performanceManager.preparePerformanceData(prepareDataListener);
-
-
-
-    }
 }

@@ -1,18 +1,75 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.jakewharton.hugo'
-//def VERSION_NAME = getVersionName()
-//def VERSION_CODE = getVersionCode()
-//
-//def getVersionName() {
-//    println "========= VersionName : " + appVersionName + " ========="
-//    return appVersionName
-//}
-//
-//def getVersionCode() {
-//    println "========= VersionCode : " + appVersionCode.toInteger() + " ========="
-//    return appVersionCode.toInteger()
-//}
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def getVersionName() {
+    println "========= VersionName : " + rootProject.ext.android.versionName + " ========="
+    return rootProject.ext.android.versionName
+}
+
+def getVersionCode() {
+    println "========= VersionCode : " + rootProject.ext.android.versionCode + " ========="
+    return rootProject.ext.android.versionCode
+}
+
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return ""
+    }
+}
+
+def isDeveloper() {
+    String curFlavor = getCurrentFlavor()
+    return curFlavor != null && curFlavor.contains("developer")
+}
+
+
+def getMergeVersion() {
+    int versionCode = getVersionCode()
+    String versionName = getVersionName()
+
+//    configurations
+//            .findAll()
+//            .each { println "${it.name}" }
+
+    try {
+        String newVersionName = versionName.replaceAll("[^(0-9)]", "")
+//        int mergeVersion
+        if (isDeveloper()) {
+            println "========= isDeveloper : " + isDeveloper() + " mergeVersion = " + (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode + " ========="
+            return (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode
+        } else {
+            println "========= isDeveloper : " + isDeveloper() + " mergeVersion = " + (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode + " ========="
+            return newVersionName.toInteger() * 1000 + versionCode
+        }
+        println "========= mergeVersion : " + getVersionCode() + " ========="
+        return getVersionCode()
+    } catch (Exception e) {
+        println "========= Exception mergeVersion :=========" + e.message
+        return getVersionCode()
+    }
+
+
+}
+
 
 android {
 
@@ -21,8 +78,8 @@ android {
 
 
     flavorDimensions "mode"
-    
-    
+
+
     productFlavors {
         developer {
             minSdkVersion 21
@@ -35,12 +92,12 @@ android {
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
+        versionCode getMergeVersion()
         versionName rootProject.ext.android.versionName
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
     }
