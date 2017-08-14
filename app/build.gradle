@@ -41,23 +41,54 @@ def isDeveloper() {
     return curFlavor != null && curFlavor.contains("developer")
 }
 
+def isDebug() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    Pattern pattern
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(Developer|Production)(\\w+)")
+    else
+        pattern = Pattern.compile("generate(Developer|Production)(\\w+)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find()) {
+        def matcherStr = matcher.group(0).toLowerCase()
+        println matcher.group(0) + " 0"
+//        println matcher.group(1) + " 1"
+//        println matcher.group(2) + " 2"
+//        println matcher.group(3) + " 3"
+        return matcherStr.contains("debug")
+    } else {
+        println "NO MATCH FOUND"
+        return false
+    }
+}
+
 
 def getMergeVersion() {
     int versionCode = getVersionCode()
     String versionName = getVersionName()
 
-//    configurations
-//            .findAll()
-//            .each { println "${it.name}" }
-
     try {
+
         String newVersionName = versionName.replaceAll("[^(0-9)]", "")
 //        int mergeVersion
         if (isDeveloper()) {
-            println "========= isDeveloper : " + isDeveloper() + " mergeVersion = " + (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode + " ========="
+            def debugBuildType = 1
+            if(!isDebug()){
+                debugBuildType = 2
+            }
+            int publishVersionCode = (newVersionName.toInteger() * 10 + debugBuildType) * 100 + versionCode
+            println "========= isDeveloper = " + isDeveloper() + ",isDebug = " + isDebug() + ", mergeVersion = " + publishVersionCode + " ========="
             return (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode
         } else {
-            println "========= isDeveloper : " + isDeveloper() + " mergeVersion = " + (newVersionName.toInteger() * 10 + 1) * 1000 + versionCode + " ========="
+            def releaseBuildType = 3
+            if (!isDebug()) {
+                releaseBuildType = 4
+            }
+            int publishVersionCode = (newVersionName.toInteger() * 10 + releaseBuildType) * 1000 + versionCode
+            println "========= isDeveloper = " + isDeveloper() + ",isDebug = " + isDebug() + ", mergeVersion = " + publishVersionCode + " ========="
             return newVersionName.toInteger() * 1000 + versionCode
         }
         println "========= mergeVersion : " + getVersionCode() + " ========="
@@ -101,9 +132,13 @@ android {
             }
         }
     }
+
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -136,5 +171,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
     compile project(':rescue')
-    compile project(':simpledb')
+//    compile project(':simpledb')
+//    debugCompile project(path: ':simpledb', configuration: 'debug')
+//    releaseCompile project(path: ':simpledb', configuration: 'release')
 }

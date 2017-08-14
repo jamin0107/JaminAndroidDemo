@@ -45,6 +45,6 @@ dependencies {
     compile 'com.android.support:support-annotations:25.3.1'
     compile 'org.greenrobot:greendao:3.2.2'//GreenDao
 //    compile project(':DaoCore')
-    implementation project(':simpledb')
+    compile project(':simpledb')
     compile 'io.reactivex.rxjava2:rxjava:2.1.2'
 }
