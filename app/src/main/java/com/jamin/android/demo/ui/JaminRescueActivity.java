@@ -11,6 +11,7 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.rescue.Rescue;
+import com.jamin.rescue.hugo.RescueTimeLog;
 import com.jamin.rescue.log.manager.PrepareDataListener;
 import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
@@ -26,6 +27,7 @@ public class JaminRescueActivity extends BaseActivity {
     Button uploadedPerformanceBtn, uploadPerformanceBtn, logPerformanceBtn;
     CheckBox enableCB;
 
+    @RescueTimeLog
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -46,5 +46,6 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'//GreenDao
 //    compile project(':DaoCore')
     compile project(':simpledb')
+    compile 'org.aspectj:aspectjrt:1.8.9'
     compile 'io.reactivex.rxjava2:rxjava:2.1.2'
 }

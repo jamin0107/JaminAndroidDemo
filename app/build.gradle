@@ -116,7 +116,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode getMergeVersion()
         versionName rootProject.ext.android.versionName
-
+        multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]

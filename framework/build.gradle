@@ -99,6 +99,7 @@ dependencies {
     compile "com.android.support:support-v4:$rootProject.supportLibVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibVersion"
     compile "com.android.support:design:$rootProject.supportLibVersion"
+    compile 'com.android.support:multidex:1.0.2'
     //find gradle jar name at http://www.mvnrepository.com/
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
