@@ -3,8 +3,8 @@ package com.jamin.rescue.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 
-import com.jamin.rescue.io.NetWorkUtil;
-import com.jamin.rescue.io.SDCardUtil;
+import com.jamin.rescue.utils.NetWorkUtil;
+import com.jamin.rescue.utils.SDCardUtil;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

@@ -44,4 +44,22 @@ public class RescueSP {
     public static boolean isEnable() {
         return sharedPreferences.getBoolean("rescueEnable", false);
     }
+    public static void setPerformanceEnable(boolean enable) {
+        sharedPreferences.edit().putBoolean("performanceEnable", enable).apply();
+    }
+
+    public static boolean isPerformanceEnable() {
+        return sharedPreferences.getBoolean("performanceEnable", false);
+    }
+
+    public static boolean hugoEnable() {
+        if (sharedPreferences == null) {
+            return true;
+        }
+        return sharedPreferences.getBoolean("hugoEnable", false);
+    }
+
+    public static void setHugoEnable(boolean enable) {
+        sharedPreferences.edit().putBoolean("hugoEnable", enable).apply();
+    }
 }

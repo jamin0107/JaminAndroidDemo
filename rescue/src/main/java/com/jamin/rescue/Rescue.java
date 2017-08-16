@@ -60,6 +60,26 @@ public class Rescue {
         return _Rescue.getInstance().isEnable();
     }
 
+
+    public static void setPerformanceEnable(boolean enable) {
+        _Rescue.getInstance().setPerformanceEnable(enable);
+    }
+
+
+    public static boolean isPerformanceEnable() {
+        return _Rescue.getInstance().isPerformanceEnable();
+    }
+
+
+    public static void setHugoEnable(boolean enable) {
+        _Rescue.getInstance().setHugoEnable(enable);
+    }
+
+    public static boolean isHugoEnable() {
+        return _Rescue.getInstance().isHugoEnable();
+    }
+
+
     public static void setDebug(boolean debug) {
         DEBUG = debug;
     }

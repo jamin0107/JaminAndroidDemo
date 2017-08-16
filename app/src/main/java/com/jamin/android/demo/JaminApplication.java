@@ -28,6 +28,8 @@ public class JaminApplication extends MultiDexApplication {
         DBFactory.getInstance().register(this);
         Rescue.init(this);
         Rescue.setEnable(true);
+        Rescue.setHugoEnable(false);
+        Rescue.setPerformanceEnable(false);
         if (BuildConfig.DEBUG) {
             //Stetho Init chrome://inspect/
 //        Stetho.newInitializerBuilder(this)
@@ -39,10 +41,11 @@ public class JaminApplication extends MultiDexApplication {
             ARouter.openLog();
             ARouter.openDebug();
             Rescue.setDebug(true);
+            Rescue.setHugoEnable(true);
+            Rescue.setPerformanceEnable(true);
         }
         ARouter.init(this);
         //
-
 
     }
 

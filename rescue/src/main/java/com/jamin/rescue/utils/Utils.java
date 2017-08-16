@@ -1,4 +1,4 @@
-package com.jamin.rescue.io;
+package com.jamin.rescue.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

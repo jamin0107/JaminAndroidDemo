@@ -2,7 +2,7 @@ package com.jamin.rescue.hugo;
 
 import android.util.Log;
 
-import com.jamin.rescue.Rescue;
+import com.jamin.rescue.db.RescueSP;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,16 +33,36 @@ public class RescueHugo {
     public void constructorInsideAnnotatedType() {
     }
 
-    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog * *(..)) || methodInsideAnnotatedType()")
+    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog * *(..)) && methodInsideAnnotatedType()")
     public void method() {
     }
 
-    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog *.new(..)) || constructorInsideAnnotatedType()")
+    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog * onCreate(..)) && methodInsideAnnotatedType()")
+    public void activity_create() {
+    }
+
+    @Pointcut("execution( * onStart(..)) && methodInsideAnnotatedType()")
+    public void activity_start() {
+    }
+
+    @Pointcut("execution( * onResume(..)) && methodInsideAnnotatedType()")
+    public void activity_resume() {
+    }
+
+    @Pointcut("execution( * onPause(..)) && methodInsideAnnotatedType()")
+    public void activity_pause() {
+    }
+
+    @Pointcut("execution( * onStop(..)) && methodInsideAnnotatedType()")
+    public void activity_stop() {
+    }
+
+    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog *.new(..)) && constructorInsideAnnotatedType()")
     public void constructor() {
     }
 
 
-    @Around("method() || constructor()")
+    @Around("method() || constructor() ||activity_create() ||activity_resume() || activity_start() ")
     public Object logAndExecute(ProceedingJoinPoint joinPoint) throws Throwable {
         enterMethod(joinPoint);
 
@@ -57,7 +77,7 @@ public class RescueHugo {
     }
 
     private static void enterMethod(JoinPoint joinPoint) {
-        if (!Rescue.isEnable())
+        if (!RescueSP.hugoEnable())
             return;
 
 //        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
@@ -89,7 +109,7 @@ public class RescueHugo {
     }
 
     private static void exitMethod(JoinPoint joinPoint, Object result, long lengthMillis) {
-        if (!Rescue.isEnable()) return;
+        if (!RescueSP.hugoEnable()) return;
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
 //            Trace.endSection();
@@ -116,8 +136,8 @@ public class RescueHugo {
         String page = asTag(cls);
         String method = methodName;
         long cost = lengthMillis;
-        Log.v(asTag(cls), "page = " + page + ",method = " + method + ",cost = " + cost);
-        //TODO:LOG
+        Log.d("RescueHugo", asTag(cls) + " --> page = " + page + ",method = " + method + ",cost = " + cost);
+
     }
 
 

@@ -1,4 +1,4 @@
-package com.jamin.rescue.upload;
+package com.jamin.rescue.log.manager;
 
 import android.app.Application;
 import android.os.Handler;
@@ -11,9 +11,8 @@ import com.google.gson.Gson;
 import com.jamin.rescue.Rescue;
 import com.jamin.rescue.dao.LogModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
-import com.jamin.rescue.io.FileUtil;
-import com.jamin.rescue.log.manager.PrepareDataListener;
 import com.jamin.rescue.model.LogModel;
+import com.jamin.rescue.utils.FileUtil;
 import com.jamin.simpedb.BaseModel;
 import com.jamin.simpedb.DBOperateDeleteListener;
 import com.jamin.simpedb.DBOperateSelectListener;

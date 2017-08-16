@@ -7,8 +7,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.jamin.android.demo.JaminApplicationHelper;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
+import com.jamin.android.demo.window.LogFloatLayerControl;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.rescue.Rescue;
 import com.jamin.rescue.hugo.RescueTimeLog;
@@ -19,7 +21,7 @@ import com.jamin.rescue.model.LogModel;
 /**
  * Created by wangjieming on 2017/7/17.
  */
-
+@RescueTimeLog
 public class JaminRescueActivity extends BaseActivity {
 
 
@@ -27,7 +29,6 @@ public class JaminRescueActivity extends BaseActivity {
     Button uploadedPerformanceBtn, uploadPerformanceBtn, logPerformanceBtn;
     CheckBox enableCB;
 
-    @RescueTimeLog
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,8 @@ public class JaminRescueActivity extends BaseActivity {
         uploadedPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_uploaded);
         uploadPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_upload);
         logPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_log);
-
+        logFloatLayerControl = new LogFloatLayerControl(JaminApplicationHelper.getApplication());
+        logFloatLayerControl.showLogFloatLayer();
         logPerformanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,8 +110,23 @@ public class JaminRescueActivity extends BaseActivity {
 
                     }
                 });
+
             }
         });
+
+        findViewById(R.id.add_log).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logFloatLayerControl.addItem("nihao hahaha--------");
+            }
+        });
+    }
+
+    LogFloatLayerControl logFloatLayerControl;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void logPerformance() {

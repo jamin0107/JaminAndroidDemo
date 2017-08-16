@@ -9,13 +9,13 @@ import com.jamin.rescue.dao.LogModelDao;
 import com.jamin.rescue.dao.PerformanceModelDao;
 import com.jamin.rescue.db.RescueDBFactory;
 import com.jamin.rescue.db.RescueSP;
-import com.jamin.rescue.io.NetWorkUtil;
-import com.jamin.rescue.io.Utils;
+import com.jamin.rescue.utils.NetWorkUtil;
+import com.jamin.rescue.utils.Utils;
 import com.jamin.rescue.log.manager.PrepareDataListener;
 import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
 import com.jamin.rescue.performance.manager.PerformanceManager;
-import com.jamin.rescue.upload.UploadManager;
+import com.jamin.rescue.log.manager.UploadManager;
 import com.jamin.simpedb.BaseModel;
 import com.jamin.simpedb.DBOperateDeleteListener;
 
@@ -30,7 +30,9 @@ public class _Rescue {
     private volatile static boolean s_HasInit = false;
 
 
-    private boolean enable = true;          //开关
+    private Boolean enable;                 //工程模式开关
+    private Boolean performanceEnable;      //性能模式开关
+    private Boolean hugoEnable;             //hugo开关
     private String deviceId;                //设备ID
     private String uid;                     //用户ID
     private int versionCode ;               //版本号
@@ -106,8 +108,38 @@ public class _Rescue {
     }
 
     boolean isEnable() {
-        return RescueSP.isEnable();
+        if (enable == null) {
+            enable = RescueSP.isEnable();
+        }
+        return enable;
     }
+
+    void setPerformanceEnable(boolean enable) {
+        this.performanceEnable = enable;
+        RescueSP.setPerformanceEnable(enable);
+    }
+
+
+    boolean isPerformanceEnable() {
+        if (performanceEnable == null) {
+            performanceEnable = RescueSP.isPerformanceEnable();
+        }
+        return performanceEnable;
+    }
+
+    void setHugoEnable(boolean enable) {
+        this.hugoEnable = enable;
+        RescueSP.setHugoEnable(enable);
+    }
+
+
+    boolean isHugoEnable() {
+        if (hugoEnable == null) {
+            hugoEnable = RescueSP.hugoEnable();
+        }
+        return hugoEnable;
+    }
+
 
     void log(@NonNull LogModel logModel) {
         if (!enable) {

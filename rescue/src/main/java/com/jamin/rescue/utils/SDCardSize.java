@@ -1,4 +1,4 @@
-package com.jamin.rescue.io;
+package com.jamin.rescue.utils;
 
 public class SDCardSize {
 
