@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.jamin.android.demo.db.DBFactory;
 import com.jamin.framework.util.LogUtil;
+import com.jamin.logger.Logger;
 import com.jamin.rescue.Rescue;
 
 /**
@@ -30,7 +31,14 @@ public class JaminApplication extends MultiDexApplication {
         Rescue.setEnable(true);
         Rescue.setHugoEnable(false);
         Rescue.setPerformanceEnable(false);
+
+        Logger.init(true, "JaminDebug");
         if (BuildConfig.DEBUG) {
+            Logger.init(true, "JaminDebug");
+            if (ProcessManager.isUIProcess()) {
+                Logger.initLogWindow(this);
+            }
+            Logger.registerLogReceiver();
             //Stetho Init chrome://inspect/
 //        Stetho.newInitializerBuilder(this)
 //                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
@@ -48,12 +56,6 @@ public class JaminApplication extends MultiDexApplication {
         //
 
     }
-
-
-
-
-
-
 
 
 }

@@ -10,8 +10,9 @@ import android.widget.CompoundButton;
 import com.jamin.android.demo.JaminApplicationHelper;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.android.demo.window.LogFloatLayerControl;
+import com.jamin.framework.util.LogEventSender;
 import com.jamin.framework.util.LogUtil;
+import com.jamin.logger.Logger;
 import com.jamin.rescue.Rescue;
 import com.jamin.rescue.hugo.RescueTimeLog;
 import com.jamin.rescue.log.manager.PrepareDataListener;
@@ -87,8 +88,7 @@ public class JaminRescueActivity extends BaseActivity {
         uploadedPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_uploaded);
         uploadPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_upload);
         logPerformanceBtn = (Button) findViewById(R.id.btn_perfromance_log);
-        logFloatLayerControl = new LogFloatLayerControl(JaminApplicationHelper.getApplication());
-        logFloatLayerControl.showLogFloatLayer();
+
         logPerformanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,12 +117,28 @@ public class JaminRescueActivity extends BaseActivity {
         findViewById(R.id.add_log).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logFloatLayerControl.addItem("nihao hahaha--------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.VERBOSE , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.ERROR , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.WARN , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.INFO , "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
+                Logger.e("Logggggggggggggggggggg");
+                Logger.i("Logggggggggggggggggggg");
+                Logger.e("Logggggggggggggggggggg");
+                Logger.e("Logggggggggggggggggggg");
+                Logger.d("Logggggggggggggggggggg");
+                Logger.i("Logggggggggggggggggggg");
+                Logger.v("Logggggggggggggggggggg");
             }
         });
     }
 
-    LogFloatLayerControl logFloatLayerControl;
+
 
     @Override
     protected void onResume() {

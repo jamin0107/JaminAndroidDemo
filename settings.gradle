@@ -1,3 +1,3 @@
-include ':framework', ':cloudlib1', ':dbmodule', ':rescue', ':simpledb'
+include ':framework', ':cloudlib1', ':dbmodule', ':rescue', ':simpledb', ':logger'
 include ':app'
 //include ':greendao-api', ':DaoCore'

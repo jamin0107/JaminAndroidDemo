@@ -9,5 +9,6 @@
         android:id="@+id/log_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="aklsdjaklsdjklasjdkl" />
+        android:text="aklsdjaklsdjklasjdkl"
+        android:textColor="#ffff00" />
 </RelativeLayout>

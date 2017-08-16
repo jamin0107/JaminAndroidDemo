@@ -1,7 +1,8 @@
-package com.jamin.android.demo.window;
+package com.jamin.logger.window;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jamin.android.demo.R;
+import com.jamin.logger.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,13 @@ import java.util.List;
 
 public class LogView {
 
-    public static final String TAG = LogView.class.getSimpleName();
-    private List<String> logList = new ArrayList<>();
-    private LogAdapter logAdapter;
-    private ListView listView;
-    private View view;
+    private List<LogInfo> logList = new ArrayList<>();
+    private LogAdapter mLogAdapter;
+    private ListView mLogListView;
+    private View mLogWindowView;
 
     private WindowManager mWindowManager;
-    private LayoutInflater inflate;
-    private Application application;
+    private LayoutInflater mInflate;
 
     public int flag = FLAG_NO_TOUCHABLE;
     public static final int FLAG_NO_TOUCHABLE = 1;
@@ -42,8 +41,7 @@ public class LogView {
 
     public LogView(Application application) {
         mWindowManager = (WindowManager) application.getSystemService(Context.WINDOW_SERVICE);
-        inflate = (LayoutInflater) application.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.application = application;
+        mInflate = (LayoutInflater) application.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public void show() {
@@ -59,18 +57,24 @@ public class LogView {
         params.format = PixelFormat.TRANSLUCENT;
         params.width = 600;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        view = inflate.inflate(R.layout.window_log_float, null);
-        listView = (ListView) view.findViewById(R.id.log_list_view);
-        logAdapter = new LogAdapter();
-        listView.setAdapter(logAdapter);
-        mWindowManager.addView(view, params);
+        mLogWindowView = mInflate.inflate(R.layout.window_log_view, null);
+        mLogListView = (ListView) mLogWindowView.findViewById(R.id.log_list_view);
+        mLogAdapter = new LogAdapter();
+        mLogListView.setAdapter(mLogAdapter);
+        mWindowManager.addView(mLogWindowView, params);
     }
 
 
-    public void addItem(String itemText) {
-        logList.add(itemText);
-        logAdapter.notifyDataSetChanged();
-        listView.smoothScrollToPosition(logList.size() - 1);
+    public void addItem(LogInfo logInfo) {
+        if (logInfo == null || logList == null) {
+            return;
+        }
+        logList.add(logInfo);
+        if (logList.size() >= 200) {
+            logList.remove(0);
+        }
+        mLogAdapter.notifyDataSetChanged();
+        mLogListView.smoothScrollToPosition(logList.size() - 1);
     }
 
     public void hide() {
@@ -79,7 +83,7 @@ public class LogView {
 
 
     public int changeFlag() {
-        WindowManager.LayoutParams lp = (WindowManager.LayoutParams) view.getLayoutParams();
+        WindowManager.LayoutParams lp = (WindowManager.LayoutParams) mLogWindowView.getLayoutParams();
         //三种模式切换
         if (flag == FLAG_NO_TOUCHABLE) {
             this.flag = FLAG_TOUCHABLE;
@@ -87,23 +91,23 @@ public class LogView {
             lp.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-            view.setVisibility(View.VISIBLE);
+            mLogWindowView.setVisibility(View.VISIBLE);
         } else if (flag == FLAG_TOUCHABLE) {
             this.flag = FLAG_HIDE;
             Log.d("LOG_VIEW", "FLAG_HIDE");
             lp.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-            view.setVisibility(View.GONE);
+            mLogWindowView.setVisibility(View.GONE);
         } else if (flag == FLAG_HIDE) {
             this.flag = FLAG_NO_TOUCHABLE;
             Log.d("LOG_VIEW", "FLAG_NO_TOUCHABLE");
             lp.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-            view.setVisibility(View.VISIBLE);
+            mLogWindowView.setVisibility(View.VISIBLE);
         }
-        mWindowManager.updateViewLayout(view, lp);
+        mWindowManager.updateViewLayout(mLogWindowView, lp);
         return flag;
     }
 
@@ -132,10 +136,42 @@ public class LogView {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = inflate.inflate(R.layout.window_log_item, null, false);
-            TextView textView = (TextView) view.findViewById(R.id.log_text_view);
-            textView.setText("position = " + position + " --- " + logList.get(position));
-            return view;
+            LogListHolder holder;
+            if (convertView == null) {
+                convertView = mInflate.inflate(R.layout.window_log_item, null, false);
+                holder = new LogListHolder();
+                holder.textView = (TextView) convertView.findViewById(R.id.log_text_view);
+                convertView.setTag(holder);
+            } else {
+                holder = (LogListHolder) convertView.getTag();
+            }
+            LogInfo logInfo = logList.get(position);
+            if (logInfo == null || holder.textView == null) {
+                return convertView;
+            }
+            Log.d("Logger", "getView Thread =  " + Thread.currentThread().getId() + ", msg = " + logInfo.msg + ", level = " + logInfo.level);
+            holder.textView.setText(logInfo.msg);
+            switch (logInfo.level) {
+                case LogInfo.VERBOSE:
+                case LogInfo.INFO:
+                    holder.textView.setTextColor(Color.WHITE);
+                case LogInfo.DEBUG:
+                    holder.textView.setTextColor(Color.GREEN);
+                    break;
+                case LogInfo.WARN:
+                case LogInfo.ERROR:
+                case LogInfo.WTF:
+                    holder.textView.setTextColor(Color.RED);
+                    break;
+                default:
+                    holder.textView.setTextColor(Color.BLUE);
+                    break;
+            }
+            return convertView;
+        }
+
+        private class LogListHolder {
+            public TextView textView;
         }
     }
 }

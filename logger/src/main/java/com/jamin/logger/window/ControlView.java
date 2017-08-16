@@ -1,4 +1,4 @@
-package com.jamin.android.demo.window;
+package com.jamin.logger.window;
 
 import android.app.Application;
 import android.content.Context;
@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.jamin.android.demo.R;
+import com.jamin.logger.R;
+
 
 /**
  * Created by wangjieming on 2017/8/16.
@@ -20,7 +21,7 @@ import com.jamin.android.demo.R;
 public class ControlView {
 
 
-    LogFloatLayerControl logFloatLayerControl;
+    LogFloatLayerManager logFloatLayerManager;
     private View view;
     private TextView textView;
     private WindowManager mWindowManager;
@@ -28,8 +29,8 @@ public class ControlView {
     private Application application;
     int flag;
 
-    public ControlView(Application application, LogFloatLayerControl logFloatLayerControl) {
-        this.logFloatLayerControl = logFloatLayerControl;
+    public ControlView(Application application, LogFloatLayerManager logFloatLayerManager) {
+        this.logFloatLayerManager = logFloatLayerManager;
         mWindowManager = (WindowManager) application.getSystemService(Context.WINDOW_SERVICE);
         inflate = (LayoutInflater) application.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -62,7 +63,7 @@ public class ControlView {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             Log.d("ControlView", "onDoubleTap");
-            int flag = logFloatLayerControl.changeLogViewFlag();
+            int flag = logFloatLayerManager.changeLogViewFlag();
             setModeText(flag);
             return super.onDoubleTap(e);
         }
