@@ -37,20 +37,31 @@ public class Logger {
         logHandler = new LogHandler(handlerThread.getLooper());
     }
 
-    public static void initLogWindow(Application application) {
-        if (logFloatLayerManager != null) {
-            return;
+    public static void showLogWindow(Application application) {
+        if (logFloatLayerManager == null) {
+            logFloatLayerManager = new LogFloatLayerManager(application);
         }
-        logFloatLayerManager = new LogFloatLayerManager(application);
         logFloatLayerManager.showLogFloatLayer();
     }
 
-    public static void registerLogReceiver() {
+    public static void hideWindow() {
+        if (logFloatLayerManager == null) {
+            return;
+        }
+        logFloatLayerManager.hide();
+    }
+
+    public static void registerLogReceiver(Application application) {
         if (logFloatLayerManager != null) {
-            logFloatLayerManager.registerLogReceiver();
+            logFloatLayerManager.registerLogReceiver(application);
         }
     }
 
+    public static void unRegisterReceiver(Application application) {
+        if (logFloatLayerManager != null) {
+            logFloatLayerManager.unregisterLogReceiver(application);
+        }
+    }
 
     /**
      * 生成TAG.
@@ -202,7 +213,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                    Log.w(tag, content);
+                Log.w(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + content);
                 }
@@ -217,7 +228,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                    Log.w(tag, content, tr);
+                Log.w(tag, content, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + content);
                 }
@@ -233,7 +244,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                    Log.w(tag, tr);
+                Log.w(tag, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + tr.getMessage());
                 }
@@ -250,7 +261,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                    Log.wtf(tag, content);
+                Log.wtf(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WTF, tag + " --> " + content);
                 }

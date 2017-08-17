@@ -45,23 +45,28 @@ public class LogView {
     }
 
     public void show() {
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        // 类型
-        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-        params.x = 0;
-        params.y = 0;
-        params.gravity = Gravity.LEFT;
-        params.format = PixelFormat.TRANSLUCENT;
-        params.width = 600;
-        params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        mLogWindowView = mInflate.inflate(R.layout.window_log_view, null);
-        mLogListView = (ListView) mLogWindowView.findViewById(R.id.log_list_view);
-        mLogAdapter = new LogAdapter();
-        mLogListView.setAdapter(mLogAdapter);
-        mWindowManager.addView(mLogWindowView, params);
+        if (mLogWindowView == null) {
+            final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+            // 类型
+            params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            params.x = 0;
+            params.y = 0;
+            params.gravity = Gravity.LEFT;
+            params.format = PixelFormat.TRANSLUCENT;
+            params.width = 600;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            mLogWindowView = mInflate.inflate(R.layout.window_log_view, null);
+            mLogListView = (ListView) mLogWindowView.findViewById(R.id.log_list_view);
+            mLogAdapter = new LogAdapter();
+            mLogListView.setAdapter(mLogAdapter);
+            mWindowManager.addView(mLogWindowView, params);
+        } else {
+            mLogWindowView.setVisibility(View.VISIBLE);
+        }
+
     }
 
 
@@ -78,6 +83,9 @@ public class LogView {
     }
 
     public void hide() {
+        if (mLogWindowView != null) {
+            mLogWindowView.setVisibility(View.GONE);
+        }
 
     }
 

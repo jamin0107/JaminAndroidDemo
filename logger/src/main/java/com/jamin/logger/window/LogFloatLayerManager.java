@@ -37,14 +37,14 @@ public class LogFloatLayerManager {
         this.controlView = new ControlView(application, this);
     }
 
-    public void registerLogReceiver() {
+    public void registerLogReceiver(Application application) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_VIVA_LOG);
-        LocalBroadcastManager.getInstance(this.application).registerReceiver(broadcastReceiver, intentFilter);
+        LocalBroadcastManager.getInstance(application).registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    public void unregisterLogReceiver() {
-        LocalBroadcastManager.getInstance(this.application).unregisterReceiver(broadcastReceiver);
+    public void unregisterLogReceiver(Application application) {
+        LocalBroadcastManager.getInstance(application).unregisterReceiver(broadcastReceiver);
     }
 
 
@@ -52,6 +52,8 @@ public class LogFloatLayerManager {
         logView.show();
         controlView.show();
     }
+
+
 
     public static String dateToStamp(long timeStamp) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss.SSS");

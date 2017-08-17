@@ -9,10 +9,12 @@ import android.widget.CompoundButton;
 
 import com.google.gson.Gson;
 import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.android.demo.ProcessManager;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.util.LogEventSender;
 import com.jamin.framework.util.LogUtil;
+import com.jamin.logger.Logger;
 import com.jamin.rescue.Rescue;
 import com.jamin.rescue.hugo.RescueTimeLog;
 import com.jamin.rescue.log.manager.PrepareDataListener;
@@ -112,6 +114,24 @@ public class JaminRescueActivity extends BaseActivity {
 
                     }
                 });
+
+            }
+        });
+
+        CheckBox checkBox = (CheckBox) findViewById(R.id.btn_log_enable);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Logger.init(true, "JaminDebug");
+                    if (ProcessManager.isUIProcess()) {
+                        Logger.showLogWindow(JaminApplicationHelper.getApplication());
+                    }
+                    Logger.registerLogReceiver(JaminApplicationHelper.getApplication());
+                } else {
+                    Logger.hideWindow();
+                    Logger.unRegisterReceiver(JaminApplicationHelper.getApplication());
+                }
 
             }
         });

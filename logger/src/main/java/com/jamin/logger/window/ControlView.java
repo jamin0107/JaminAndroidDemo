@@ -22,7 +22,7 @@ public class ControlView {
 
 
     LogFloatLayerManager logFloatLayerManager;
-    private View view;
+    private View mControlView;
     private TextView textView;
     private WindowManager mWindowManager;
     private LayoutInflater inflate;
@@ -36,26 +36,32 @@ public class ControlView {
     }
 
     public void show() {
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        // 类型
-        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        params.x = 300;
-        params.y = 300;
-        params.format = PixelFormat.TRANSLUCENT;
-        params.width = 200;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        view = inflate.inflate(R.layout.window_log_control, null);
-        textView = (TextView) view.findViewById(R.id.log_control_btn);
-        textView.setText("Mode:浮层不可点");
-        GestureDetector gestureDetector = new GestureDetector(view.getContext(), this.simpleOnGestureListener);
-        view.setOnTouchListener(new ControlTouchListener(params, mWindowManager, gestureDetector));
-        view.setHapticFeedbackEnabled(false);
-        mWindowManager.addView(view, params);
+        if (mControlView == null) {
+            final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+            // 类型
+            params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+            params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            params.x = 300;
+            params.y = 300;
+            params.format = PixelFormat.TRANSLUCENT;
+            params.width = 200;
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            mControlView = inflate.inflate(R.layout.window_log_control, null);
+            textView = (TextView) mControlView.findViewById(R.id.log_control_btn);
+            textView.setText("Mode:浮层不可点");
+            GestureDetector gestureDetector = new GestureDetector(mControlView.getContext(), this.simpleOnGestureListener);
+            mControlView.setOnTouchListener(new ControlTouchListener(params, mWindowManager, gestureDetector));
+            mControlView.setHapticFeedbackEnabled(false);
+            mWindowManager.addView(mControlView, params);
+        } else {
+            mControlView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void hide() {
-
+        if (mControlView != null) {
+            mControlView.setVisibility(View.GONE);
+        }
     }
 
     private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
