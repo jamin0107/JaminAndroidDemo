@@ -7,17 +7,19 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.google.gson.Gson;
 import com.jamin.android.demo.JaminApplicationHelper;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.util.LogEventSender;
 import com.jamin.framework.util.LogUtil;
-import com.jamin.logger.Logger;
 import com.jamin.rescue.Rescue;
 import com.jamin.rescue.hugo.RescueTimeLog;
 import com.jamin.rescue.log.manager.PrepareDataListener;
 import com.jamin.rescue.model.KeyPathPerformanceModel;
 import com.jamin.rescue.model.LogModel;
+
+import java.util.HashMap;
 
 /**
  * Created by wangjieming on 2017/7/17.
@@ -117,27 +119,35 @@ public class JaminRescueActivity extends BaseActivity {
         findViewById(R.id.add_log).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.VERBOSE , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.ERROR , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.WARN , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.INFO , "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication() , LogEventSender.DEBUG , "LogMsg-------------");
-                Logger.e("Logggggggggggggggggggg");
-                Logger.i("Logggggggggggggggggggg");
-                Logger.e("Logggggggggggggggggggg");
-                Logger.e("Logggggggggggggggggggg");
-                Logger.d("Logggggggggggggggggggg");
-                Logger.i("Logggggggggggggggggggg");
-                Logger.v("Logggggggggggggggggggg");
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("bac", "345");
+                hashMap.put("qwe", "zxc");
+                hashMap.put("asd", "2345");
+                hashMap.put("asd", "123");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ",\n propMap = " + new Gson().toJson(hashMap) + "\n");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.VERBOSE, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.ERROR, "LogMsg-------------");
+                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.WARN, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.INFO, "LogMsg-------------");
+//                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
+//                Logger.e("Logggggggggggggggggggg");
+//                Logger.i("Logggggggggggggggggggg");
+//                Logger.e("Logggggggggggggggggggg");
+//                Logger.e("Logggggggggggggggggggg");
+//                Logger.d("Logggggggggggggggggggg");
+//                Logger.i("Logggggggggggggggggggg");
+//                Logger.v("Logggggggggggggggggggg");
             }
         });
     }
-
 
 
     @Override

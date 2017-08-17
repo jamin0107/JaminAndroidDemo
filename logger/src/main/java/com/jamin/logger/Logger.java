@@ -79,11 +79,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.d(tag, content);
-                } else {
-                    Log.d(tag, content);
-                }
+                Log.d(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.DEBUG, tag + " --> " + content);
                 }
@@ -99,11 +95,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.d(tag, content, tr);
-                } else {
-                    Log.d(tag, content, tr);
-                }
+                Log.d(tag, content, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.DEBUG, tag + " --> " + content);
                 }
@@ -119,11 +111,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.e(tag, content);
-                } else {
-                    Log.e(tag, content);
-                }
+                Log.e(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.ERROR, tag + " --> " + content);
                 }
@@ -138,11 +126,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.e(tag, content, tr);
-                } else {
-                    Log.e(tag, content, tr);
-                }
+                Log.e(tag, content, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.ERROR, tag + " --> " + content);
                 }
@@ -157,11 +141,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.i(tag, content);
-                } else {
-                    Log.i(tag, content);
-                }
+                Log.i(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.INFO, tag + " --> " + content);
                 }
@@ -176,11 +156,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.i(tag, content, tr);
-                } else {
-                    Log.i(tag, content, tr);
-                }
+                Log.i(tag, content, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.INFO, tag + " --> " + content);
                 }
@@ -195,11 +171,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.v(tag, content);
-                } else {
-                    Log.v(tag, content);
-                }
+                Log.v(tag, content);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.VERBOSE, tag + " --> " + content);
                 }
@@ -215,11 +187,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.v(tag, content, tr);
-                } else {
-                    Log.v(tag, content, tr);
-                }
+                Log.v(tag, content, tr);
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.VERBOSE, tag + " --> " + content);
                 }
@@ -234,11 +202,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.w(tag, content);
-                } else {
                     Log.w(tag, content);
-                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + content);
                 }
@@ -253,11 +217,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.w(tag, content, tr);
-                } else {
                     Log.w(tag, content, tr);
-                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + content);
                 }
@@ -273,11 +233,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.w(tag, tr);
-                } else {
                     Log.w(tag, tr);
-                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WARN, tag + " --> " + tr.getMessage());
                 }
@@ -294,11 +250,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (customLogger != null) {
-                    customLogger.wtf(tag, content);
-                } else {
                     Log.wtf(tag, content);
-                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WTF, tag + " --> " + content);
                 }
@@ -313,11 +265,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-//                if (customLogger != null) {
-//                    customLogger.wtf(tag, content, tr);
-//                } else {
                 Log.wtf(tag, content, tr);
-//                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WTF, tag + " --> " + content);
                 }
@@ -332,11 +280,7 @@ public class Logger {
         logHandler.post(new Runnable() {
             @Override
             public void run() {
-//                if (customLogger != null) {
-//                    customLogger.wtf(tag, tr);
-//                } else {
                 Log.wtf(tag, tr);
-//                }
                 if (logFloatLayerManager != null) {
                     logFloatLayerManager.addItem(LogInfo.WTF, tag + " --> " + tr.getMessage());
                 }
@@ -345,41 +289,6 @@ public class Logger {
 
     }
 
-
-    public static CustomLogger customLogger;
-
-
-    //可自定义
-    public interface CustomLogger {
-
-        void d(String tag, String content);
-
-        void d(String tag, String content, Throwable tr);
-
-        void e(String tag, String content);
-
-        void e(String tag, String content, Throwable tr);
-
-        void i(String tag, String content);
-
-        void i(String tag, String content, Throwable tr);
-
-        void v(String tag, String content);
-
-        void v(String tag, String content, Throwable tr);
-
-        void w(String tag, String content);
-
-        void w(String tag, String content, Throwable tr);
-
-        void w(String tag, Throwable tr);
-
-        void wtf(String tag, String content);
-
-        void wtf(String tag, String content, Throwable tr);
-
-        void wtf(String tag, Throwable tr);
-    }
 
     static class LogHandler extends Handler {
 

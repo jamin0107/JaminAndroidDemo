@@ -54,7 +54,7 @@ public class LogFloatLayerManager {
     }
 
     public static String dateToStamp(long timeStamp) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss.SSS");
         Date date = new Date(timeStamp);
         return simpleDateFormat.format(date);
     }
