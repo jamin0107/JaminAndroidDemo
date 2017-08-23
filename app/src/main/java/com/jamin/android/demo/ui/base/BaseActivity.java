@@ -7,18 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 
-
-
 /**
  * Created by jamin on 2016/12/14.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(BaseActivity.this.getClass().getSimpleName());
+        }
     }
 
 

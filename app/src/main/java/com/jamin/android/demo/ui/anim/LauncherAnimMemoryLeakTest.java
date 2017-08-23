@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
-import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.framework.base.BaseApplicationHelper;
 
 /**
  * Created by wangjieming on 2017/7/13.
@@ -28,13 +28,13 @@ public class LauncherAnimMemoryLeakTest {
         };
 
         IntentFilter intentFilter = new IntentFilter("a");
-        LocalBroadcastManager.getInstance(JaminApplicationHelper.getAppContext()).registerReceiver(receiver, intentFilter);
+        LocalBroadcastManager.getInstance(BaseApplicationHelper.getAppContext()).registerReceiver(receiver, intentFilter);
 
     }
 
 
     public void sayHollo() {
-        Toast.makeText(JaminApplicationHelper.getAppContext(), "Hello Memory LeakTest", Toast.LENGTH_SHORT).show();
+        Toast.makeText(BaseApplicationHelper.getAppContext(), "Hello Memory LeakTest", Toast.LENGTH_SHORT).show();
     }
 
 }

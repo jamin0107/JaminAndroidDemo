@@ -12,7 +12,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.framework.base.BaseApplicationHelper;
 import com.jamin.framework.util.LogUtil;
 
 /**
@@ -36,7 +36,7 @@ public class JaminServiceConnectMessenger implements IJaminConnect {
     }
 
     public void onBind() {
-        Context context = JaminApplicationHelper.getAppContext();
+        Context context = BaseApplicationHelper.getAppContext();
         Intent intent = new Intent(context, JaminService.class);
         context.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
         int pid = android.os.Process.myPid();
@@ -49,7 +49,7 @@ public class JaminServiceConnectMessenger implements IJaminConnect {
             return;
         }
         isBind = false;
-        Context context = JaminApplicationHelper.getAppContext();
+        Context context = BaseApplicationHelper.getAppContext();
         context.unbindService(mServiceConnection);
         int pid = android.os.Process.myPid();
         LogUtil.d("onUnBind pid = " + pid);
@@ -58,7 +58,7 @@ public class JaminServiceConnectMessenger implements IJaminConnect {
 
 
     public void onConnectTestMethod() {
-        Toast.makeText(JaminApplicationHelper.getAppContext(), "let remote service calculate 5 + 10 , maybe coast 5s", Toast.LENGTH_SHORT).show();
+        Toast.makeText(BaseApplicationHelper.getAppContext(), "let remote service calculate 5 + 10 , maybe coast 5s", Toast.LENGTH_SHORT).show();
         Message message = Message.obtain(null, JaminService.MESSAGER_ADD, 5, 10);
         message.replyTo = mMessenger;
         try {
@@ -95,7 +95,7 @@ public class JaminServiceConnectMessenger implements IJaminConnect {
                     Bundle bundle = msg.getData();
                     bundle.setClassLoader(RemoteObj.class.getClassLoader());
                     RemoteObj remote = bundle.getParcelable(JaminService.BUNDLE_REMOTE_OBJ);
-                    Toast.makeText(JaminApplicationHelper.getAppContext(), remote.getName() + ",sum = " + msg.arg1, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseApplicationHelper.getAppContext(), remote.getName() + ",sum = " + msg.arg1, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(JaminApplicationHelper.getAppContext(), "sum = " + msg.arg1, Toast.LENGTH_SHORT).show();
                     break;
             }

@@ -9,8 +9,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import com.jamin.android.demo.JaminApplication;
-import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.framework.base.BaseApplicationHelper;
 import com.jamin.framework.util.LogUtil;
 
 /**
@@ -36,7 +35,7 @@ public class JaminServiceConnect implements IJaminConnect {
     }
 
     public void onBind() {
-        Context context = JaminApplicationHelper.getAppContext();
+        Context context = BaseApplicationHelper.getAppContext();
         Intent intent = new Intent(context, JaminService.class);
         context.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
         int pid = android.os.Process.myPid();
@@ -49,7 +48,7 @@ public class JaminServiceConnect implements IJaminConnect {
             return;
         }
         isBind = false;
-        Context context = JaminApplicationHelper.getAppContext();
+        Context context = BaseApplicationHelper.getAppContext();
         context.unbindService(mServiceConnection);
         int pid = android.os.Process.myPid();
         LogUtil.d("onUnBind pid = " + pid);
@@ -99,10 +98,10 @@ public class JaminServiceConnect implements IJaminConnect {
         @Override
         public void onSuccess(final RemoteObj remoteObj) throws RemoteException {
             LogUtil.d("onSuccess remoteObj = " + remoteObj);
-            new Handler(JaminApplicationHelper.getAppContext().getMainLooper()).post(new Runnable() {
+            new Handler(BaseApplicationHelper.getAppContext().getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(JaminApplicationHelper.getAppContext(), "remoteObj = " + remoteObj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseApplicationHelper.getAppContext(), "remoteObj = " + remoteObj, Toast.LENGTH_SHORT).show();
                 }
             });
 

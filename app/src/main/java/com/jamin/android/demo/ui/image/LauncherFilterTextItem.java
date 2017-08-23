@@ -40,6 +40,8 @@ public class LauncherFilterTextItem extends BaseItem<String> {
                     getActivity().startActivity(new Intent(getActivity(), ActivityMain.class));
                 } else if (LauncherImageActivity.LAUNCHER_ICON_FONT.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), IconFontGridActivity.class));
+                }else if (LauncherImageActivity.LAUNCHER_BITMAP_TEST.equals(desc)) {
+                    getActivity().startActivity(new Intent(getActivity(), BitmapTestActivity.class));
                 }
             }
         });

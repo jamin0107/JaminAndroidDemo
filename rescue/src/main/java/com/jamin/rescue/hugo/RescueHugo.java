@@ -37,7 +37,7 @@ public class RescueHugo {
     public void method() {
     }
 
-    @Pointcut("execution(@com.jamin.rescue.hugo.RescueTimeLog * onCreate(..)) && methodInsideAnnotatedType()")
+    @Pointcut("execution( * onCreate(..)) && methodInsideAnnotatedType()")
     public void activity_create() {
     }
 
@@ -62,7 +62,7 @@ public class RescueHugo {
     }
 
 
-    @Around("method() || constructor() ||activity_create() ||activity_resume() || activity_start() ")
+    @Around("method() || constructor() ||activity_create() ||activity_resume() || activity_start()||activity_pause() ||activity_stop() ")
     public Object logAndExecute(ProceedingJoinPoint joinPoint) throws Throwable {
         enterMethod(joinPoint);
 

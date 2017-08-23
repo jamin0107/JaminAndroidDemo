@@ -13,7 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.framework.base.BaseApplicationHelper;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
@@ -73,7 +73,7 @@ public class LauncherAnimationActivity extends BaseActivity {
             }
         };
         IntentFilter intentFilter = new IntentFilter("a");
-        LocalBroadcastManager.getInstance(JaminApplicationHelper.getAppContext()).registerReceiver(innerBroadcastReceiver, intentFilter);
+        LocalBroadcastManager.getInstance(BaseApplicationHelper.getAppContext()).registerReceiver(innerBroadcastReceiver, intentFilter);
     }
 
     private void initData() {

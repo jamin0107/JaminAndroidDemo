@@ -1,11 +1,11 @@
 package com.jamin.android.demo;
 
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.jamin.android.demo.db.DBFactory;
+import com.jamin.framework.base.BaseApplication;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.rescue.Rescue;
 
@@ -13,7 +13,10 @@ import com.jamin.rescue.Rescue;
  * Created by jamin on 2016/11/25.
  */
 
-public class JaminApplication extends MultiDexApplication {
+public class JaminApplication extends BaseApplication {
+
+
+
 
 
     @Override
@@ -21,7 +24,6 @@ public class JaminApplication extends MultiDexApplication {
         super.onCreate();
         MultiDex.install(this);
         LogUtil.init(true, "JaminDebug");
-        JaminApplicationHelper.init(this);
         ProcessManager.init(this);
         LogUtil.d("isUIProcess = " + ProcessManager.isUIProcess());
         //注册数据库

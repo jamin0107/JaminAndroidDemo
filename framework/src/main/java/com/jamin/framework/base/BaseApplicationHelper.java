@@ -1,4 +1,4 @@
-package com.jamin.android.demo;
+package com.jamin.framework.base;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,20 +7,20 @@ import android.content.Context;
  * Created by jamin on 2017/3/15.
  */
 
-public class JaminApplicationHelper {
+public class BaseApplicationHelper {
 
 
-    private final JaminApplication THE_APP;
-    private static JaminApplicationHelper mInstance;
+    private final BaseApplication THE_APP;
+    private static BaseApplicationHelper mInstance;
 
 
-    private JaminApplicationHelper(JaminApplication application) {
+    private BaseApplicationHelper(BaseApplication application) {
         THE_APP = application;
     }
 
-    public static void init(JaminApplication application) {
+    public static void init(BaseApplication application) {
         if (mInstance == null) {
-            mInstance = new JaminApplicationHelper(application);
+            mInstance = new BaseApplicationHelper(application);
         }
     }
 
@@ -43,14 +43,6 @@ public class JaminApplicationHelper {
         }
         return mInstance.THE_APP.getApplicationContext();
     }
-
-
-
-
-
-
-
-
 
 
 }

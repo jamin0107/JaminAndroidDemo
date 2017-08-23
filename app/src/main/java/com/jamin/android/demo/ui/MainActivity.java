@@ -36,11 +36,12 @@ public class MainActivity extends BaseActivity {
     public static final String LAUNCHER_ANIMATION = "Animation";
     public static final String LAUNCHER_IMAGE = "Image";
     public static final String LAUNCHER_HISTORY_ON_TODAY = "DbHistory on Today";
+    public static final String LAUNCHER_RXJAVA_TEST = "RxBus";
     public static final String LAUNCHER_GL_VIEW = "GLView";
     public static final String LAUNCHER_SERVICE = "Remote Service";
     public static final String LAUNCHER_RESCUE_TEST = "RESCUE";
 
-    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY, LAUNCHER_GL_VIEW, LAUNCHER_SERVICE , LAUNCHER_RESCUE_TEST};
+    String[] LAUNCHER = new String[]{LAUNCHER_ANIMATION, LAUNCHER_IMAGE, LAUNCHER_HISTORY_ON_TODAY, LAUNCHER_RXJAVA_TEST, LAUNCHER_GL_VIEW, LAUNCHER_SERVICE, LAUNCHER_RESCUE_TEST};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

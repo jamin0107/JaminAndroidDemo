@@ -61,6 +61,8 @@
 
         <activity android:name=".ui.image.iconfont.IconFontGridActivity" />
 
+        <activity android:name=".ui.image.BitmapTestActivity" />
+
         <activity android:name=".ui.image.filter.activity.ActivityMain" />
         <activity android:name=".ui.image.filter.activity.ActivityGallery" />
         <activity android:name=".ui.image.filter.activity.ActivityCamera" />

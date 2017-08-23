@@ -3,6 +3,7 @@ package com.jamin.http.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.jamin.http.cache.HttpBaseResponse;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by jamin on 2016/12/23.
  */
 
-public class CloudBeanHistoryOnToday {
+public class CloudBeanHistoryOnToday extends HttpBaseResponse {
 
     //返回码
     @SerializedName("error_code")

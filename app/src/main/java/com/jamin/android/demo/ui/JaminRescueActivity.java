@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.google.gson.Gson;
-import com.jamin.android.demo.JaminApplicationHelper;
+import com.jamin.framework.base.BaseApplicationHelper;
 import com.jamin.android.demo.ProcessManager;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.ui.base.BaseActivity;
@@ -125,12 +125,12 @@ public class JaminRescueActivity extends BaseActivity {
                 if (isChecked) {
                     Logger.init(true, "JaminDebug");
                     if (ProcessManager.isUIProcess()) {
-                        Logger.showLogWindow(JaminApplicationHelper.getApplication());
+                        Logger.showLogWindow(BaseApplicationHelper.getApplication());
                     }
-                    Logger.registerLogReceiver(JaminApplicationHelper.getApplication());
+                    Logger.registerLogReceiver(BaseApplicationHelper.getApplication());
                 } else {
                     Logger.hideWindow();
-                    Logger.unRegisterReceiver(JaminApplicationHelper.getApplication());
+                    Logger.unRegisterReceiver(BaseApplicationHelper.getApplication());
                 }
 
             }
@@ -145,14 +145,14 @@ public class JaminRescueActivity extends BaseActivity {
                 hashMap.put("qwe", "zxc");
                 hashMap.put("asd", "2345");
                 hashMap.put("asd", "123");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ",\n propMap = " + new Gson().toJson(hashMap) + "\n");
+                LogEventSender.sendEvent(BaseApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ",\n propMap = " + new Gson().toJson(hashMap) + "\n");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.VERBOSE, "LogMsg-------------");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
+                LogEventSender.sendEvent(BaseApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.ERROR, "LogMsg-------------");
-                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
+                LogEventSender.sendEvent(BaseApplicationHelper.getApplication(), LogEventSender.DEBUG, "Event : " + "abc" + ", propMap = " + new Gson().toJson(hashMap));
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.DEBUG, "LogMsg-------------");
 //                LogEventSender.sendEvent(JaminApplicationHelper.getApplication(), LogEventSender.WARN, "LogMsg-------------");
@@ -175,6 +175,7 @@ public class JaminRescueActivity extends BaseActivity {
         super.onResume();
     }
 
+    @RescueTimeLog
     private void logPerformance() {
         KeyPathPerformanceModel performanceModel = new KeyPathPerformanceModel();
         performanceModel.fromPage = "A";
@@ -192,6 +193,23 @@ public class JaminRescueActivity extends BaseActivity {
                 .withPageName(JaminRescueActivity.class.getSimpleName())
                 .withMessage("onCreate");
         Rescue.log(logModel);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
 

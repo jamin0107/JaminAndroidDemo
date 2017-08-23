@@ -25,7 +25,8 @@ public class LauncherImageActivity extends BaseActivity {
     List<BaseItem> list = new LinkedList<>();
     public static final String LAUNCHER_FILTER = "Filter";
     public static final String LAUNCHER_ICON_FONT = "IconFont";
-    String[] LAUNCHER = new String[]{LAUNCHER_FILTER , LAUNCHER_ICON_FONT};
+    public static final String LAUNCHER_BITMAP_TEST = "BitmapTest";
+    String[] LAUNCHER = new String[]{LAUNCHER_FILTER, LAUNCHER_ICON_FONT, LAUNCHER_BITMAP_TEST};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

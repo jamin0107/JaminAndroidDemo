@@ -6,23 +6,23 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
-import com.jamin.android.demo.db.DBFactory;
-import com.jamin.android.demo.db.ModelHelper;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.util.LogUtil;
-import com.jamin.greendao.model.DbHistory;
-import com.jamin.http.HttpService;
-import com.jamin.http.model.CloudBeanHistory;
+import com.jamin.http.cache.HttpFileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 
-import java.util.ArrayList;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.FlowableSubscriber;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by jamin on 2016/12/23.
@@ -37,7 +37,6 @@ public class ActivityHistoryOnToday extends BaseActivity {
     SwipeRefreshLayout mLayoutSwipeRefresh;
 
 
-
     private CustomRecyclerViewAdapter mAdapter;
     private BaseActivity activity;
 
@@ -48,14 +47,14 @@ public class ActivityHistoryOnToday extends BaseActivity {
         ButterKnife.bind(this);
         activity = this;
 
+        refresh();
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
             }
         });
-//        mLayoutSwipeRefresh.setRefreshing(true);
-//        refresh();
+
 
     }
 
@@ -65,69 +64,56 @@ public class ActivityHistoryOnToday extends BaseActivity {
     }
 
     private void request() {
-//        Observable<CloudBeanHistoryOnToday> observer = HttpService.getInstance().getTodayOnHistory("1/17");
-//        observer.subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.io())
-//                .doOnNext(new Action1<CloudBeanHistoryOnToday>() {
-//                    @Override
-//                    public void call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-//                        if (cloudBeanHistoryOnToday.list == null) {
-//                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
-//                        }
-//                        if (cloudBeanHistoryOnToday.errorCode != 0) {
-//                            LogUtil.d("reason = " + cloudBeanHistoryOnToday.reason);
-//                            throw Exceptions.propagate(new Throwable("" + cloudBeanHistoryOnToday.errorCode));
-//                        }
-//                        //存入数据库
-//                        List<DbHistory> list = new ArrayList<>();
-//                        for (CloudBeanHistory history : cloudBeanHistoryOnToday.list) {
-//                            list.add(ModelHelper.cloudHistoryToDBHistory(history));
-//                        }
-//                        DBFactory.getInstance().getHistoryDao().insertInTx(list);
-//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-//                        LogUtil.d("DbHistory OnToday Success do first event on bg");
-//                    }
-//
-//                })
-//                .map(new Func1<CloudBeanHistoryOnToday, List<BaseItem>>() {
-//                    @Override
-//                    public List<BaseItem> call(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-//
-//                        List<CloudBeanHistory> list = cloudBeanHistoryOnToday.list;
-//                        List<BaseItem> items = new ArrayList<BaseItem>();
-//                        for (CloudBeanHistory cloudBeanHistory : list) {
-//                            items.add(new HistoryItem(activity, cloudBeanHistory));
-//                        }
-//                        return items;
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<BaseItem>>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        if (mLayoutSwipeRefresh != null) {
-//                            mLayoutSwipeRefresh.setRefreshing(false);
-//                        }
-//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-//                        LogUtil.d("notify UI onCompleted on MainThread");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        if (mLayoutSwipeRefresh != null) {
-//                            mLayoutSwipeRefresh.setRefreshing(false);
-//                        }
-//                        LogUtil.d("Thread id = " + Thread.currentThread().getId() + ", Thread name = " + Thread.currentThread().getName());
-//                        LogUtil.d("notify UI onError on MainThread");
-//                        LogUtil.d("Throwable.msg = " + e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<BaseItem> baseItems) {
-//                        refreshRecyclerView(baseItems);
-//                    }
-//                });
+        HttpFileCache<CloudBeanHistoryOnToday> httpFileCache = new HttpFileCache<>(CloudBeanHistoryOnToday.class);
+        CloudBeanHistoryOnToday cloudBeanHistoryOnToday = new CloudBeanHistoryOnToday();
+        cloudBeanHistoryOnToday.errorCode = 1;
+        cloudBeanHistoryOnToday.list = null;
+        cloudBeanHistoryOnToday.reason = "test";
+        httpFileCache.saveCache(cloudBeanHistoryOnToday).subscribe();
 
+        httpFileCache.getCache().subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new FlowableSubscriber<CloudBeanHistoryOnToday>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
+                        LogUtil.d("ReadCache = " + new Gson().toJson(cloudBeanHistoryOnToday));
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+//                    .subscribe(new Subscriber<CloudBeanHistoryOnToday>() {
+//                        @Override
+//                        public void onSubscribe(Subscription subscription) {
+//                            subscription.request(Long.MAX_VALUE);
+//                        }
+//
+//                        @Override
+//                        public void onNext(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
+//                            LogUtil.d(new Gson().toJson(cloudBeanHistoryOnToday));
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable t) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//
+//                        }
+//                    });
     }
 
     private void refreshRecyclerView(List<BaseItem> baseItems) {
