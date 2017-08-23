@@ -12,11 +12,9 @@ import com.jamin.framework.util.MD5Util;
 import java.io.File;
 import java.io.IOException;
 
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -25,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by wangjieming on 2017/8/22.
  * 简单的HTTP 请求的Cache
  */
-public class HttpFileCache<T extends HttpBaseResponse> implements ICache<T> {
+public class HttpFileCache<T> implements ICache<T> {
 
 
     private File cacheFile;
@@ -105,9 +103,9 @@ public class HttpFileCache<T extends HttpBaseResponse> implements ICache<T> {
 
 
     @Override
-    public Flowable<T> getCache() {
+    public Observable<T> getCache() {
         LogUtil.d("getCache");
-        return Flowable.just(cacheFile)
+        return Observable.just(cacheFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map(new Function<File, T>() {
@@ -121,7 +119,7 @@ public class HttpFileCache<T extends HttpBaseResponse> implements ICache<T> {
 
 
     @Override
-    public Flowable<Boolean> clearCache() {
+    public Observable<Boolean> clearCache() {
 
 //        return Single.create(new SingleOnSubscribe<File>() {
 //            @Override
@@ -137,13 +135,13 @@ public class HttpFileCache<T extends HttpBaseResponse> implements ICache<T> {
 //                    }
 //                }).toFlowable();
 
-        return Flowable
-                .create(new FlowableOnSubscribe<Integer>() {
+        return Observable
+                .create(new ObservableOnSubscribe<Integer>() {
                     @Override
-                    public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
-                        emitter.onNext(1);
+                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                        e.onNext(1);
                     }
-                }, BackpressureStrategy.BUFFER)
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map(new Function<Integer, Boolean>() {

@@ -1,6 +1,5 @@
 package com.jamin.http.cache;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -8,14 +7,14 @@ import io.reactivex.Observable;
  * 这个cache只cache一页数据，只可以添加删除，不可修改
  */
 
-public interface ICache<T extends HttpBaseResponse> {
+public interface ICache<T> {
 
 
     Observable<Boolean> saveCache(T data);
 
-    Flowable<T> getCache();
+    Observable<T> getCache();
 
-    Flowable<Boolean> clearCache();
+    Observable<Boolean> clearCache();
 
 
 }

@@ -15,14 +15,13 @@ import com.jamin.framework.util.LogUtil;
 import com.jamin.http.cache.HttpFileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 
-import org.reactivestreams.Subscription;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.FlowableSubscriber;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by jamin on 2016/12/23.
@@ -72,19 +71,19 @@ public class ActivityHistoryOnToday extends BaseActivity {
         httpFileCache.saveCache(cloudBeanHistoryOnToday).subscribe();
 
         httpFileCache.getCache().subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new FlowableSubscriber<CloudBeanHistoryOnToday>() {
+                .subscribe(new Observer<CloudBeanHistoryOnToday>() {
                     @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
                     public void onNext(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-                        LogUtil.d("ReadCache = " + new Gson().toJson(cloudBeanHistoryOnToday));
+                        LogUtil.d(new Gson().toJson(cloudBeanHistoryOnToday));
                     }
 
                     @Override
-                    public void onError(Throwable t) {
+                    public void onError(Throwable e) {
 
                     }
 
@@ -93,27 +92,6 @@ public class ActivityHistoryOnToday extends BaseActivity {
 
                     }
                 });
-//                    .subscribe(new Subscriber<CloudBeanHistoryOnToday>() {
-//                        @Override
-//                        public void onSubscribe(Subscription subscription) {
-//                            subscription.request(Long.MAX_VALUE);
-//                        }
-//
-//                        @Override
-//                        public void onNext(CloudBeanHistoryOnToday cloudBeanHistoryOnToday) {
-//                            LogUtil.d(new Gson().toJson(cloudBeanHistoryOnToday));
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable t) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//
-//                        }
-//                    });
     }
 
     private void refreshRecyclerView(List<BaseItem> baseItems) {
