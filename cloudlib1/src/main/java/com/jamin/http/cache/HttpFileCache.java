@@ -15,6 +15,7 @@ import java.io.IOException;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -77,28 +78,27 @@ public class HttpFileCache<T> implements ICache<T> {
      * @return 返回boolean 存储是否成功
      */
     @Override
-    public Observable<Boolean> saveCache(final T data) {
-        return Observable.just(data).subscribeOn(Schedulers.io())
+    public void saveCache(final T data) {
+        Observable.just(data).subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map(new Function<T, Boolean>() {
                     @Override
                     public Boolean apply(T t) throws Exception {
                         return saveCacheAsync(t);
                     }
-                });
-//        return Observable.create(new ObservableOnSubscribe<T>() {
-//            @Override
-//            public void subscribe(ObservableEmitter<T> emitter) throws Exception {
-//                emitter.onNext(data);
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.io())
-//                .map(new Function<T, Boolean>() {
-//                    @Override
-//                    public Boolean apply(T t) throws Exception {
-//                        return saveCacheAsync(t);
-//                    }
-//                });
+                }).subscribe();
+    }
+
+    @Override
+    public void saveCache(T data, Observer<Boolean> observer) {
+        Observable.just(data).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map(new Function<T, Boolean>() {
+                    @Override
+                    public Boolean apply(T t) throws Exception {
+                        return saveCacheAsync(t);
+                    }
+                }).subscribe(observer);
     }
 
 
@@ -119,23 +119,8 @@ public class HttpFileCache<T> implements ICache<T> {
 
 
     @Override
-    public Observable<Boolean> clearCache() {
-
-//        return Single.create(new SingleOnSubscribe<File>() {
-//            @Override
-//            public void subscribe(SingleEmitter<File> e) throws Exception {
-//                e.onSuccess(cacheFile);
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.io())
-//                .map(new Function<File, Boolean>() {
-//                    @Override
-//                    public Boolean apply(File t) throws Exception {
-//                        return deleteCacheAsync();
-//                    }
-//                }).toFlowable();
-
-        return Observable
+    public void clearCache() {
+        Observable
                 .create(new ObservableOnSubscribe<Integer>() {
                     @Override
                     public void subscribe(ObservableEmitter<Integer> e) throws Exception {
@@ -149,7 +134,26 @@ public class HttpFileCache<T> implements ICache<T> {
                     public Boolean apply(Integer t) throws Exception {
                         return deleteCacheAsync();
                     }
-                });
+                }).subscribe();
+    }
+
+    @Override
+    public void clearCache(Observer<Boolean> observable) {
+        Observable
+                .create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                        e.onNext(1);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map(new Function<Integer, Boolean>() {
+                    @Override
+                    public Boolean apply(Integer t) throws Exception {
+                        return deleteCacheAsync();
+                    }
+                }).subscribe(observable);
     }
 
 

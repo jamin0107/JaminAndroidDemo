@@ -1,6 +1,7 @@
 package com.jamin.http.cache;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 
 /**
  * Created by wangjieming on 2017/8/22.
@@ -10,11 +11,14 @@ import io.reactivex.Observable;
 public interface ICache<T> {
 
 
-    Observable<Boolean> saveCache(T data);
+    void saveCache(T data);
+
+    void saveCache(T data, Observer<Boolean> observable);
 
     Observable<T> getCache();
 
-    Observable<Boolean> clearCache();
+    void clearCache();
 
+    void clearCache(Observer<Boolean> observable);
 
 }

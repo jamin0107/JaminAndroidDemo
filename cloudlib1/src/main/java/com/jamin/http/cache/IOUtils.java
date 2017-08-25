@@ -15,13 +15,12 @@ import java.io.OutputStream;
 
 public class IOUtils {
 
-    public static final int BUFFER_SIZE = 4096;
-    public static final int MAX_STRING_LENGTH = 1024 * 1024;// 超过这个值的string，就不解析了，防止oom
+    private static final int BUFFER_SIZE = 4096;
+    private static final int MAX_STRING_LENGTH = 1024 * 1024;// 超过这个值的string，就不解析了，防止oom
 
 
     /**
      * 读取文件到字符串，大文件勿用
-     *
      * @param file
      * @param charset
      * @return

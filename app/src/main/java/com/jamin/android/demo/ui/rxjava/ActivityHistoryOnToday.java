@@ -68,7 +68,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
         cloudBeanHistoryOnToday.errorCode = 1;
         cloudBeanHistoryOnToday.list = null;
         cloudBeanHistoryOnToday.reason = "test";
-        httpFileCache.saveCache(cloudBeanHistoryOnToday).subscribe();
+        httpFileCache.saveCache(cloudBeanHistoryOnToday);
 
         httpFileCache.getCache().subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CloudBeanHistoryOnToday>() {
