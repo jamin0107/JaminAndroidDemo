@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by wangjieming on 2017/8/22.
  * 简单的HTTP 请求的Cache
  */
-public class HttpFileCache<T> implements ICache<T> {
+public class FileCache<T> implements ICache<T> {
 
 
     private File cacheFile;
@@ -40,7 +40,7 @@ public class HttpFileCache<T> implements ICache<T> {
      *
      * @param classOfT
      */
-    public HttpFileCache(@NonNull Class<T> classOfT) {
+    public FileCache(@NonNull Class<T> classOfT) {
         //用name，防止混淆过后导致SimpleName重复
         this(classOfT.getName(), classOfT);
     }
@@ -52,7 +52,7 @@ public class HttpFileCache<T> implements ICache<T> {
      * @param cacheKey
      * @param classOfT
      */
-    public HttpFileCache(@NonNull String cacheKey, Class<T> classOfT) {
+    public FileCache(@NonNull String cacheKey, Class<T> classOfT) {
         //缓存文件cache file name md5,对应多个cache file，所以允许自定义
         String fileName = MD5Util.getMd5ByString(cacheKey);
         this.classOfT = classOfT;
@@ -163,7 +163,7 @@ public class HttpFileCache<T> implements ICache<T> {
         if (cacheFile == null) {
             return false;
         }
-        synchronized (HttpFileCache.class) {
+        synchronized (FileCache.class) {
             snsDataResponse = data;
             String jsonStr = new Gson().toJson(data);
             LogUtil.d("HttpFileCache save Cache - " + jsonStr + "");
@@ -182,7 +182,7 @@ public class HttpFileCache<T> implements ICache<T> {
         if (cacheFile == null) {
             return null;
         }
-        synchronized (HttpFileCache.class) {
+        synchronized (FileCache.class) {
             String str = IOUtils.readFileToString(cacheFile, "UTF-8");
             if (TextUtils.isEmpty(str)) {
                 return null;

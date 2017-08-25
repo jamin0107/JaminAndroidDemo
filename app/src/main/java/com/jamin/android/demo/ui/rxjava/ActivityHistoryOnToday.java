@@ -12,7 +12,7 @@ import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.framework.util.LogUtil;
-import com.jamin.http.cache.HttpFileCache;
+import com.jamin.http.cache.FileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 
 import java.util.List;
@@ -63,14 +63,16 @@ public class ActivityHistoryOnToday extends BaseActivity {
     }
 
     private void request() {
-        HttpFileCache<CloudBeanHistoryOnToday> httpFileCache = new HttpFileCache<>(CloudBeanHistoryOnToday.class);
+        FileCache<CloudBeanHistoryOnToday> fileCache = new FileCache<>(CloudBeanHistoryOnToday.class);
+
         CloudBeanHistoryOnToday cloudBeanHistoryOnToday = new CloudBeanHistoryOnToday();
         cloudBeanHistoryOnToday.errorCode = 1;
         cloudBeanHistoryOnToday.list = null;
         cloudBeanHistoryOnToday.reason = "test";
-        httpFileCache.saveCache(cloudBeanHistoryOnToday);
 
-        httpFileCache.getCache().subscribeOn(AndroidSchedulers.mainThread())
+        fileCache.saveCache(cloudBeanHistoryOnToday);
+
+        fileCache.getCache().subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CloudBeanHistoryOnToday>() {
                     @Override
                     public void onSubscribe(Disposable d) {
