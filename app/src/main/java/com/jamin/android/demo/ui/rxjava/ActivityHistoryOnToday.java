@@ -15,6 +15,8 @@ import com.jamin.framework.util.LogUtil;
 import com.jamin.http.cache.FileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +49,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
         activity = this;
 
         refresh();
+        saveHashMap();
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -54,7 +57,78 @@ public class ActivityHistoryOnToday extends BaseActivity {
             }
         });
 
+    }
 
+
+    private void saveHashMap() {
+        FileCache<HashMap> fileCache = new FileCache<>(HashMap.class);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        CloudBeanHistoryOnToday cloudBeanHistoryOnToday = new CloudBeanHistoryOnToday();
+        cloudBeanHistoryOnToday.errorCode = 1;
+        cloudBeanHistoryOnToday.list = null;
+        cloudBeanHistoryOnToday.reason = "test";
+        hashMap.put("aaa", "bbb");
+        hashMap.put("aaaa", 111);
+        hashMap.put("aaaaa", 111);
+        hashMap.put("aaaaaa", cloudBeanHistoryOnToday);
+        fileCache.saveCache(hashMap);
+        fileCache.getCache().subscribe(new Observer<HashMap>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HashMap hashMap) {
+                LogUtil.d(new Gson().toJson(hashMap));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtil.d(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+
+
+
+        FileCache<ArrayList> fileCache1 = new FileCache<>(ArrayList.class);
+        ArrayList<Object> list = new ArrayList<>();
+        CloudBeanHistoryOnToday cloudBeanHistoryOnToday1 = new CloudBeanHistoryOnToday();
+        cloudBeanHistoryOnToday1.errorCode = 1;
+        cloudBeanHistoryOnToday1.list = null;
+        cloudBeanHistoryOnToday1.reason = "test";
+        list.add(111);
+        list.add("aaa");
+        list.add(cloudBeanHistoryOnToday1);
+        fileCache1.saveCache(list);
+        fileCache1.getCache().subscribe(new Observer<ArrayList>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ArrayList list) {
+                LogUtil.d(new Gson().toJson(list));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtil.d(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
 

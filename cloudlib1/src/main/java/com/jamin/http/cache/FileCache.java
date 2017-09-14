@@ -16,6 +16,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.exceptions.Exceptions;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -111,6 +112,10 @@ public class FileCache<T> implements ICache<T> {
                 .map(new Function<File, T>() {
                     @Override
                     public T apply(File t) throws Exception {
+                        T tt = readCacheAsync();
+                        if (tt == null) {
+                            throw Exceptions.propagate(new Throwable("No Cache"));
+                        }
                         return readCacheAsync();
                     }
                 });
