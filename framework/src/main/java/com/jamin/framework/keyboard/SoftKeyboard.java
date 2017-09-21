@@ -2,6 +2,7 @@ package com.jamin.framework.keyboard;
 
 /**
  * Created by wangjieming on 2017/9/21.
+ * https://felhr85.net/2014/05/04/catch-soft-keyboard-showhidden-events-in-android/
  */
 
 import android.os.Handler;
