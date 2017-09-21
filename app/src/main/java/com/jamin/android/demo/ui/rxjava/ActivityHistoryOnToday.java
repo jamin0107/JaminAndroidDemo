@@ -1,16 +1,23 @@
 package com.jamin.android.demo.ui.rxjava;
 
+import android.app.Service;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.ui.base.BaseActivity;
+import com.jamin.framework.keyboard.SoftKeyboard;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.http.cache.FileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
@@ -36,7 +43,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
     RecyclerView mRecyclerHistoryList;
     @BindView(R.id.layout_swipeRefresh)
     SwipeRefreshLayout mLayoutSwipeRefresh;
-
+    SoftKeyboard softKeyboard;
 
     private CustomRecyclerViewAdapter mAdapter;
     private BaseActivity activity;
@@ -56,9 +63,52 @@ public class ActivityHistoryOnToday extends BaseActivity {
                 refresh();
             }
         });
+        keyBoardListener();
+    }
+
+    private void keyBoardListener() {
+
+        findViewById(R.id.open).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                softKeyboard.openSoftKeyboard();
+            }
+        });
+        findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                softKeyboard.closeSoftKeyboard();
+            }
+        });
+
+        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.activity_history_today_root_layout); // You must use the layout root
+        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
+        softKeyboard = new SoftKeyboard(mainLayout, im);
+        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
+
+            @Override
+            public void onSoftKeyboardHide() {
+                LogUtil.d("onSoftKeyboardHide");
+            }
+
+            @Override
+            public void onSoftKeyboardShow() {
+                LogUtil.d("onSoftKeyboardShow");
+            }
+        });
+
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (softKeyboard != null) {
+            softKeyboard.setSoftKeyboardCallback(null);
+            softKeyboard.unRegisterSoftKeyboardCallback();
+            softKeyboard = null;
+        }
+    }
 
     private void saveHashMap() {
         FileCache<HashMap> fileCache = new FileCache<>(HashMap.class);
@@ -93,9 +143,6 @@ public class ActivityHistoryOnToday extends BaseActivity {
 
             }
         });
-
-
-
 
 
         FileCache<ArrayList> fileCache1 = new FileCache<>(ArrayList.class);
@@ -183,5 +230,24 @@ public class ActivityHistoryOnToday extends BaseActivity {
             mAdapter.setData(baseItems);
         }
 
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+
+        // Checks whether a hardware keyboard is available
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            Toast.makeText(this, "keyboard visible", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
+        }
     }
 }

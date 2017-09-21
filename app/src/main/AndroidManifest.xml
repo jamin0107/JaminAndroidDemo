@@ -67,7 +67,10 @@
         <activity android:name=".ui.image.filter.activity.ActivityGallery" />
         <activity android:name=".ui.image.filter.activity.ActivityCamera" />
 
-        <activity android:name=".ui.rxjava.ActivityHistoryOnToday" />
+        <activity
+            android:name=".ui.rxjava.ActivityHistoryOnToday"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <activity android:name=".ui.gl.GLLaunchActivity" />
 
