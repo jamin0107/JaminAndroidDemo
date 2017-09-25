@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_history_today_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/activity_history_today_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -43,4 +46,10 @@
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+    <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout
+        android:id="@+id/keyboard_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout>

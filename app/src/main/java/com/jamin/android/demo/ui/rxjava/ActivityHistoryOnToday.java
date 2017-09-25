@@ -1,6 +1,5 @@
 package com.jamin.android.demo.ui.rxjava;
 
-import android.app.Service;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -17,7 +18,6 @@ import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseItem;
 import com.jamin.android.demo.adapter.CustomRecyclerViewAdapter;
 import com.jamin.android.demo.ui.base.BaseActivity;
-import com.jamin.framework.keyboard.SoftKeyboard;
 import com.jamin.framework.util.LogUtil;
 import com.jamin.http.cache.FileCache;
 import com.jamin.http.model.CloudBeanHistoryOnToday;
@@ -28,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -43,15 +45,31 @@ public class ActivityHistoryOnToday extends BaseActivity {
     RecyclerView mRecyclerHistoryList;
     @BindView(R.id.layout_swipeRefresh)
     SwipeRefreshLayout mLayoutSwipeRefresh;
-    SoftKeyboard softKeyboard;
+    @BindView(R.id.keyboard_panel)
+    KPSwitchFSPanelLinearLayout panelLayout;
+    @BindView(R.id.activity_history_today_edittext)
+    EditText editText;
+
+    ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
 
     private CustomRecyclerViewAdapter mAdapter;
     private BaseActivity activity;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_on_today);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            Window win = getWindow();
+            WindowManager.LayoutParams winParams = win.getAttributes();
+            final int bits;
+            bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+            winParams.flags |= bits;
+            win.setAttributes(winParams);
+        }
+
         ButterKnife.bind(this);
         activity = this;
 
@@ -68,46 +86,32 @@ public class ActivityHistoryOnToday extends BaseActivity {
 
     private void keyBoardListener() {
 
+        onGlobalLayoutListener = KeyboardUtil.attach(this, panelLayout, new KeyboardUtil.OnKeyboardShowingListener() {
+            @Override
+            public void onKeyboardShowing(boolean isShowing) {
+                LogUtil.d("onKeyboardShowing = " + isShowing);
+            }
+        });
+
         findViewById(R.id.open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                softKeyboard.openSoftKeyboard();
+                KeyboardUtil.showKeyboard(editText);
             }
         });
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                softKeyboard.closeSoftKeyboard();
+                KeyboardUtil.hideKeyboard(editText);
             }
         });
-
-        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.activity_history_today_root_layout); // You must use the layout root
-        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
-        softKeyboard = new SoftKeyboard(mainLayout, im);
-        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
-
-            @Override
-            public void onSoftKeyboardHide() {
-                LogUtil.d("onSoftKeyboardHide");
-            }
-
-            @Override
-            public void onSoftKeyboardShow() {
-                LogUtil.d("onSoftKeyboardShow");
-            }
-        });
-
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (softKeyboard != null) {
-            softKeyboard.setSoftKeyboardCallback(null);
-            softKeyboard.unRegisterSoftKeyboardCallback();
-            softKeyboard = null;
-        }
+        KeyboardUtil.detach(this, onGlobalLayoutListener);
     }
 
     private void saveHashMap() {
