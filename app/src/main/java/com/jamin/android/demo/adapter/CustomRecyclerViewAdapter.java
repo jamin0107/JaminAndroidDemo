@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,26 +14,20 @@ import java.util.List;
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<BaseHolder> {
 
 
-    List<BaseItem> mList;
+    private List<BaseItem> mList = new ArrayList<>();
 
 
     public CustomRecyclerViewAdapter(List<BaseItem> list) {
-        this.mList = list;
+        if (list != null) {
+            this.mList.addAll(list);
+        }
     }
 
-
-    /**
-     * TODO:有点小问题 万一传入的是mList的引用，clear就清空掉了。
-     * @param list
-     */
     public void setData(List<BaseItem> list) {
-        if (mList != null) {
-            mList.clear();
-        }
+        mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
     }
-
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
