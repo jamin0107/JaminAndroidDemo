@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="50dp"
+      android:background="#ffffff"
+      >
+    <TextView
+        android:id="@+id/music_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:text="00:12"
+        android:textColor="#999999"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/music_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/music_item_time"
+        android:text="hello world"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        />
+    <Button
+        android:id="@+id/music_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:text="Download"
+
+        />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:layout_alignLeft="@id/music_item_name"
+        android:layout_alignParentBottom="true"
+        android:background="#eeeeee"
+        />
+  </RelativeLayout>
+
+
+  <ViewStub
+      android:id="@+id/music_player_layout"
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      />
+</LinearLayout>

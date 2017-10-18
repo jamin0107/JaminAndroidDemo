@@ -12,10 +12,11 @@ import java.io.OutputStream;
  * Created by wangjieming on 2017/8/22.
  */
 
-class IOUtils {
+class EncryptIOUtils {
 
   private static final int BUFFER_SIZE = 4096;
   private static final int MAX_STRING_LENGTH = 1024 * 1024;// 超过这个值的string，就不解析了，防止oom
+  private static final byte KEY = (byte) 777;
 
   /**
    * 读取文件到字符串，大文件勿用
@@ -29,7 +30,7 @@ class IOUtils {
     try {
       in = new FileInputStream(file);
       for (int len = -1; (len = in.read(buffer)) != -1; ) {
-        out.write(buffer, 0, len);
+        out.write(decrypt(buffer, KEY), 0, len);
         if (out.size() > MAX_STRING_LENGTH) {
           Log.e("IoUtils", "File too large, maybe not a string. " + file.getAbsolutePath());
           return null;
@@ -37,6 +38,9 @@ class IOUtils {
       }
       data = out.toString(charset);
     } catch (IOException e) {
+      e.printStackTrace();
+      data = null;
+    } catch (Exception e) {
       e.printStackTrace();
       data = null;
     } finally {
@@ -68,7 +72,7 @@ class IOUtils {
     OutputStream out = null;
     try {
       out = new FileOutputStream(file);
-      out.write(data.getBytes(charset));
+      out.write(encrypt(data, KEY, charset));
       return true;
     } catch (IOException e) {
       e.printStackTrace();
@@ -83,5 +87,23 @@ class IOUtils {
       }
     }
     return false;
+  }
+
+  private static byte[] encrypt(String str, byte skey, String charset) throws Exception {
+    byte[] bytes = str.getBytes(charset);
+
+    for (int i = 0; i < bytes.length; i++) {
+      bytes[i] = (byte) (bytes[i] ^ skey);
+    }
+    return bytes;
+  }
+
+
+  private static byte[] decrypt(byte[] bytes, byte skey) throws Exception {
+
+    for (int i = 0; i < bytes.length; i++) {
+      bytes[i] = (byte) (bytes[i] ^ skey);
+    }
+    return bytes;
   }
 }

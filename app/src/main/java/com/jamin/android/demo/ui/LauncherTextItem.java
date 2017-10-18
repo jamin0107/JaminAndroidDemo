@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
@@ -14,9 +13,8 @@ import com.jamin.android.demo.remote.TestRemoteServiceActivity;
 import com.jamin.android.demo.ui.base.BaseActivity;
 import com.jamin.android.demo.ui.gl.GLLaunchActivity;
 import com.jamin.android.demo.ui.image.LauncherImageActivity;
-import com.jamin.android.demo.ui.rxjava.ActivityHistoryOnToday;
 import com.jamin.android.demo.ui.rxjava.RxStudyActivity;
-
+import com.jamin.android.demo.ui.tab.JaminMusicActivity;
 
 /**
  * Created by Administrator on 2016/5/19.
@@ -35,7 +33,7 @@ public class LauncherTextItem extends BaseItem<String> {
 
     @Override
     public void onBindView(BaseHolder holder, int position) {
-        TextView textView = holder.getView(R.id.list_item_launch_tv);
+        TextView textView = holder.findViewById(R.id.list_item_launch_tv);
         final String desc = getItemData();
         textView.setText(Html.fromHtml(desc));
         if (MainActivity.LAUNCHER_ANIMATION.equals(desc)) {
@@ -55,7 +53,7 @@ public class LauncherTextItem extends BaseItem<String> {
                 } else if (MainActivity.LAUNCHER_IMAGE.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), LauncherImageActivity.class));
                 } else if (MainActivity.LAUNCHER_HISTORY_ON_TODAY.equals(desc)) {
-                    getActivity().startActivity(new Intent(getActivity(), ActivityHistoryOnToday.class));
+                    getActivity().startActivity(new Intent(getActivity(), JaminMusicActivity.class));
                 } else if (MainActivity.LAUNCHER_RXJAVA_TEST.equals(desc)) {
                     getActivity().startActivity(new Intent(getActivity(), RxStudyActivity.class));
                 } else if (MainActivity.LAUNCHER_GL_VIEW.equals(desc)) {

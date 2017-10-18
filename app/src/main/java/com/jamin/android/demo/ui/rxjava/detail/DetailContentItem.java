@@ -28,7 +28,7 @@ public class DetailContentItem extends BaseItem {
     @Override
     public void onBindView(BaseHolder holder, int position) {
 
-        TextView tvContent = holder.getView(R.id.content);
+        TextView tvContent = holder.findViewById(R.id.content);
         tvContent.setText(content);
 
     }

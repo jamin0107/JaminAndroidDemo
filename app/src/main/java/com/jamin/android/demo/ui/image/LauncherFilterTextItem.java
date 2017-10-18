@@ -30,7 +30,7 @@ public class LauncherFilterTextItem extends BaseItem<String> {
 
     @Override
     public void onBindView(BaseHolder holder, int position) {
-        TextView textView = holder.getView(R.id.list_item_launch_tv);
+        TextView textView = holder.findViewById(R.id.list_item_launch_tv);
         final String desc = getItemData();
         textView.setText(Html.fromHtml(desc));
         textView.setOnClickListener(new View.OnClickListener() {

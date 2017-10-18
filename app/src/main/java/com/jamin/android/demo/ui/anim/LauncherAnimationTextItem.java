@@ -30,7 +30,7 @@ public class LauncherAnimationTextItem extends BaseItem<String> {
     @Override
     public void onBindView(BaseHolder holder, int position) {
         final String desc = getItemData();
-        TextView textView = holder.getView(R.id.list_item_launch_tv);
+        TextView textView = holder.findViewById(R.id.list_item_launch_tv);
         textView.setText(Html.fromHtml(desc));
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

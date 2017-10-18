@@ -17,7 +17,7 @@ public class BaseHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public <T extends View> T getView(int id) {
+    public <T extends View> T findViewById(int id) {
         View view = mViews.get(id);
         if (view == null) {
             view = itemView.findViewById(id);

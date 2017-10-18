@@ -115,7 +115,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
     }
 
     private void saveHashMap() {
-        FileCache<HashMap> fileCache = new FileCache<>(HashMap.class);
+        FileCache<HashMap> fileCache = new FileCache(this, HashMap.class);
         HashMap<String, Object> hashMap = new HashMap<>();
         CloudBeanHistoryOnToday cloudBeanHistoryOnToday = new CloudBeanHistoryOnToday();
         cloudBeanHistoryOnToday.errorCode = 1;
@@ -148,8 +148,7 @@ public class ActivityHistoryOnToday extends BaseActivity {
             }
         });
 
-
-        FileCache<ArrayList> fileCache1 = new FileCache<>(ArrayList.class);
+        FileCache<ArrayList> fileCache1 = new FileCache<>(this, ArrayList.class);
         ArrayList<Object> list = new ArrayList<>();
         CloudBeanHistoryOnToday cloudBeanHistoryOnToday1 = new CloudBeanHistoryOnToday();
         cloudBeanHistoryOnToday1.errorCode = 1;
@@ -188,7 +187,8 @@ public class ActivityHistoryOnToday extends BaseActivity {
     }
 
     private void request() {
-        FileCache<CloudBeanHistoryOnToday> fileCache = new FileCache<>(CloudBeanHistoryOnToday.class);
+        FileCache<CloudBeanHistoryOnToday> fileCache =
+            new FileCache<>(this, CloudBeanHistoryOnToday.class);
 
         CloudBeanHistoryOnToday cloudBeanHistoryOnToday = new CloudBeanHistoryOnToday();
         cloudBeanHistoryOnToday.errorCode = 1;

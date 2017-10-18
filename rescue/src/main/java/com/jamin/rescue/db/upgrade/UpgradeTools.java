@@ -124,7 +124,7 @@ public class UpgradeTools {
                 sql = "real";
             } else if (clazz == String.class) {
                 sql = "text";
-            } else {//全部用gjson转换成字符串
+            } else {//全部用gson转换成字符串
                 sql = "text";
             }
         }

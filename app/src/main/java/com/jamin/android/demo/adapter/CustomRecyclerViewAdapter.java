@@ -16,6 +16,9 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<BaseHolder> 
 
     private List<BaseItem> mList = new ArrayList<>();
 
+    public CustomRecyclerViewAdapter() {
+
+    }
 
     public CustomRecyclerViewAdapter(List<BaseItem> list) {
         if (list != null) {

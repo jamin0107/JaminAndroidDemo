@@ -4,7 +4,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
@@ -34,11 +33,11 @@ public class DetailPictureItem extends BaseItem {
     @Override
     public void onBindView(BaseHolder holder, int position) {
 
-        TextView tvTitle = holder.getView(R.id.pic_title);
+        TextView tvTitle = holder.findViewById(R.id.pic_title);
         tvTitle.setText(picture.getPic_title());
-        TextView tvUrl = holder.getView(R.id.pic_url);
+        TextView tvUrl = holder.findViewById(R.id.pic_url);
         tvUrl.setText(picture.getUrl());
-        ImageView imgPic=holder.getView(R.id.pic_image);
+        ImageView imgPic=holder.findViewById(R.id.pic_image);
         Glide.with(getActivity()).load(picture.getUrl()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imgPic);
 
 

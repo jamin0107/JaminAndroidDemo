@@ -26,9 +26,9 @@ public class ListItemIconFont extends BaseItem<IconFont> {
 
     @Override
     public void onBindView(BaseHolder holder, int position) {
-        IconFontTextView iconFontTextView = holder.getView(R.id.list_item_iconfont_ico);
+        IconFontTextView iconFontTextView = holder.findViewById(R.id.list_item_iconfont_ico);
         IconFont iconFont = getItemData();
-        TextView textView = holder.getView(R.id.list_item_iconfont_text);
+        TextView textView = holder.findViewById(R.id.list_item_iconfont_text);
         if (iconFont == null) {
             return;
         }

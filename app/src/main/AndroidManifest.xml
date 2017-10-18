@@ -89,6 +89,8 @@
 
         <activity android:name=".ui.JaminRescueActivity" />
 
+        <activity android:name=".ui.tab.JaminMusicActivity" />
+
         <activity
             android:name=".remote.JaminRemoteActivity"
             android:process=":Remote" />

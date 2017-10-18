@@ -32,9 +32,9 @@ public class HistoryItem extends BaseItem {
     @Override
     public void onBindView(BaseHolder holder, int position) {
 
-        TextView tvTitle = holder.getView(R.id.title);
+        TextView tvTitle = holder.findViewById(R.id.title);
         tvTitle.setText(history.title);
-        TextView tvDate = holder.getView(R.id.date);
+        TextView tvDate = holder.findViewById(R.id.date);
         tvDate.setText(history.date);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

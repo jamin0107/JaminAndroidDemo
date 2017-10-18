@@ -1,7 +1,6 @@
 package com.jamin.android.demo.ui.anim.parallaxscroll;
 
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.jamin.android.demo.R;
 import com.jamin.android.demo.adapter.BaseHolder;
@@ -34,7 +33,7 @@ public class HeaderItem extends BaseItem<Void> {
 
     @Override
     public void onBindView(BaseHolder holder, int position) {
-        relativeLayout = holder.getView(R.id.list_item_cover_layout);
+        relativeLayout = holder.findViewById(R.id.list_item_cover_layout);
     }
 
 
